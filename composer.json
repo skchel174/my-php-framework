@@ -1,0 +1,10 @@
+{
+    "name": "evgeny/my-php-framework",
+    "authors": [
+        {
+            "name": "Evgeny Kuzmin",
+            "email": "skchel174@gmail.com"
+        }
+    ],
+    "require": {}
+}
