@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  nginx:
+    build:
+      context: "./"
+      dockerfile: docker/nginx/nginx.docker
+    volumes:
+      - ./:/var/www
+    ports:
+      - "8000:80"
+    links:
+      - php-fpm
