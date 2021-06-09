@@ -11,3 +11,10 @@ services:
       - "8000:80"
     links:
       - php-fpm
+
+  php-fpm:
+    build:
+      context: "./"
+      dockerfile: docker/php/php-fpm.docker
+    volumes:
+      - ./:/var/www
