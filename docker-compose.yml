@@ -18,6 +18,18 @@ services:
       dockerfile: docker/php/php-fpm.docker
     volumes:
       - ./:/var/www
+    links:
+      - mysql
+
+  php-cli:
+    build:
+      context: "./"
+      dockerfile: docker/php/php-cli.docker
+    volumes:
+      - ./:/var/www
+    links:
+      - mysql
+    tty: true
 
   mysql:
     image: mysql:8.0.23

@@ -9,3 +9,6 @@ docker-stop:
 
 docker-build:
 	docker-compose up --build
+
+test:
+	docker-compose exec php-cli vendor/bin/phpunit

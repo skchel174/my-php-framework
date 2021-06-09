@@ -1,4 +1,6 @@
-.idea
 /doc/
 /vendor/
 /storage/docker
+
+.idea
+.phpunit.result.cache
