@@ -68,7 +68,7 @@ abstract class HttpMessage implements MessageInterface
      */
     public function getHeaderLine($name): string
     {
-        return implode(', ', $this->getHeader($name));
+        return implode(',', $this->getHeader($name));
     }
 
     /**
