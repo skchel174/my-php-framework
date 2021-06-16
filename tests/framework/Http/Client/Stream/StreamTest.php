@@ -2,6 +2,7 @@
 
 namespace Tests\framework\Http\Client\Stream;
 
+use Framework\Http\Client\Stream\Exceptions\ProvidedResourceTypeException;
 use Framework\Http\Client\Stream\Stream;
 use PHPUnit\Framework\TestCase;
 
@@ -19,7 +20,7 @@ class StreamTest extends TestCase
 
     public function testConstructFail(): void
     {
-        $this->expectException(\InvalidArgumentException::class);
+        $this->expectException(ProvidedResourceTypeException::class);
         new Stream('invalid resource');
     }
 
