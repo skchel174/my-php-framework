@@ -29,14 +29,6 @@ class UploadedFile implements UploadedFileInterface
     protected ?string $clientMediaType;
     protected bool $isMoved = false;
 
-    /**
-     * UploadedFile constructor.
-     * @param StreamInterface $stream
-     * @param int|null $size
-     * @param int $error
-     * @param string|null $clientFileName
-     * @param string|null $clientMediaType
-     */
     public function __construct(
         StreamInterface $stream,
         ?int $size,
@@ -51,10 +43,6 @@ class UploadedFile implements UploadedFileInterface
         $this->clientMediaType = $clientMediaType;
     }
 
-    /**
-     * @throws AlreadyMovedFileException
-     * @return StreamInterface
-     */
     public function getStream(): StreamInterface
     {
         if ($this->isMoved) {
@@ -63,12 +51,6 @@ class UploadedFile implements UploadedFileInterface
         return $this->stream;
     }
 
-    /**
-     * @throws InvalidPathTypeException
-     * @throws AlreadyMovedFileException
-     * @throws FileMoveFailException
-     * @param string $targetPath
-     */
     public function moveTo($targetPath): void
     {
         if (!is_string($targetPath)) {
