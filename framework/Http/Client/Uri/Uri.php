@@ -3,9 +3,7 @@
 namespace Framework\Http\Client\Uri;
 
 use Framework\Http\Client\Uri\Exceptions\InvalidUriSchemeException;
-use Framework\Http\Client\Uri\Exceptions\UriComponentTypeException;
 use Framework\Http\Client\Uri\Exceptions\UriPortRangeException;
-use Framework\Http\Client\Uri\Exceptions\UriPortTypeException;
 use Psr\Http\Message\UriInterface;
 
 class Uri implements UriInterface
@@ -47,7 +45,8 @@ class Uri implements UriInterface
         string $path = '',
         string $query = '',
         string $fragment = '',
-    ) {
+    )
+    {
         $this->scheme = $scheme ? $this->filterScheme($scheme) : '';
         $this->user = $user ? $this->filterUserName($user) : '';
         $this->pass = $pass ? $this->filterUserPass($pass) : null;
