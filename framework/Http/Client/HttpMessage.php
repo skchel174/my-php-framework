@@ -9,20 +9,13 @@ abstract class HttpMessage implements MessageInterface
 {
     protected string $protocolVersion = '';
     protected array $headers = [];
-    protected StreamInterface $body;
+    protected ?StreamInterface $body = null;
 
-    /**
-     * @return string
-     */
     public function getProtocolVersion(): string
     {
         return $this->protocolVersion;
     }
 
-    /**
-     * @param string $version
-     * @return $this
-     */
     public function withProtocolVersion($version): static
     {
         $clone = clone $this;
@@ -30,27 +23,16 @@ abstract class HttpMessage implements MessageInterface
         return $clone;
     }
 
-    /**
-     * @return string[][]
-     */
     public function getHeaders(): array
     {
         return $this->headers;
     }
 
-    /**
-     * @param string $name
-     * @return bool
-     */
     public function hasHeader($name): bool
     {
         return !empty($this->getHeader($name));
     }
 
-    /**
-     * @param string $name
-     * @return string[]
-     */
     public function getHeader($name): array
     {
         $name = $this->fixHeaderCase($name);
@@ -62,20 +44,11 @@ abstract class HttpMessage implements MessageInterface
         return [];
     }
 
-    /**
-     * @param string $name
-     * @return string
-     */
     public function getHeaderLine($name): string
     {
         return implode(',', $this->getHeader($name));
     }
 
-    /**
-     * @param string $name
-     * @param string|string[] $value
-     * @return $this
-     */
     public function withHeader($name, $value): static
     {
         $clone = clone $this;
@@ -83,11 +56,6 @@ abstract class HttpMessage implements MessageInterface
         return $clone;
     }
 
-    /**
-     * @param string $name
-     * @param string|string[] $value
-     * @return $this
-     */
     public function withAddedHeader($name, $value): static
     {
         $header = $this->getHeader($name);
@@ -95,10 +63,6 @@ abstract class HttpMessage implements MessageInterface
         return $this->withHeader($name, array_merge($header, $value));
     }
 
-    /**
-     * @param string $name
-     * @return $this
-     */
     public function withoutHeader($name): static
     {
         $clone = clone $this;
@@ -108,18 +72,11 @@ abstract class HttpMessage implements MessageInterface
         return $clone;
     }
 
-    /**
-     * @return StreamInterface
-     */
-    public function getBody(): StreamInterface
+    public function getBody(): ?StreamInterface
     {
         return $this->body;
     }
 
-    /**
-     * @param StreamInterface $body
-     * @return $this
-     */
     public function withBody(StreamInterface $body): static
     {
         $clone = clone $this;
@@ -127,10 +84,6 @@ abstract class HttpMessage implements MessageInterface
         return $clone;
     }
 
-    /**
-     * @param string $name
-     * @return string
-     */
     protected function fixHeaderCase(string $name): string
     {
         $prep = str_replace('-', ' ', $name);
