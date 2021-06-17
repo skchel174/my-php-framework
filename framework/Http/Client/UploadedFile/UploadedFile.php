@@ -29,6 +29,14 @@ class UploadedFile implements UploadedFileInterface
     protected ?string $clientMediaType;
     protected bool $isMoved = false;
 
+    /**
+     * UploadedFile constructor.
+     * @param StreamInterface $stream
+     * @param int|null $size
+     * @param int $error
+     * @param string|null $clientFileName
+     * @param string|null $clientMediaType
+     */
     public function __construct(
         StreamInterface $stream,
         ?int $size,
@@ -43,6 +51,10 @@ class UploadedFile implements UploadedFileInterface
         $this->clientMediaType = $clientMediaType;
     }
 
+    /**
+     * @throws AlreadyMovedFileException
+     * @return StreamInterface
+     */
     public function getStream(): StreamInterface
     {
         if ($this->isMoved) {
@@ -51,7 +63,13 @@ class UploadedFile implements UploadedFileInterface
         return $this->stream;
     }
 
-    public function moveTo($targetPath)
+    /**
+     * @throws InvalidPathTypeException
+     * @throws AlreadyMovedFileException
+     * @throws FileMoveFailException
+     * @param string $targetPath
+     */
+    public function moveTo($targetPath): void
     {
         if (!is_string($targetPath)) {
             throw new InvalidPathTypeException($targetPath);
@@ -61,31 +79,17 @@ class UploadedFile implements UploadedFileInterface
             throw new AlreadyMovedFileException();
         }
 
-        $sapiType = php_sapi_name();
         $file = $this->stream->getMetadata('uri');
 
-        if ($sapiType) {
-            if (is_uploaded_file($file)) {
-                $result = move_uploaded_file($file, $targetPath);
-            } else {
-                $targetStream = (new StreamFactory)->createStreamFromFile($targetPath, 'w+b');
-                while (!$this->stream->eof()) {
-                    $targetStream->rewind();
-                    $targetStream->write($this->stream->read(1024));
-                }
-                $targetStream->close();
-                $this->stream->close();
-                $result = true;
-            }
+        if (!php_sapi_name()) {
+            $this->moveByRename($file, $targetPath);
         } else {
-            $result = rename($file, $targetPath);
+            if (is_uploaded_file($file)) {
+                $this->moveUploadedFile($file, $targetPath);
+            } else {
+                $this->moveFileByCopying($targetPath);
+            }
         }
-
-        if (!isset($result)) {
-            throw new FileMoveFailException();
-        }
-
-        $this->isMoved = true;
     }
 
     public function getSize(): ?int
@@ -106,5 +110,34 @@ class UploadedFile implements UploadedFileInterface
     public function getClientMediaType(): ?string
     {
         return $this->clientMediaType;
+    }
+
+    protected function moveByRename(string $file, string $targetPath): void
+    {
+        if (!rename($file, $targetPath)) {
+            throw new FileMoveFailException();
+        }
+        $this->isMoved = true;
+    }
+
+    protected function moveUploadedFile(string $file, string $targetPath): void
+    {
+        if (!move_uploaded_file($file, $targetPath)) {
+            throw new FileMoveFailException();
+        }
+        unlink($file);
+        $this->isMoved = true;
+    }
+
+    protected function moveFileByCopying(string $targetPath): void
+    {
+        $targetStream = (new StreamFactory)->createStreamFromFile($targetPath, 'w+b');
+        $targetStream->rewind();
+        while (!$this->stream->eof()) {
+            $targetStream->write($this->stream->read(1024));
+        }
+        $targetStream->close();
+        $this->stream->close();
+        $this->isMoved = true;
     }
 }
