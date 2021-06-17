@@ -13,6 +13,7 @@ class UriFactory implements UriFactoryInterface
             return new Uri(...parse_url($uri));
         }
         return new Uri();
+
     }
 
     public function createUriFromSapi(array $server = []): UriInterface
@@ -22,7 +23,7 @@ class UriFactory implements UriFactoryInterface
             strtolower(explode('/', $server['SERVER_PROTOCOL'])[0]) ?? '',
             $server['PHP_AUTH_USER'] ?? '',
             $server['PHP_AUTH_PW'] ?? null,
-            parse_url($server['HTTP_HOST'], PHP_URL_HOST) ?? '',
+            explode(':', $server['HTTP_HOST'])[0] ?? '',
             $server['SERVER_PORT'] ?? null,
             parse_url($server['REQUEST_URI'], PHP_URL_PATH) ?? '',
             parse_url($server['REQUEST_URI'], PHP_URL_QUERY) ?? '',
