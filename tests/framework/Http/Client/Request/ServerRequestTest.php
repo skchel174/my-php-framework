@@ -2,7 +2,7 @@
 
 namespace Tests\framework\Http\Client\Request;
 
-use Framework\Http\Client\Request\Exceptions\InvalidBodyTypeException;
+use Framework\Http\Client\Message\Exceptions\InvalidBodyTypeException;
 use Framework\Http\Client\Request\ServerRequest;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;

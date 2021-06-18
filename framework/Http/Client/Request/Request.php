@@ -2,7 +2,7 @@
 
 namespace Framework\Http\Client\Request;
 
-use Framework\Http\Client\HttpMessage;
+use Framework\Http\Client\Message\HttpMessage;
 use Framework\Http\Client\Request\Exceptions\InvalidMethodException;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
@@ -20,17 +20,17 @@ class Request extends HttpMessage implements RequestInterface
 
     public function __construct(
         string $method = '',
-        ?UriInterface $uri = null,
+        null|UriInterface $uri = null,
         string $protocolVersion = '',
         array $headers = [],
-        ?StreamInterface $body = null,
+        null|string|StreamInterface $body = null,
     )
     {
         $this->method = $method ? $this->filterMethod($method) : '';
         $this->uri = $uri;
         $this->protocolVersion = $protocolVersion;
         $this->headers = $headers;
-        $this->body = $body;
+        $this->body = $this->normalizeBody($body);
     }
 
     public function getRequestTarget(): string

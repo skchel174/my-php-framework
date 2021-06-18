@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\framework\Http\Client;
+namespace Tests\framework\Http\Message\Client;
 
-use Framework\Http\Client\HttpMessage;
+use Framework\Http\Client\Message\HttpMessage;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\StreamInterface;

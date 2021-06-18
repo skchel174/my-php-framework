@@ -1,7 +1,9 @@
 <?php
 
-namespace Framework\Http\Client;
+namespace Framework\Http\Client\Message;
 
+use Framework\Http\Client\Message\Exceptions\InvalidBodyTypeException;
+use Framework\Http\Client\Stream\StreamFactory;
 use Psr\Http\Message\MessageInterface;
 use Psr\Http\Message\StreamInterface;
 
@@ -77,10 +79,10 @@ abstract class HttpMessage implements MessageInterface
         return $this->body;
     }
 
-    public function withBody(StreamInterface $body): static
+    public function withBody(string|StreamInterface $body): static
     {
         $clone = clone $this;
-        $clone->body = $body;
+        $clone->body = $this->normalizeBody($body);
         return $clone;
     }
 
@@ -88,5 +90,18 @@ abstract class HttpMessage implements MessageInterface
     {
         $prep = str_replace('-', ' ', $name);
         return str_replace(' ', '-', ucwords(strtolower($prep)));
+    }
+
+    protected function normalizeBody($body): ?StreamInterface
+    {
+        if ($body === null || $body instanceof StreamInterface) {
+            return $body;
+        }
+
+        if (is_string($body)) {
+            return (new StreamFactory)->createStream($body);
+        }
+
+        throw new InvalidBodyTypeException($body);
     }
 }

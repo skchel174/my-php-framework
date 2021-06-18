@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Http\Client\Request\Exceptions;
+namespace Framework\Http\Client\Message\Exceptions;
 
 class InvalidBodyTypeException extends \InvalidArgumentException
 {

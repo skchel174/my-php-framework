@@ -2,7 +2,7 @@
 
 namespace Framework\Http\Client\Request;
 
-use Framework\Http\Client\Request\Exceptions\InvalidBodyTypeException;
+use Framework\Http\Client\Message\Exceptions\InvalidBodyTypeException;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
@@ -18,17 +18,18 @@ class ServerRequest extends Request implements ServerRequestInterface
 
     public function __construct(
         string $method = '',
-        ?UriInterface $uri = null,
+        null|UriInterface $uri = null,
         array $serverParams = [],
         string $protocolVersion = '',
         array $headers = [],
-        ?StreamInterface $body = null,
+        null|string|StreamInterface $body = null,
         null|object|array $parsedBody = null,
         array $cookieParams = [],
         array $queryParams = [],
         array $uploadedFiles = [],
         array $attributes = [],
-    ) {
+    )
+    {
         parent::__construct($method, $uri, $protocolVersion, $headers, $body);
         $this->serverParams = $serverParams;
         $this->cookieParams = $cookieParams;
