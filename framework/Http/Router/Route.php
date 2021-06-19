@@ -6,8 +6,6 @@ use Framework\Http\Router\Interfaces\RouteInterface;
 
 class Route implements RouteInterface
 {
-    const REQUEST_HANDLER = '_handler';
-
     protected string $path;
     protected string|array $handler;
     protected array $methods;
