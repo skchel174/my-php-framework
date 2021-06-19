@@ -3,9 +3,10 @@
 use App\Http\Controllers\IndexController;
 use App\Http\Middlewares\AppPerformanceMiddleware;
 use Framework\Http\Client\Request\ServerRequestFactory;
-use Framework\Http\Controller\ControllerHandler;
+use Framework\Http\Middlewares\RequestHandler\RequestHandler;
 use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareDispatcher;
 use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareResolver;
+use Framework\Http\Middlewares\RequestHandler\RequestHandlerResolver;
 use Framework\Http\Middlewares\RouteDispatchMiddleware;
 use Framework\Http\Router\RouteDispatcher;
 use Framework\Http\Router\RoutesCollection;
@@ -26,7 +27,7 @@ $request = (new ServerRequestFactory)->createFromSapi();
 $middlewareDispatcher = new MiddlewareDispatcher(new MiddlewareResolver());
 $middlewareDispatcher->add(AppPerformanceMiddleware::class);
 $middlewareDispatcher->add(new RouteDispatchMiddleware($router));
-$response = $middlewareDispatcher->process($request, new ControllerHandler());
+$response = $middlewareDispatcher->process($request, new RequestHandler(new RequestHandlerResolver()));
 
 header(sprintf('HTTP/%s %d %s',
     $response->getProtocolVersion(),

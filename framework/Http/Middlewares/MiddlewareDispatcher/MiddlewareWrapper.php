@@ -2,13 +2,13 @@
 
 namespace Framework\Http\Middlewares\MiddlewareDispatcher;
 
+use Framework\Http\Router\Interfaces\RouteInterface;
+use Framework\Http\Router\Route;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 class MiddlewareWrapper
 {
-    const ROUTE = '_route_name';
-
     protected mixed $middleware;
     protected ?string $route = null;
 
@@ -33,6 +33,8 @@ class MiddlewareWrapper
         if ($this->route === null) {
             return true;
         }
-        return $this->route === $request->getAttribute(static::ROUTE);
+        /** @var RouteInterface $route */
+        $route = $request->getAttribute(Route::class);
+        return $this->route === $route->getName() ?: $route->getPath();
     }
 }
