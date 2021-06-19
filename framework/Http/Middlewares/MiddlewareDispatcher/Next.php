@@ -1,8 +1,7 @@
 <?php
 
-namespace Framework\Http\Middlewares;
+namespace Framework\Http\Middlewares\MiddlewareDispatcher;
 
-use Framework\Http\Router\Route;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -32,6 +31,6 @@ class Next
         }
 
         $next = new Next($this->middlewareQueue, $this->defaultHandler);
-        return $middleware($request, $next);
+        return $middleware->process($request, $next);
     }
 }

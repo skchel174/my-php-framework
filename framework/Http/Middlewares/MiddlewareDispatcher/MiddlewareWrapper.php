@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Http\Middlewares;
+namespace Framework\Http\Middlewares\MiddlewareDispatcher;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -12,14 +12,14 @@ class MiddlewareWrapper
     protected mixed $middleware;
     protected ?string $route = null;
 
-    public function __construct(mixed $middleware)
+    public function __construct(callable $middleware)
     {
         $this->middleware = $middleware;
     }
 
-    public function __invoke(ServerRequestInterface $request, callable $next): ResponseInterface
+    public function process(ServerRequestInterface $request, callable $next): ResponseInterface
     {
-        return $this->middleware->process($request, new RequestHandlerWrapper($next));
+        return ($this->middleware)($request, new RequestHandlerWrapper($next));
     }
 
     public function route(string $route): static

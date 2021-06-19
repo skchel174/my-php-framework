@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Http\Middlewares;
+namespace Framework\Http\Middlewares;
 
 use Framework\Http\Controller\ControllerHandler;
-use Framework\Http\Middlewares\MiddlewareWrapper;
+use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareWrapper;
 use Framework\Http\Router\Interfaces\RouteDispatcherInterface;
-use Framework\Http\Router\Route;
 use Framework\Http\Router\RouteDispatcher;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;

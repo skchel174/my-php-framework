@@ -2,10 +2,11 @@
 
 use App\Http\Controllers\IndexController;
 use App\Http\Middlewares\AppPerformanceMiddleware;
-use App\Http\Middlewares\RouteDispatchMiddleware;
 use Framework\Http\Client\Request\ServerRequestFactory;
-use Framework\Http\Middlewares\MiddlewareDispatcher;
 use Framework\Http\Controller\ControllerHandler;
+use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareDispatcher;
+use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareResolver;
+use Framework\Http\Middlewares\RouteDispatchMiddleware;
 use Framework\Http\Router\RouteDispatcher;
 use Framework\Http\Router\RoutesCollection;
 
@@ -22,8 +23,8 @@ $routes->post('/{page}', [IndexController::class, 'page'])->params(['page' => '[
 $router = new RouteDispatcher($routes);
 $request = (new ServerRequestFactory)->createFromSapi();
 
-$middlewareDispatcher = new MiddlewareDispatcher();
-$middlewareDispatcher->add(new AppPerformanceMiddleware());
+$middlewareDispatcher = new MiddlewareDispatcher(new MiddlewareResolver());
+$middlewareDispatcher->add(AppPerformanceMiddleware::class);
 $middlewareDispatcher->add(new RouteDispatchMiddleware($router));
 $response = $middlewareDispatcher->process($request, new ControllerHandler());
 
