@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Http\Controllers;
 
 use Framework\Http\Client\Response\HtmlResponse;
 use Psr\Http\Message\ResponseInterface;

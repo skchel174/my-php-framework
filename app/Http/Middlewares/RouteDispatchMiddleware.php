@@ -1,9 +1,11 @@
 <?php
 
-namespace Framework\Http\Router\Middlewares;
+namespace App\Http\Middlewares;
 
 use Framework\Http\Controller\ControllerHandler;
+use Framework\Http\Middlewares\MiddlewareWrapper;
 use Framework\Http\Router\Interfaces\RouteDispatcherInterface;
+use Framework\Http\Router\Route;
 use Framework\Http\Router\RouteDispatcher;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -22,10 +24,16 @@ class RouteDispatchMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $route = $this->router->dispatch($request);
-        foreach ($route->getAttributes() as $name => $value) {
+
+        $attributes = array_merge($route->getAttributes(), [
+            MiddlewareWrapper::ROUTE => $route->getName() ?? $route->getPath(),
+            ControllerHandler::HANDLER => $route->getHandler(),
+        ]);
+
+        foreach ($attributes as $name => $value) {
             $request = $request->withAttribute($name, $value);
         }
-        $request = $request->withAttribute(ControllerHandler::class, $route->getHandler());
+
         return $handler->handle($request);
     }
 }

@@ -8,10 +8,13 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class ControllerHandler implements RequestHandlerInterface
 {
+    const HANDLER = '_controller_handler';
+
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         /** @var ResponseInterface $response */
-        [$handler, $method] = $request->getAttribute(ControllerHandler::class);
-        return (new $handler)->$method($request);
+        [$handler, $method] = $request->getAttribute(static::HANDLER);
+        $controller = new $handler();
+        return $controller->$method($request);
     }
 }

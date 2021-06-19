@@ -1,11 +1,11 @@
 <?php
 
-use App\Controllers\IndexController;
-use App\Middlewares\AppPerformanceMiddleware;
+use App\Http\Controllers\IndexController;
+use App\Http\Middlewares\AppPerformanceMiddleware;
+use App\Http\Middlewares\RouteDispatchMiddleware;
 use Framework\Http\Client\Request\ServerRequestFactory;
-use Framework\Http\Controller\ControllerHandler;
 use Framework\Http\Middlewares\MiddlewareDispatcher;
-use Framework\Http\Router\Middlewares\RouteDispatchMiddleware;
+use Framework\Http\Controller\ControllerHandler;
 use Framework\Http\Router\RouteDispatcher;
 use Framework\Http\Router\RoutesCollection;
 

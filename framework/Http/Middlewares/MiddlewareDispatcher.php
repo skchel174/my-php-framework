@@ -18,12 +18,12 @@ class MiddlewareDispatcher implements MiddlewareDispatcherInterface
 
     public function add($middleware): void
     {
-        $this->middlewareQueue->enqueue($middleware);
+        $this->middlewareQueue->enqueue(new MiddlewareWrapper($middleware));
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $next = new Next($this->middlewareQueue, $handler);
-        return $next->handle($request);
+        return $next($request);
     }
 }

@@ -2,12 +2,12 @@
 
 namespace Framework\Http\Middlewares;
 
+use Framework\Http\Router\Route;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class Next implements RequestHandlerInterface
+class Next
 {
     protected \SplQueue $middlewareQueue;
     protected RequestHandlerInterface $defaultHandler;
@@ -18,16 +18,20 @@ class Next implements RequestHandlerInterface
         $this->defaultHandler = $defaultHandler;
     }
 
-    public function handle(ServerRequestInterface $request): ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
         if ($this->middlewareQueue->isEmpty()) {
             return $this->defaultHandler->handle($request);
         }
 
-        /** @var MiddlewareInterface $middleware */
+        /** @var MiddlewareWrapper $middleware */
         $middleware = $this->middlewareQueue->dequeue();
 
+        if (!$middleware->isAdmitted($request)) {
+            return $this($request);
+        }
+
         $next = new Next($this->middlewareQueue, $this->defaultHandler);
-        return $middleware->process($request, $next);
+        return $middleware($request, $next);
     }
 }
