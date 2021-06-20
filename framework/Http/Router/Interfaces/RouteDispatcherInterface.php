@@ -13,7 +13,6 @@ interface RouteDispatcherInterface
      * Метод выполняет поиск в коллекции роутов по параметрам, переданнм в объекте типа Request
      *
      * @param RequestInterface $request
-     * @throws RouteNotExistsException
      * @return RouteInterface
      */
     public function dispatch(RequestInterface $request): RouteInterface;
@@ -24,8 +23,6 @@ interface RouteDispatcherInterface
      *
      * @param string $name
      * @param array $params
-     * @throws ParameterNotAssignException
-     * @throws RouteNotFoundException
      * @return string
      */
     public function route(string $name, array $params = []): string;
