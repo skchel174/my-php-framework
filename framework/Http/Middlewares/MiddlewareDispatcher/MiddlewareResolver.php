@@ -13,31 +13,45 @@ class MiddlewareResolver implements MiddlewareResolverInterface
 {
     public function resolve(mixed $middleware): callable
     {
+        $this->middlewareTypeGuard($middleware);
+
         if (is_array($middleware)) {
             $middleware = $this->resolveArray($middleware);
+
             return function (ServerRequestInterface $request, RequestHandlerInterface $handler) use ($middleware) {
                 $middleware->process($request, $handler);
             };
         }
 
-        if ((is_string($middleware) && class_exists($middleware)) || is_object($middleware)) {
+        $reflection = new \ReflectionClass($middleware);
+
+        if ($reflection->implementsInterface(MiddlewareInterface::class)) {
+
             return function (ServerRequestInterface $request, RequestHandlerInterface $handler) use ($middleware) {
                 if (!is_object($middleware)) {
                     $middleware = new $middleware();
                 }
-
-                if ($middleware instanceof MiddlewareInterface || method_exists($middleware, 'process')) {
-                    return $middleware->process($request, $handler);
-                }
-
-                if (is_callable($middleware)) {
-                    return $middleware($request, $handler);
-                }
-
-                throw new UnknownMiddlewareClassException($middleware);
+                return $middleware->process($request, $handler);
             };
         }
-        throw new InvalidMiddlewareTypeException($middleware);
+
+        if ($reflection->hasMethod('__invoke')) {
+            $method = $reflection->getMethod('__invoke');
+            $parameters = $method->getParameters();
+
+            if ($parameters[0]->getType() === ServerRequestInterface::class &&
+                $parameters[1]->getType() === RequestHandlerInterface::class) {
+
+                return function (ServerRequestInterface $request, RequestHandlerInterface $handler) use ($middleware) {
+                    if (!is_object($middleware)) {
+                        $middleware = new $middleware();
+                    }
+                    return $middleware($request, $handler);
+                };
+            }
+        }
+
+        throw new UnknownMiddlewareClassException($middleware);
     }
 
     protected function resolveArray(array $middlewares): MiddlewareInterface
@@ -47,5 +61,12 @@ class MiddlewareResolver implements MiddlewareResolverInterface
             $dispatcher->add($middleware);
         }
         return $dispatcher;
+    }
+
+    protected function middlewareTypeGuard(mixed $middleware): void
+    {
+        if (!(is_string($middleware) && class_exists($middleware)) && !is_object($middleware) && !is_array($middleware)) {
+            throw new InvalidMiddlewareTypeException($middleware);
+        }
     }
 }

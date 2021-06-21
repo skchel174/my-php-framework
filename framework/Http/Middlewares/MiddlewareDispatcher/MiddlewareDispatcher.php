@@ -19,7 +19,7 @@ class MiddlewareDispatcher implements MiddlewareInterface, MiddlewareDispatcherI
         $this->middlewareResolver = $middlewareResolver;
     }
 
-    public function add($middleware): void
+    public function add(mixed $middleware): void
     {
         $resolved = $this->middlewareResolver->resolve($middleware);
         $this->middlewareQueue->enqueue(new MiddlewareWrapper($resolved));
