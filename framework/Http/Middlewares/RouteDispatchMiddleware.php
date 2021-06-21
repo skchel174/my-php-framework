@@ -22,6 +22,7 @@ class RouteDispatchMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         $route = $this->router->dispatch($request);
+
         $attributes = array_merge($route->getAttributes(), [Route::class => $route]);
 
         foreach ($attributes as $name => $value) {

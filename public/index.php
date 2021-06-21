@@ -18,15 +18,21 @@ define('START_MEMORY', memory_get_usage());
 require_once BASE_DIR . '/vendor/autoload.php';
 
 $routes = new RoutesCollection();
-$routes->get('/', [IndexController::class, 'index'])->name('home');
-$routes->post('/{page}', [IndexController::class, 'page'])->params(['page' => '[a-z]+']);
+$routes->get('/', [IndexController::class, 'index']);
+$routes->post('/{page}', [IndexController::class, 'page'])
+    ->params(['page' => '[a-z]+'])
+    ->name('home');
 
 $router = new RouteDispatcher($routes);
 $request = (new ServerRequestFactory)->createFromSapi();
 
 $middlewareDispatcher = new MiddlewareDispatcher(new MiddlewareResolver());
-$middlewareDispatcher->add(AppPerformanceMiddleware::class);
+
+$middlewareDispatcher
+    ->add(AppPerformanceMiddleware::class)
+    ->route('home');
 $middlewareDispatcher->add(new RouteDispatchMiddleware($router));
+
 $response = $middlewareDispatcher->process($request, new RequestHandler(new RequestHandlerResolver()));
 
 header(sprintf('HTTP/%s %d %s',
@@ -42,4 +48,3 @@ foreach ($response->getHeaders() as $name => $values) {
 }
 
 echo $response->getBody();
-

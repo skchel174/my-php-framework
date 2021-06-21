@@ -4,5 +4,5 @@ namespace Framework\Http\Middlewares\MiddlewareDispatcher\Interfaces;
 
 interface MiddlewareDispatcherInterface
 {
-    public function add(mixed $middleware): void;
+    public function add(mixed $middleware): MiddlewareWrapperInterface;
 }

@@ -2,6 +2,7 @@
 
 namespace Framework\Http\Middlewares\MiddlewareDispatcher;
 
+use Framework\Http\Middlewares\MiddlewareDispatcher\Interfaces\MiddlewareWrapperInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -19,10 +20,11 @@ class MiddlewareDispatcher implements MiddlewareInterface, MiddlewareDispatcherI
         $this->middlewareResolver = $middlewareResolver;
     }
 
-    public function add(mixed $middleware): void
+    public function add(mixed $middleware): MiddlewareWrapperInterface
     {
-        $resolved = $this->middlewareResolver->resolve($middleware);
-        $this->middlewareQueue->enqueue(new MiddlewareWrapper($resolved));
+        $resolved = new MiddlewareWrapper($this->middlewareResolver->resolve($middleware));
+        $this->middlewareQueue->enqueue($resolved);
+        return $resolved;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface

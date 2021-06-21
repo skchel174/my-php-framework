@@ -36,21 +36,23 @@ class MiddlewareWrapper implements MiddlewareInterface, MiddlewareWrapperInterfa
     {
         if (is_string($route)) {
             $this->routes[] = $route;
+        } else {
+            $this->routes = array_merge($this->routes, $route);
         }
-        $this->routes = array_merge($this->routes, $route);
         return $this;
     }
 
     public function isAdmitted(ServerRequestInterface $request): bool
     {
-        if (empty($this->routes)) {
+        /** @var RouteInterface $route */
+        if (!$route = $request->getAttribute(Route::class)) {
             return true;
         }
-        /** @var RouteInterface $route */
-        $route = $request->getAttribute(Route::class);
 
         foreach ($this->routes as $item) {
             return $item === $route->getName() ?: $route->getPath();
         }
+
+        return true;
     }
 }
