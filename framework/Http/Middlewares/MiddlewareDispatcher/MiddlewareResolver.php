@@ -17,9 +17,8 @@ class MiddlewareResolver implements MiddlewareResolverInterface
 
         if (is_array($middleware)) {
             $middleware = $this->resolveArray($middleware);
-
             return function (ServerRequestInterface $request, RequestHandlerInterface $handler) use ($middleware) {
-                $middleware->process($request, $handler);
+                return $middleware->process($request, $handler);
             };
         }
 
@@ -39,8 +38,8 @@ class MiddlewareResolver implements MiddlewareResolverInterface
             $method = $reflection->getMethod('__invoke');
             $parameters = $method->getParameters();
 
-            if ($parameters[0]->getType() === ServerRequestInterface::class &&
-                $parameters[1]->getType() === RequestHandlerInterface::class) {
+            if ($parameters[0]->getType() == ServerRequestInterface::class &&
+                $parameters[1]->getType() == RequestHandlerInterface::class) {
 
                 return function (ServerRequestInterface $request, RequestHandlerInterface $handler) use ($middleware) {
                     if (!is_object($middleware)) {
