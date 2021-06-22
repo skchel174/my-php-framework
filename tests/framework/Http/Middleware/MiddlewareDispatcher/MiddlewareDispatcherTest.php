@@ -2,6 +2,7 @@
 
 namespace Tests\framework\Http\Middleware\MiddlewareDispatcher;
 
+use Framework\Http\Client\Response\Response;
 use Framework\Http\Middlewares\MiddlewareDispatcher\Interfaces\MiddlewareWrapperInterface;
 use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareDispatcher;
 use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareResolver;

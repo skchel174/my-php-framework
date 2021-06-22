@@ -50,7 +50,7 @@ class MiddlewareWrapper implements MiddlewareInterface, MiddlewareWrapperInterfa
         }
 
         foreach ($this->routes as $item) {
-            return $item === $route->getName() ?: $route->getPath();
+            return $item === $route->getName() ?? $route->getPath();
         }
 
         return true;

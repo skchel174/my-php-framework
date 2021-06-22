@@ -30,7 +30,7 @@ class Next
             return $this($request);
         }
 
-        $next = new RequestHandlerWrapper(new static($this->middlewareQueue, $this->defaultHandler));
-        return $middleware->process($request, $next);
+        $next = new static($this->middlewareQueue, $this->defaultHandler);
+        return $middleware->process($request, new RequestHandlerWrapper($next));
     }
 }
