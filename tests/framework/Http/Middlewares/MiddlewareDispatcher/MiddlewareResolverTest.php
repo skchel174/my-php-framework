@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\framework\Http\Middleware\MiddlewareDispatcher;
+namespace Tests\framework\Http\Middlewares\MiddlewareDispatcher;
 
 use Framework\Http\Middlewares\MiddlewareDispatcher\Exceptions\InvalidMiddlewareTypeException;
 use Framework\Http\Middlewares\MiddlewareDispatcher\Exceptions\UnknownMiddlewareClassException;
@@ -9,10 +9,10 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Tests\framework\Http\Middleware\DummyMiddlewares\FirstDummyMiddleware;
-use Tests\framework\Http\Middleware\DummyMiddlewares\FourthDummyMiddleware;
-use Tests\framework\Http\Middleware\DummyMiddlewares\SecondDummyMiddleware;
-use Tests\framework\Http\Middleware\DummyMiddlewares\ThirdDummyMiddleware;
+use Tests\framework\Http\Middlewares\DummyMiddlewares\FirstDummyMiddleware;
+use Tests\framework\Http\Middlewares\DummyMiddlewares\FourthDummyMiddleware;
+use Tests\framework\Http\Middlewares\DummyMiddlewares\SecondDummyMiddleware;
+use Tests\framework\Http\Middlewares\DummyMiddlewares\ThirdDummyMiddleware;
 
 class MiddlewareResolverTest extends TestCase
 {

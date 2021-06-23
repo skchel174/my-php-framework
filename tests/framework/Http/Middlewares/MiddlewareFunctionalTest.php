@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\framework\Http\Middleware;
+namespace Tests\framework\Http\Middlewares;
 
 use Framework\Http\Client\Request\ServerRequest;
 use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareDispatcher;
@@ -8,11 +8,11 @@ use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareResolver;
 use Framework\Http\Router\Route;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
-use Tests\framework\Http\Middleware\DummyMiddlewares\DummyRequestHandler;
-use Tests\framework\Http\Middleware\DummyMiddlewares\FirstDummyMiddleware;
-use Tests\framework\Http\Middleware\DummyMiddlewares\FourthDummyMiddleware;
-use Tests\framework\Http\Middleware\DummyMiddlewares\SecondDummyMiddleware;
-use Tests\framework\Http\Middleware\DummyMiddlewares\ThirdDummyMiddleware;
+use Tests\framework\Http\Middlewares\DummyMiddlewares\DummyRequestHandler;
+use Tests\framework\Http\Middlewares\DummyMiddlewares\FirstDummyMiddleware;
+use Tests\framework\Http\Middlewares\DummyMiddlewares\FourthDummyMiddleware;
+use Tests\framework\Http\Middlewares\DummyMiddlewares\SecondDummyMiddleware;
+use Tests\framework\Http\Middlewares\DummyMiddlewares\ThirdDummyMiddleware;
 
 class MiddlewareFunctionalTest extends TestCase
 {

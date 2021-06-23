@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\framework\Http\Middleware\MiddlewareDispatcher;
+namespace Tests\framework\Http\Middlewares\MiddlewareDispatcher;
 
 use Framework\Http\Client\Response\Response;
 use Framework\Http\Middlewares\MiddlewareDispatcher\Interfaces\MiddlewareWrapperInterface;
