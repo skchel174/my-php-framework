@@ -3,15 +3,16 @@
 namespace Tests\framework\Http\Middleware;
 
 use Framework\Http\Client\Request\ServerRequest;
-use Framework\Http\Client\Response\Response;
 use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareDispatcher;
 use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareResolver;
 use Framework\Http\Router\Route;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
-use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\MiddlewareInterface;
-use Psr\Http\Server\RequestHandlerInterface;
+use Tests\framework\Http\Middleware\DummyMiddlewares\DummyRequestHandler;
+use Tests\framework\Http\Middleware\DummyMiddlewares\FirstDummyMiddleware;
+use Tests\framework\Http\Middleware\DummyMiddlewares\FourthDummyMiddleware;
+use Tests\framework\Http\Middleware\DummyMiddlewares\SecondDummyMiddleware;
+use Tests\framework\Http\Middleware\DummyMiddlewares\ThirdDummyMiddleware;
 
 class MiddlewareFunctionalTest extends TestCase
 {
@@ -43,54 +44,5 @@ class MiddlewareFunctionalTest extends TestCase
         $this->assertArrayNotHasKey(SecondDummyMiddleware::class, $response->getHeaders());
         $this->assertArrayHasKey(ThirdDummyMiddleware::class, $response->getHeaders());
         $this->assertArrayHasKey(FourthDummyMiddleware::class, $response->getHeaders());
-    }
-}
-
-class FirstDummyMiddleware implements MiddlewareInterface
-{
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
-    {
-        $request = $request->withAttribute(self::class, true);
-        $response = $handler->handle($request);
-        return $response->withHeader(self::class, true);
-    }
-}
-
-class SecondDummyMiddleware implements MiddlewareInterface
-{
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
-    {
-        $request = $request->withAttribute(self::class, true);
-        $response = $handler->handle($request);
-        return $response->withHeader(self::class, true);;
-    }
-}
-
-class ThirdDummyMiddleware implements MiddlewareInterface
-{
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
-    {
-        $request = $request->withAttribute(self::class, true);
-        $response = $handler->handle($request);
-        return $response->withHeader(self::class, true);;
-    }
-}
-
-class FourthDummyMiddleware implements MiddlewareInterface
-{
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
-    {
-        $request = $request->withAttribute(self::class, true);
-        $response = $handler->handle($request);
-        return $response->withHeader(self::class, true);;
-    }
-}
-
-class DummyRequestHandler implements RequestHandlerInterface
-{
-    public function handle(ServerRequestInterface $request): ResponseInterface
-    {
-        $response = new Response();
-        return $response->withBody(json_encode($request->getAttributes()));
     }
 }
