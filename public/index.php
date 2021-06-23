@@ -1,44 +1,50 @@
 <?php
 
+use App\Http\Controllers\IndexController;
+use App\Http\Middlewares\AppPerformanceMiddleware;
 use Framework\Http\Client\Request\ServerRequestFactory;
+use Framework\Http\Middlewares\RequestHandler\RequestHandler;
+use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareDispatcher;
+use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareResolver;
+use Framework\Http\Middlewares\RequestHandler\RequestHandlerResolver;
+use Framework\Http\Middlewares\RouteDispatchMiddleware;
 use Framework\Http\Router\RouteDispatcher;
 use Framework\Http\Router\RoutesCollection;
-use Psr\Http\Message\ServerRequestInterface;
 
 define('BASE_DIR', dirname(__DIR__));
+define('START_TIME', microtime(true));
+define('START_MEMORY', memory_get_usage());
 
 require_once BASE_DIR . '/vendor/autoload.php';
 
-class HomeController
-{
-    public function index(ServerRequestInterface $request)
-    {
-        echo '<form action="/home" method="POST">
-                <input type="submit">
-            </form>';
-    }
-
-    public function page(ServerRequestInterface $request)
-    {
-        echo __CLASS__ . ' / ' . __METHOD__ . '<br>';
-        var_dump($request->getAttributes());
-    }
-}
-
 $routes = new RoutesCollection();
-$routes->get('/', [HomeController::class, 'index'])->name('home');
-$routes->post('/{page}', [HomeController::class, 'page'])->params(['page' => '[a-z]+']);
+$routes->get('/', [IndexController::class, 'index']);
+$routes->post('/{page}', [IndexController::class, 'page'])
+    ->params(['page' => '[a-z]+'])
+    ->name('home');
 
 $router = new RouteDispatcher($routes);
-
 $request = (new ServerRequestFactory)->createFromSapi();
-$route = $router->dispatch($request);
 
-foreach ($route->getAttributes() as $name => $value) {
-    $request = $request->withAttribute($name, $value);
+$middlewareDispatcher = new MiddlewareDispatcher(new MiddlewareResolver());
+
+$middlewareDispatcher->add(new RouteDispatchMiddleware($router));
+$middlewareDispatcher
+    ->add(AppPerformanceMiddleware::class)
+    ->route('home');
+
+$response = $middlewareDispatcher->process($request, new RequestHandler(new RequestHandlerResolver()));
+
+header(sprintf('HTTP/%s %d %s',
+    $response->getProtocolVersion(),
+    $response->getStatusCode(),
+    $response->getReasonPhrase()
+));
+
+foreach ($response->getHeaders() as $name => $values) {
+    foreach ($values as $value) {
+        header(sprintf('%s: %s', $name, $value), false);
+    }
 }
 
-[$handler, $method] = $route->getHandler();
-(new $handler)->$method($request);
-
-
+echo $response->getBody();

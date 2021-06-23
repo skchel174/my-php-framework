@@ -7,7 +7,7 @@ use Framework\Http\Router\Interfaces\RouteInterface;
 class Route implements RouteInterface
 {
     protected string $path;
-    protected string|array $handler;
+    protected mixed $handler;
     protected array $methods;
     protected array $params;
     protected ?string $name;
@@ -15,7 +15,7 @@ class Route implements RouteInterface
 
     public function __construct(
         string $path,
-        string|array $handler,
+        mixed $handler,
         array $methods,
         array $params = [],
         string $name = null
@@ -33,7 +33,7 @@ class Route implements RouteInterface
         return $this->path;
     }
 
-    public function getHandler(): string|array
+    public function getHandler(): mixed
     {
         return $this->handler;
     }
