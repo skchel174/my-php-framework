@@ -14,9 +14,9 @@ interface RouteInterface
     /**
      * Возвращает имя класса, назначенного в качестве обработчика роута
      *
-     * @return string|array
+     * @return mixed
      */
-    public function getHandler(): string|array;
+    public function getHandler(): mixed;
 
     /**
      * Возвращает методы/методы, зарегистрированные на роут

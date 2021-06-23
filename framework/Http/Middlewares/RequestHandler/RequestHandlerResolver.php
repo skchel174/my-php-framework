@@ -28,7 +28,7 @@ class RequestHandlerResolver
             }
         }
 
-        if (is_array($handler)) {
+        if (is_array($handler) && count($handler) === 2) {
             return function (ServerRequestInterface $request) use ($handler) {
                 [$controller, $action] = $handler;
                 $controller = new $controller();
