@@ -8,6 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Framework\Http\Middlewares\MiddlewareDispatcher\Exceptions\InvalidMiddlewareTypeException;
+use ReflectionParameter;
 
 class MiddlewareResolver implements MiddlewareResolverInterface
 {
@@ -25,7 +26,6 @@ class MiddlewareResolver implements MiddlewareResolverInterface
         $reflection = new \ReflectionClass($middleware);
 
         if ($reflection->implementsInterface(MiddlewareInterface::class)) {
-
             return function (ServerRequestInterface $request, RequestHandlerInterface $handler) use ($middleware) {
                 if (!is_object($middleware)) {
                     $middleware = new $middleware();
@@ -34,13 +34,25 @@ class MiddlewareResolver implements MiddlewareResolverInterface
             };
         }
 
+        if ($reflection->getName() == \Closure::class) {
+            $funcReflection = new \ReflectionFunction($middleware);
+            $parameters = $funcReflection->getParameters();
+
+            if ($this->parametersTypeGuard($parameters)) {
+                return function (ServerRequestInterface $request, RequestHandlerInterface $handler) use ($middleware) {
+                    if (!is_object($middleware)) {
+                        $middleware = new $middleware();
+                    }
+                    return $middleware($request, $handler);
+                };
+            }
+        }
+
         if ($reflection->hasMethod('__invoke')) {
             $method = $reflection->getMethod('__invoke');
             $parameters = $method->getParameters();
 
-            if ($parameters[0]->getType() == ServerRequestInterface::class &&
-                $parameters[1]->getType() == RequestHandlerInterface::class) {
-
+            if ($this->parametersTypeGuard($parameters)) {
                 return function (ServerRequestInterface $request, RequestHandlerInterface $handler) use ($middleware) {
                     if (!is_object($middleware)) {
                         $middleware = new $middleware();
@@ -67,5 +79,18 @@ class MiddlewareResolver implements MiddlewareResolverInterface
         if (!(is_string($middleware) && class_exists($middleware)) && !is_object($middleware) && !is_array($middleware)) {
             throw new InvalidMiddlewareTypeException($middleware);
         }
+    }
+
+    /**
+     * @param ReflectionParameter[] $parameters
+     * @return bool
+     */
+    protected function parametersTypeGuard(array $parameters): bool
+    {
+        if (count($parameters) >= 2) {
+            return $parameters[0]->getType() == ServerRequestInterface::class
+                && $parameters[1]->getType() == RequestHandlerInterface::class;
+        }
+        return false;
     }
 }
