@@ -28,10 +28,10 @@ $request = (new ServerRequestFactory)->createFromSapi();
 
 $middlewareDispatcher = new MiddlewareDispatcher(new MiddlewareResolver());
 
+$middlewareDispatcher->add(new RouteDispatchMiddleware($router));
 $middlewareDispatcher
     ->add(AppPerformanceMiddleware::class)
     ->route('home');
-$middlewareDispatcher->add(new RouteDispatchMiddleware($router));
 
 $response = $middlewareDispatcher->process($request, new RequestHandler(new RequestHandlerResolver()));
 
