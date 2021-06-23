@@ -25,7 +25,6 @@ class RequestHandlerResolverTest extends TestCase
     {
         return [
             'Class name handler' => [DummyPsrHandler::class],
-            'Object handler' => [new DummyPsrHandler()],
             'Callable handler' => [DummyCallableHandler::class],
             'Array handler' => [[DummyArrayHandler::class, 'index']],
         ];
