@@ -44,15 +44,21 @@ class MiddlewareWrapper implements MiddlewareInterface, MiddlewareWrapperInterfa
 
     public function isAdmitted(ServerRequestInterface $request): bool
     {
+        if (empty($this->routes)) {
+            return true;
+        }
+
         /** @var RouteInterface $route */
         if (!$route = $request->getAttribute(Route::class)) {
             return true;
         }
 
-        foreach ($this->routes as $item) {
-            return $item === ($route->getName() ?? $route->getPath());
+        foreach ($this->routes as $value) {
+            if ($value === ($route->getName() ?? $route->getPath())) {
+                return true;
+            }
         }
 
-        return true;
+        return false;
     }
 }
