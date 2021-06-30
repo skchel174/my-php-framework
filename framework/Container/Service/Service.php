@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Container\Services;
+namespace Framework\Container\Service;
 
 use Framework\Container\Exceptions\ServiceConstructException;
 use Framework\Container\Interfaces\ContainerInterface;

@@ -3,11 +3,10 @@
 namespace Framework\Container;
 
 use Framework\Container\Exceptions\InvalidServiceIdException;
-use Framework\Container\Exceptions\ServiceConstructException;
 use Framework\Container\Exceptions\ServiceNotFoundException;
 use Framework\Container\Interfaces\ContainerInterface;
 use Framework\Container\Interfaces\ServiceInterface;
-use Framework\Container\Services\Service;
+use Framework\Container\Service\Service;
 
 class Container implements ContainerInterface
 {
