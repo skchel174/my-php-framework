@@ -3,29 +3,16 @@
 namespace Framework\Container;
 
 use Framework\Container\Exceptions\InvalidServiceIdException;
+use Framework\Container\Exceptions\ServiceConstructException;
+use Framework\Container\Exceptions\ServiceNotFoundException;
 use Framework\Container\Interfaces\ContainerInterface;
+use Framework\Container\Interfaces\ServiceInterface;
+use Framework\Container\Services\Service;
 
 class Container implements ContainerInterface
 {
-    protected static ?ContainerInterface $instance = null;
     protected array $services = [];
     protected array $shared = [];
-
-    private function __construct() {}
-    private function __clone() {}
-
-    public static function __callStatic(string $name, array $arguments): mixed
-    {
-        return static::getInstance()->$name(...$arguments);
-    }
-
-    public static function getInstance(): ContainerInterface
-    {
-        if (static::$instance === null) {
-            static::$instance = new static();
-        }
-        return static::$instance;
-    }
 
     public function get(string $id): mixed
     {
@@ -33,7 +20,24 @@ class Container implements ContainerInterface
             return $this->shared[$id];
         }
 
-        return $this->getService($id);
+        $service = $this->getService($id);
+
+        if ($service === null) {
+            if (!class_exists($id)) {
+                throw new ServiceNotFoundException($id);
+            }
+            $service = new Service($id);
+        }
+
+        if ($service instanceof ServiceInterface) {
+            $serviceObject = $service->construct($this);
+            if ($service->isShared()) {
+                $this->shared[$id] = $serviceObject;
+            }
+            return $serviceObject;
+        }
+
+        return $service;
     }
 
     public function has(string $id): bool
