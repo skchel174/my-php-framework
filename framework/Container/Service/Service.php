@@ -34,6 +34,11 @@ class Service implements ServiceInterface
         return $this;
     }
 
+    public function getArguments(): array
+    {
+        return $this->arguments;
+    }
+
     public function construct(ContainerInterface $container): object
     {
         if (is_object($this->service)) {
