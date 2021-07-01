@@ -47,14 +47,14 @@ class Container implements ContainerInterface
     protected function getService(string $id): mixed
     {
         $keys = explode('.', $id);
-        if (empty($keys)) {
-            throw new InvalidServiceIdException($id);
-        }
-
         $service = $this->services;
 
         while (!empty($keys)) {
             $key = array_shift($keys);
+
+            if (empty($key)) {
+                throw new InvalidServiceIdException($id);
+            }
 
             if (!isset($service[$key])) {
                 return null;
@@ -68,14 +68,14 @@ class Container implements ContainerInterface
     public function set(string $id, mixed $value): void
     {
         $keys = explode('.', $id);
-        if (empty($keys)) {
-            throw new InvalidServiceIdException($id);
-        }
-
         $serviceRef =& $this->services;
 
         while (!empty($keys)) {
             $key = array_shift($keys);
+
+            if (empty($key)) {
+                throw new InvalidServiceIdException($id);
+            }
 
             if (!isset($serviceRef[$key])) {
                 $serviceRef[$key] = [];

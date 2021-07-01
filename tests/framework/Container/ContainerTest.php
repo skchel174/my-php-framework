@@ -3,7 +3,10 @@
 namespace Tests\framework\Container;
 
 use Framework\Container\Container;
+use Framework\Container\Exceptions\InvalidServiceIdException;
+use Framework\Container\Exceptions\ServiceNotFoundException;
 use Framework\Container\Interfaces\ContainerInterface;
+use Framework\Container\Interfaces\ServiceInterface;
 use PHPUnit\Framework\TestCase;
 
 class ContainerTest extends TestCase
@@ -39,24 +42,94 @@ class ContainerTest extends TestCase
 
     public function testDeepNestedValues(): void
     {
-        $id = [
-            'value1' => [
-                'first' => 'first_value',
-                'second' => 'second_value',
+        $arr = [
+            'group01' => [
+                'user01' => 'John Doe',
+                'user02' => 'Peter Parker',
             ],
-            'value2' => [
-                'third' => 'third_value',
+            'group02' => [
+                'user01' => 'Hugh Jackman',
             ],
-            'value3' => [
-                'fourth' => ['key' => 'fourth_value'],
+            'group03' => [
+                'user01' => ['ugly' => 'Artur Morgan'],
             ],
         ];
 
-        $this->container->set('id.value1.first', 'first_value');
-        $this->container->set('id.value1.second', 'second_value');
-        $this->container->set('id.value2.third', 'third_value');
-        $this->container->set('id.value3.fourth', ['key' => 'fourth_value']);
+        $this->container->set('arr.group01.user01', 'John Doe');
+        $this->container->set('arr.group01.user02', 'Peter Parker');
+        $this->container->set('arr.group02.user01', 'Hugh Jackman');
+        $this->container->set('arr.group03.user01.ugly', 'Artur Morgan');
 
-        $this->assertEquals($id, $this->container->get('id'));
+        $this->assertEquals($arr, $this->container->get('arr'));
+    }
+
+    public function testServiceShared(): void
+    {
+        $service = $this->container->get(\stdClass::class);
+        $this->assertEquals(false, isset($service->data));
+
+        $service->data = \stdClass::class;
+
+        $service = $this->container->get(\stdClass::class);
+
+        $this->assertNotEmpty($service->data);
+        $this->assertEquals(\stdClass::class, $service->data);
+    }
+
+    public function testNotSharedService(): void
+    {
+        $service = $this->getMockBuilder(ServiceInterface::class)
+            ->getMock();
+
+        $service->method('isShared')
+            ->willReturn(false);
+
+        $this->container->set(ServiceInterface::class, $service);
+
+        $service = $this->container->get(ServiceInterface::class);
+        $this->assertEquals(false, isset($service->data));
+
+        $service->data = ServiceInterface::class;
+
+        $service = $this->container->get(ServiceInterface::class);
+        $this->assertEquals(false, isset($service->data));
+    }
+
+    public function testServiceNotFound(): void
+    {
+        $this->expectException(ServiceNotFoundException::class);
+
+        $this->container->get('NotExistService');
+    }
+
+    /**
+     * @dataProvider invalidServicesProvider
+     */
+    public function testGetInvalidIdException(string $service): void
+    {
+        $this->expectException(InvalidServiceIdException::class);
+
+        $this->container->set('config', []);
+        $this->container->get($service);
+    }
+
+    /**
+     * @dataProvider invalidServicesProvider
+     */
+    public function testSetInvalidIdException(string $service): void
+    {
+        $this->expectException(InvalidServiceIdException::class);
+
+        $this->container->set($service, []);
+    }
+
+    public function invalidServicesProvider(): array
+    {
+        return [
+            [''],
+            ['.'],
+            ['.config'],
+            ['config.'],
+        ];
     }
 }
