@@ -2,6 +2,7 @@
 
 namespace Framework\Http\Middlewares\MiddlewareDispatcher;
 
+use Framework\Container\Interfaces\ContainerInterface;
 use Framework\Http\Middlewares\MiddlewareDispatcher\Exceptions\UnknownMiddlewareClassException;
 use Framework\Http\Middlewares\MiddlewareDispatcher\Interfaces\MiddlewareResolverInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -12,6 +13,13 @@ use ReflectionParameter;
 
 class MiddlewareResolver implements MiddlewareResolverInterface
 {
+    protected ContainerInterface $container;
+
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
     public function resolve(mixed $middleware): callable
     {
         $this->middlewareTypeGuard($middleware);
@@ -28,7 +36,7 @@ class MiddlewareResolver implements MiddlewareResolverInterface
         if ($reflection->implementsInterface(MiddlewareInterface::class)) {
             return function (ServerRequestInterface $request, RequestHandlerInterface $handler) use ($middleware) {
                 if (!is_object($middleware)) {
-                    $middleware = new $middleware();
+                    $middleware = $this->container->get($middleware);
                 }
                 return $middleware->process($request, $handler);
             };
@@ -41,7 +49,7 @@ class MiddlewareResolver implements MiddlewareResolverInterface
             if ($this->parametersTypeGuard($parameters)) {
                 return function (ServerRequestInterface $request, RequestHandlerInterface $handler) use ($middleware) {
                     if (!is_object($middleware)) {
-                        $middleware = new $middleware();
+                        $middleware = $this->container->get($middleware);
                     }
                     return $middleware($request, $handler);
                 };
@@ -55,7 +63,7 @@ class MiddlewareResolver implements MiddlewareResolverInterface
             if ($this->parametersTypeGuard($parameters)) {
                 return function (ServerRequestInterface $request, RequestHandlerInterface $handler) use ($middleware) {
                     if (!is_object($middleware)) {
-                        $middleware = new $middleware();
+                        $middleware = $this->container->get($middleware);
                     }
                     return $middleware($request, $handler);
                 };
