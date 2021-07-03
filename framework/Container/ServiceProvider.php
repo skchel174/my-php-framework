@@ -20,7 +20,7 @@ class ServiceProvider implements ServiceProviderInterface
 
     public function config(string $id, mixed $value): void
     {
-        $this->container->set('config.' . $id, $value);
+        $this->container->set($id, $value);
     }
 
     public function service(string|object $service): ServiceInterface

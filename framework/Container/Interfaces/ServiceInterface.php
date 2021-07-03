@@ -8,5 +8,5 @@ interface ServiceInterface
     public function isShared(): bool;
     public function argument(string $name, mixed $argument): ServiceInterface;
     public function getArguments(): array;
-    public function construct(ContainerInterface $container): object;
+    public function __invoke(ContainerInterface $container): object;
 }

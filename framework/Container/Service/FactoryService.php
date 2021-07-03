@@ -6,7 +6,7 @@ use Framework\Container\Interfaces\ContainerInterface;
 
 class FactoryService extends Service
 {
-    public function construct(ContainerInterface $container): object
+    public function __invoke(ContainerInterface $container): object
     {
         $service = is_string($this->service) ? new $this->service() : $this->service;
 

@@ -21,7 +21,7 @@ class CallableServiceTest extends TestCase
         $service = new CallableService($f);
         $service->argument('config', 'config.array');
 
-        $serviceObject = $service->construct($container);
+        $serviceObject = $service($container);
 
         $this->assertIsObject($serviceObject);
         $this->assertInstanceOf(DummyService::class, $serviceObject);

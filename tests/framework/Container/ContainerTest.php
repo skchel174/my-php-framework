@@ -71,7 +71,6 @@ class ContainerTest extends TestCase
         $service->data = \stdClass::class;
 
         $service = $this->container->get(\stdClass::class);
-
         $this->assertNotEmpty($service->data);
         $this->assertEquals(\stdClass::class, $service->data);
     }

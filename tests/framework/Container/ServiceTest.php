@@ -47,7 +47,7 @@ class ServiceTest extends TestCase
         $service = new Service(DummyService::class);
         $service->argument('config', 'config.array');
 
-        $serviceObject = $service->construct($container);
+        $serviceObject = $service($container);
 
         $this->assertIsObject($serviceObject);
         $this->assertInstanceOf(DummyService::class, $serviceObject);

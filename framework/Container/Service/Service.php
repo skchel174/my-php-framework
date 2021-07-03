@@ -3,8 +3,9 @@
 namespace Framework\Container\Service;
 
 use Framework\Container\Exceptions\ServiceConstructException;
-use Framework\Container\Interfaces\ContainerInterface;
 use Framework\Container\Interfaces\ServiceInterface;
+use Psr\Container\ContainerInterface as PsrContainerInterface;
+use Framework\Container\Interfaces\ContainerInterface;
 
 class Service implements ServiceInterface
 {
@@ -39,7 +40,7 @@ class Service implements ServiceInterface
         return $this->arguments;
     }
 
-    public function construct(ContainerInterface $container): object
+    public function __invoke(ContainerInterface $container): object
     {
         if (is_object($this->service)) {
             return $this->service;
@@ -61,10 +62,10 @@ class Service implements ServiceInterface
             $name = $parameter->getName();
             $type = $parameter->getType()->getName();
 
-            if (array_key_exists($name, $this->arguments)) {
-                $arguments[] = $container->get($this->arguments[$name]);
-            } else if ($type === ContainerInterface::class) {
+            if ($type === PsrContainerInterface::class) {
                 $arguments[] = $container;
+            } else if (array_key_exists($name, $this->arguments)) {
+                $arguments[] = $container->get($this->arguments[$name]);
             } else if (class_exists($type)) {
                 $arguments[] = $container->get($type);
             } else {

@@ -15,6 +15,10 @@ class Container implements ContainerInterface
 
     public function get(string $id): mixed
     {
+        if (!$this->has($id)) {
+            throw new ServiceNotFoundException($id);
+        }
+
         if (array_key_exists($id, $this->shared)) {
             return $this->shared[$id];
         }
@@ -22,14 +26,11 @@ class Container implements ContainerInterface
         $service = $this->getService($id);
 
         if ($service === null) {
-            if (!class_exists($id)) {
-                throw new ServiceNotFoundException($id);
-            }
             $service = new Service($id);
         }
 
         if ($service instanceof ServiceInterface) {
-            $serviceObject = $service->construct($this);
+            $serviceObject = $service($this);
             if ($service->isShared()) {
                 $this->shared[$id] = $serviceObject;
             }
@@ -41,28 +42,10 @@ class Container implements ContainerInterface
 
     public function has(string $id): bool
     {
-        return $this->getService($id) || class_exists($id);
-    }
-
-    protected function getService(string $id): mixed
-    {
-        $keys = explode('.', $id);
-        $service = $this->services;
-
-        while (!empty($keys)) {
-            $key = array_shift($keys);
-
-            if (empty($key)) {
-                throw new InvalidServiceIdException($id);
-            }
-
-            if (!isset($service[$key])) {
-                return null;
-            }
-
-            $service = $service[$key];
+        if ($this->getService($id) !== null || class_exists($id)) {
+            return true;
         }
-        return $service;
+        return false;
     }
 
     public function set(string $id, mixed $value): void
@@ -85,6 +68,29 @@ class Container implements ContainerInterface
                 $serviceRef =& $serviceRef[$key];
             }
         }
+
         $serviceRef[$key] = $value;
+    }
+
+    protected function getService(string $id): mixed
+    {
+        $keys = explode('.', $id);
+        $service = $this->services;
+
+        while (!empty($keys)) {
+            $key = array_shift($keys);
+
+            if (empty($key)) {
+                throw new InvalidServiceIdException($id);
+            }
+
+            if (!isset($service[$key])) {
+                return null;
+            }
+
+            $service = $service[$key];
+        }
+
+        return $service;
     }
 }

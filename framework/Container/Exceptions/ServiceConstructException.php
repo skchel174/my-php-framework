@@ -2,7 +2,10 @@
 
 namespace Framework\Container\Exceptions;
 
-class ServiceConstructException extends \ReflectionException
+use Psr\Container\ContainerExceptionInterface;
+use ReflectionException;
+
+class ServiceConstructException extends ReflectionException implements ContainerExceptionInterface
 {
     public function __construct(string $parameter, string $service)
     {

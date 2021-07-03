@@ -2,7 +2,10 @@
 
 namespace Framework\Container\Exceptions;
 
-class InvalidServiceIdException extends \InvalidArgumentException
+use InvalidArgumentException;
+use Psr\Container\ContainerExceptionInterface;
+
+class InvalidServiceIdException extends InvalidArgumentException implements ContainerExceptionInterface
 {
     public function __construct(string $id)
     {
