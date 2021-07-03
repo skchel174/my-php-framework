@@ -5,7 +5,6 @@ use Framework\Http\Client\Request\ServerRequestFactory;
 use Framework\Http\Middlewares\MiddlewareDispatcher\Interfaces\MiddlewareDispatcherInterface;
 use Framework\Http\Middlewares\RequestHandler\RequestHandler;
 
-
 define('BASE_DIR', dirname(__DIR__));
 define('START_TIME', microtime(true));
 define('START_MEMORY', memory_get_usage());
