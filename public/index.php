@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\IndexController;
 use App\Http\Middlewares\AppPerformanceMiddleware;
+use Framework\Container\Container;
 use Framework\Http\Client\Request\ServerRequestFactory;
 use Framework\Http\Middlewares\RequestHandler\RequestHandler;
 use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareDispatcher;
@@ -9,7 +10,6 @@ use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareResolver;
 use Framework\Http\Middlewares\RequestHandler\RequestHandlerResolver;
 use Framework\Http\Middlewares\RouteDispatchMiddleware;
 use Framework\Http\Router\RouteDispatcher;
-use Framework\Http\Router\RoutesCollection;
 
 define('BASE_DIR', dirname(__DIR__));
 define('START_TIME', microtime(true));
@@ -17,13 +17,11 @@ define('START_MEMORY', memory_get_usage());
 
 require_once BASE_DIR . '/vendor/autoload.php';
 
-$routes = new RoutesCollection();
-$routes->get('/', [IndexController::class, 'index']);
-$routes->post('/{page}', [IndexController::class, 'page'])
-    ->params(['page' => '[a-z]+'])
-    ->name('home');
+require BASE_DIR . '/setup/provider.php';
 
-$router = new RouteDispatcher($routes);
+/** @var Container $container */
+$router = $container->get(RouteDispatcher::class);
+
 $request = (new ServerRequestFactory)->createFromSapi();
 
 $middlewareDispatcher = new MiddlewareDispatcher(new MiddlewareResolver());

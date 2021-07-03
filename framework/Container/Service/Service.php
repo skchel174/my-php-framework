@@ -62,11 +62,11 @@ class Service implements ServiceInterface
             $name = $parameter->getName();
             $type = $parameter->getType()->getName();
 
-            if ($type === PsrContainerInterface::class) {
+            if ($type === ContainerInterface::class || $type === PsrContainerInterface::class) {
                 $arguments[] = $container;
             } else if (array_key_exists($name, $this->arguments)) {
                 $arguments[] = $container->get($this->arguments[$name]);
-            } else if (class_exists($type)) {
+            } else if ($container->has($type)) {
                 $arguments[] = $container->get($type);
             } else {
                 if (!$parameter->isDefaultValueAvailable()) {

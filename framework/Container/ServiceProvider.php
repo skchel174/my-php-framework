@@ -4,12 +4,11 @@ namespace Framework\Container;
 
 use Framework\Container\Interfaces\ContainerInterface;
 use Framework\Container\Interfaces\ServiceInterface;
-use Framework\Container\Interfaces\ServiceProviderInterface;
 use Framework\Container\Service\CallableService;
 use Framework\Container\Service\FactoryService;
 use Framework\Container\Service\Service;
 
-class ServiceProvider implements ServiceProviderInterface
+class ServiceProvider
 {
     protected ContainerInterface $container;
 
