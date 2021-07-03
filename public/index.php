@@ -12,7 +12,7 @@ define('START_MEMORY', memory_get_usage());
 
 require_once BASE_DIR . '/vendor/autoload.php';
 
-require BASE_DIR . '/setup/provider.php';
+require BASE_DIR . '/setup/container.php';
 require BASE_DIR . '/setup/middlewares.php';
 
 $request = (new ServerRequestFactory)->createFromSapi();
