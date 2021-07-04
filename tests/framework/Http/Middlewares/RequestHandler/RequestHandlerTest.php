@@ -2,6 +2,7 @@
 
 namespace Tests\framework\Http\Middlewares\RequestHandler;
 
+use Framework\Container\Container;
 use Framework\Http\Client\Request\ServerRequest;
 use Framework\Http\Client\Response\Response;
 use Framework\Http\Middlewares\RequestHandler\RequestHandler;
@@ -22,7 +23,8 @@ class RequestHandlerTest extends TestCase
     public function testHandle(Route $handler): void
     {
         $request = (new ServerRequest)->withAttribute(Route::class, $handler);
-        $handler = new RequestHandler(new RequestHandlerResolver());
+        $resolver = new RequestHandlerResolver(new Container());
+        $handler = new RequestHandler($resolver);
         $response = $handler->handle($request);
 
         $this->assertInstanceOf(ResponseInterface::class, $response);

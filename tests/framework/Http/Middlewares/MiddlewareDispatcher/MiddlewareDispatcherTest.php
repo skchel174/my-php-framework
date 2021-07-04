@@ -20,7 +20,9 @@ class MiddlewareDispatcherTest extends TestCase
 
     public function setUp(): void
     {
-        $this->resolver = $this->getMockBuilder(MiddlewareResolver::class)->getMock();
+        $this->resolver = $this->getMockBuilder(MiddlewareResolver::class)
+            ->disableOriginalConstructor()
+            ->getMock();
         $this->dispatcher = new MiddlewareDispatcher($this->resolver);
     }
 
