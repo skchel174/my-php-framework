@@ -21,7 +21,7 @@ class MiddlewareFunctionalTest extends TestCase
     {
         $request = (new ServerRequest)
             ->withAttribute(Route::class, new Route('/test', 'handler', ['GET']));
-        $resolver = new MiddlewareResolver(new Container());
+        $resolver = new MiddlewareResolver(Container::getInstance());
         $dispatcher = new MiddlewareDispatcher($resolver);
 
         $dispatcher->add(new FirstDummyMiddleware());

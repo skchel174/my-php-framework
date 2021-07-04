@@ -10,8 +10,17 @@ use Framework\Container\Service\Service;
 
 class Container implements ContainerInterface
 {
+    protected static ?ContainerInterface $instance = null;
     protected array $services = [];
     protected array $shared = [];
+
+    public static function getInstance(): static
+    {
+        if (static::$instance === null) {
+            static::$instance = new static();
+        }
+        return static::$instance;
+    }
 
     public function get(string $id): mixed
     {
@@ -93,4 +102,7 @@ class Container implements ContainerInterface
 
         return $service;
     }
+
+    private function __construct() {}
+    private function __clone() {}
 }

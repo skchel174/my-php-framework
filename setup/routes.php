@@ -1,9 +1,10 @@
 <?php
 
+use Framework\Container\Container;
 use Framework\Http\Router\RoutesCollection;
 use App\Http\Controllers\IndexController;
 
-$routes = new RoutesCollection();
+$routes = Container::getInstance()->get(RoutesCollection::class);
 
 $routes->get('/', [IndexController::class, 'index']);
 $routes->post('/{page}', [IndexController::class, 'page'])

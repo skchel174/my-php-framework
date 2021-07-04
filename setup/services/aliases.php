@@ -1,6 +1,6 @@
 <?php
 
-use Framework\Container\Interfaces\ContainerInterface;
+use Framework\Container\Container;
 use Framework\Container\ServiceProvider;
 use Framework\Http\Middlewares\MiddlewareDispatcher\Interfaces\MiddlewareDispatcherInterface;
 use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareDispatcher;
@@ -11,8 +11,7 @@ use Framework\Http\Router\Interfaces\RouteDispatcherInterface;
 use Framework\Http\Router\RouteDispatcher;
 use Psr\Http\Server\RequestHandlerInterface;
 
-/** @var ContainerInterface $container */
-$provider = $container->get(ServiceProvider::class);
+$provider = Container::getInstance()->get(ServiceProvider::class);
 
 $provider->alias(RouteDispatcherInterface::class, RouteDispatcher::class);
 $provider->alias(MiddlewareDispatcherInterface::class, MiddlewareDispatcher::class);
