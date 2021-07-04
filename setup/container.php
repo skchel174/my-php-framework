@@ -4,7 +4,7 @@ use Framework\Container\ConfigLoader;
 use Framework\Container\Container;
 use Framework\Container\ServiceProvider;
 
-$container = new Container();
+$container = Container::getInstance();
 $provider = $container->get(ServiceProvider::class);
 
 $configLoader = new ConfigLoader(BASE_DIR . '/setup/config');
