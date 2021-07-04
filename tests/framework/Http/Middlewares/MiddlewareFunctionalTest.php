@@ -2,6 +2,7 @@
 
 namespace Tests\framework\Http\Middlewares;
 
+use Framework\Container\Container;
 use Framework\Http\Client\Request\ServerRequest;
 use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareDispatcher;
 use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareResolver;
@@ -20,7 +21,8 @@ class MiddlewareFunctionalTest extends TestCase
     {
         $request = (new ServerRequest)
             ->withAttribute(Route::class, new Route('/test', 'handler', ['GET']));
-        $dispatcher = new MiddlewareDispatcher(new MiddlewareResolver());
+        $resolver = new MiddlewareResolver(new Container());
+        $dispatcher = new MiddlewareDispatcher($resolver);
 
         $dispatcher->add(new FirstDummyMiddleware());
         $dispatcher->add(new SecondDummyMiddleware())->route('/');

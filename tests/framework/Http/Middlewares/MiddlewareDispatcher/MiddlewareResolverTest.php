@@ -2,6 +2,7 @@
 
 namespace Tests\framework\Http\Middlewares\MiddlewareDispatcher;
 
+use Framework\Container\Container;
 use Framework\Http\Middlewares\MiddlewareDispatcher\Exceptions\InvalidMiddlewareTypeException;
 use Framework\Http\Middlewares\MiddlewareDispatcher\Exceptions\UnknownMiddlewareClassException;
 use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareResolver;
@@ -21,7 +22,7 @@ class MiddlewareResolverTest extends TestCase
      */
     public function testResolve(mixed $middleware): void
     {
-        $resolver = new MiddlewareResolver();
+        $resolver = new MiddlewareResolver(new Container());
         $resolved = $resolver->resolve($middleware);
 
         $this->assertIsCallable($resolved);
@@ -33,7 +34,7 @@ class MiddlewareResolverTest extends TestCase
     public function testInvalidTypeMiddleware(mixed $middleware): void
     {
         $this->expectException(InvalidMiddlewareTypeException::class);
-        $resolver = new MiddlewareResolver();
+        $resolver = new MiddlewareResolver(new Container());
         $resolver->resolve($middleware);
     }
 
@@ -43,7 +44,7 @@ class MiddlewareResolverTest extends TestCase
     public function testUnknownClassMiddleware(mixed $middleware): void
     {
         $this->expectException(UnknownMiddlewareClassException::class);
-        $resolver = new MiddlewareResolver();
+        $resolver = new MiddlewareResolver(new Container());
         $resolver->resolve($middleware);
     }
 
