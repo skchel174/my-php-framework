@@ -65,7 +65,11 @@ class Service implements ServiceInterface
             if ($type === ContainerInterface::class || $type === PsrContainerInterface::class) {
                 $arguments[] = $container;
             } else if (array_key_exists($name, $this->arguments)) {
-                $arguments[] = $container->get($this->arguments[$name]);
+                $argument = $this->arguments[$name];
+                if (is_string($argument) && $container->has($argument)) {
+                    $argument = $container->get($argument);
+                }
+                $arguments[] = $argument;
             } else if ($container->has($type)) {
                 $arguments[] = $container->get($type);
             } else {
