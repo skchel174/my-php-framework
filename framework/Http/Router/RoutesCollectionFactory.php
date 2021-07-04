@@ -8,8 +8,6 @@ class RoutesCollectionFactory
 
     public function __invoke(): RoutesCollection
     {
-        $routes = new RoutesCollection();
-        require static::ROUTES_FILE;
-        return $routes;
+        return require static::ROUTES_FILE;
     }
 }
