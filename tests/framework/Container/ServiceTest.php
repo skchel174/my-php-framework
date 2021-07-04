@@ -41,7 +41,7 @@ class ServiceTest extends TestCase
 
     public function testConstruct(): void
     {
-        $container = new Container();
+        $container = Container::getInstance();
         $container->set('config.array', $config = ['value01', 'value02', 'value03']);
 
         $service = new Service(DummyService::class);

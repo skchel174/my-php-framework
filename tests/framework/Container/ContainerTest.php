@@ -16,7 +16,7 @@ class ContainerTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->container = new Container();
+        $this->container = Container::getInstance();
     }
 
     /**

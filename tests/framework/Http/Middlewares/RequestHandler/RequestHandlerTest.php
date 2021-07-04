@@ -23,7 +23,7 @@ class RequestHandlerTest extends TestCase
     public function testHandle(Route $handler): void
     {
         $request = (new ServerRequest)->withAttribute(Route::class, $handler);
-        $resolver = new RequestHandlerResolver(new Container());
+        $resolver = new RequestHandlerResolver(Container::getInstance());
         $handler = new RequestHandler($resolver);
         $response = $handler->handle($request);
 

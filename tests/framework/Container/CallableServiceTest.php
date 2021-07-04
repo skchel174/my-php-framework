@@ -15,7 +15,7 @@ class CallableServiceTest extends TestCase
             return new DummyService($object, $config, $default);
         };
 
-        $container = new Container();
+        $container = Container::getInstance();
         $container->set('config.array', $config = ['value01', 'value02', 'value03']);
 
         $service = new CallableService($f);
