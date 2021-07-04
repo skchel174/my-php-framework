@@ -10,3 +10,5 @@ $middlewareDispatcher = $container->get(MiddlewareDispatcher::class);
 
 $middlewareDispatcher->add(RouteDispatchMiddleware::class);
 $middlewareDispatcher->add(AppPerformanceMiddleware::class)->route('home');
+
+return $middlewareDispatcher;
