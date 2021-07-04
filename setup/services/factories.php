@@ -10,6 +10,5 @@ use Framework\Http\Router\RoutesCollectionFactory;
 /** @var ContainerInterface $container */
 $provider = $container->get(ServiceProvider::class);
 
-$provider->factory(ApplicationFactory::class, Application::class);
+$provider->factory(Application::class, ApplicationFactory::class);
 $provider->factory(RoutesCollectionInterface::class, RoutesCollectionFactory::class);
-
