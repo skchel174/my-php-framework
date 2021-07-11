@@ -1,0 +1,14 @@
+<?php /** @var Framework\Renderer\Renderer $this */ ?>
+
+<?php $this->extends('greeting/main.phtml');  ?>
+
+<?php $this->block('main') ?>
+    <h1>Documentation</h1>
+
+    <?php $this->block('footer') ?>
+    <footer>
+        <h3>DOC FOOTER</h3>
+    </footer>
+    <?php $this->close() ?>
+
+<?php $this->close() ?>

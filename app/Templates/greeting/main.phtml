@@ -1,0 +1,17 @@
+<?php /** @var Framework\Renderer\Renderer $this */ ?>
+
+<?php $this->extends('greeting/layout.phtml');  ?>
+
+
+<?php $this->block('main') ?>
+
+    <?php $this->include('greeting/header.phtml'); ?>
+
+    <h1><?= $var ?></h1>
+
+    <?php for ($i = 0; $i < 1; $i++): ?>
+        <?php $this->include('greeting/footer.phtml'); ?>
+    <?php endfor ?>
+<?php $this->close() ?>
+
+
