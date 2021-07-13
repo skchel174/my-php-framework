@@ -14,12 +14,17 @@ class TemplatesManager
     private ?Template $currentTemplate = null;
     private BlocksCollection $blocks;
 
-    public function __construct(string $directory, FiltersCollection $filters, ExtensionsCollection $extensions)
+    public function __construct(
+        string $directory,
+        FiltersCollection $filters,
+        ExtensionsCollection $extensions,
+        BlocksCollection $blocks,
+    )
     {
         $this->directory = $directory;
         $this->filters = $filters;
         $this->extensions = $extensions;
-        $this->blocks = new BlocksCollection();
+        $this->blocks = $blocks;
     }
 
     public function handle(string $template, array $parameters = []): string
@@ -40,17 +45,6 @@ class TemplatesManager
         }
 
         return $content;
-    }
-
-    public function includeTemplate(string $template, array $parameters): string
-    {
-        $template = $this->createTemplate($template);
-        return $template->render($parameters);
-    }
-
-    public function extendTemplate(string $template)
-    {
-        $this->currentTemplate = $this->createTemplate($template);
     }
 
     public function openBlock(string $name): void
@@ -76,26 +70,37 @@ class TemplatesManager
         return $block->getContent();
     }
 
-    public function getFilters(): FiltersCollection
+    public function includeTemplate(string $template, array $parameters): string
     {
-        return $this->filters;
+        $template = $this->createTemplate($template);
+        return $template->render($parameters);
     }
 
-    public function getExtensions(): ExtensionsCollection
+    public function extendTemplate(string $template)
     {
-        return $this->extensions;
+        $this->currentTemplate = $this->createTemplate($template);
     }
 
-    protected function createTemplate(string $template): Template
+    public function createTemplate(string $template): Template
     {
         $this->templateExistGuard($template);
         return new Template($this->directory . '/' . $template, $this);
     }
 
-    protected function renderTemplate(Template $template, array $parameters): string
+    public function renderTemplate(Template $template, array $parameters): string
     {
         $this->currentTemplate = null;
         return $template->render($parameters);
+    }
+
+    public function filter(mixed $parameter, array|string $filters): mixed
+    {
+        return $this->filters->handle($parameter, $filters);
+    }
+
+    public function callExtension(string $name, array $arguments): mixed
+    {
+        return $this->extensions->call($name, $arguments);
     }
 
     protected function templateExistGuard(string $template)

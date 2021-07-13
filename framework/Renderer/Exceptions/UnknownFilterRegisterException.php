@@ -2,11 +2,11 @@
 
 namespace Framework\Renderer\Exceptions;
 
-class InvalidFilterException extends \InvalidArgumentException
+class UnknownFilterRegisterException extends \InvalidArgumentException
 {
     public function __construct(string $filter)
     {
-        $message = 'Filter with name "' . $filter . '" not registered';
+        $message = 'Function with name "' . $filter . '" not exist';
         parent::__construct($message, 500);
     }
 }

@@ -3,6 +3,8 @@
 namespace Framework\Renderer;
 
 use Framework\Renderer\Exceptions\InvalidFilterException;
+use Framework\Renderer\Exceptions\InvalidFilterParametersException;
+use Framework\Renderer\Exceptions\UnknownFilterRegisterException;
 
 class FiltersCollection
 {
@@ -19,7 +21,7 @@ class FiltersCollection
 
     public function handle(mixed $value, string|array $filters): mixed
     {
-        $filters = is_string($filters) ? $this->parseFiltersToArray($filters) : $filters;
+        $filters = is_string($filters) ? explode('|', $filters) : $filters;
 
         if (!empty($filters)) {
             $this->filterExistGuard($filters);
@@ -32,9 +34,18 @@ class FiltersCollection
         return $value;
     }
 
-    protected function parseFiltersToArray(string $filters): array
+    public function register(string $alias, string $filter): void
     {
-        return explode('|', $filters);
+        if (!function_exists($filter)) {
+            throw new UnknownFilterRegisterException($filter);
+        }
+
+        $reflection = new \ReflectionFunction($filter);
+        if ($reflection->getNumberOfParameters() < 1 || $reflection->getNumberOfRequiredParameters() > 1) {
+            throw new InvalidFilterParametersException($filter);
+        }
+
+        $this->filters[$alias] = $filter;
     }
 
     protected function filterExistGuard(array $filters)

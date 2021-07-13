@@ -24,7 +24,7 @@ class Block
 
         $this->closed = true;
 
-        $content = trim(ob_get_clean());
+        $content = ob_get_clean();
         $this->content($content);
     }
 

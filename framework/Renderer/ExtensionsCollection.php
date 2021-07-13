@@ -31,6 +31,7 @@ class ExtensionsCollection
         if (!array_key_exists($method, $this->extensions)) {
             throw new ExtensionNotExistException($method);
         }
+        return $this->extensions[$method];
     }
 
     protected function methodsExistGuard(object $extension, array $methods): void

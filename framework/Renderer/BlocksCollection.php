@@ -19,7 +19,7 @@ class BlocksCollection
 
     public function getOpen(): ?Block
     {
-        if (!$this->openBlocks->isEmpty()) {
+        if ($this->openBlocks->isEmpty()) {
             return null;
         }
         return $this->openBlocks->pop();

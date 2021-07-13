@@ -46,11 +46,11 @@ class Template
 
     public function get(mixed $parameter, array|string $filters = []): mixed
     {
-        return $this->manager->getFilters()->handle($parameter, $filters);
+        return $this->manager->filter($parameter, $filters);
     }
 
     public function __call(string $name, array $arguments): mixed
     {
-        return $this->manager->getExtensions()->call($name, $arguments);
+        return $this->manager->callExtension($name, $arguments);
     }
 }

@@ -1,0 +1,23 @@
+<?php
+    use Framework\Renderer\View;
+    /**
+     * @var string $content
+     * @var array $list
+     */
+?>
+
+<?php View::extends('layout.phtml') ?>
+
+<?php View::block('title') ?>Content Title<?php View::close() ?>
+
+<?php View::block('content') ?>
+    <main class="main_extends">
+        <h1><?= View::get($content, 'title') ?></h1>
+
+        <div>
+            <?php foreach ($list as $key => $item): ?>
+                <?php View::include('list.phtml', ['item' => $item])?>
+            <?php endforeach ?>
+        </div>
+    </main>
+<?php View::close() ?>

@@ -1,0 +1,13 @@
+<?php
+use Framework\Renderer\View;
+
+/** @var array $parameters */
+
+?>
+
+<?php View::block('header') ?>
+    <header>
+        <h1>Renderer Tests</h1>
+        <?php View::include('nav.phtml') ?>
+    </header>
+<?php View::close() ?>
