@@ -1,0 +1,10 @@
+<?php
+    use Framework\Renderer\View;
+    /** @var string $content */
+?>
+
+<?php View::block('template') ?>
+    <div class="template">
+        <p><?=$content ?></p>
+    </div>
+<?php View::close() ?>
