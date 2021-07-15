@@ -8,6 +8,24 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 
+
+/**
+ * Регистрация обработциков ошибок
+ *
+ * исключение + запрос -> метод ->
+ *
+ * Регистрация логов
+ *
+ * [ 'InvalidRequestMethodException' => function (\Throwable $e) { code... } ]
+ * foreach ($handlers as $handler) {
+ *      if ($e instanceof $handler) {
+ *          $handler($e);
+ *      }
+ * }
+ *
+ *
+ */
+
 class ErrorHandler implements ErrorHandlerInterface
 {
     private ErrorGeneratorInterface $errorGenerator;
