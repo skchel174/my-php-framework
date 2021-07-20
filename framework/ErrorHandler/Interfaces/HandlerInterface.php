@@ -5,7 +5,7 @@ namespace Framework\ErrorHandler\Interfaces;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-interface ErrorGeneratorInterface
+interface HandlerInterface
 {
-    public function generate(\Throwable $e, ServerRequestInterface $request): ResponseInterface;
+    public function handle(\Throwable $e, ServerRequestInterface $request): ResponseInterface;
 }
