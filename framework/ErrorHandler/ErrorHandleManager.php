@@ -3,12 +3,13 @@
 namespace Framework\ErrorHandler;
 
 use Framework\Container\Container;
+use Framework\ErrorHandler\Interfaces\ErrorsManagerInterface;
 use Framework\ErrorHandler\Interfaces\HandlerInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class ErrorHandleManager
+class ErrorHandleManager implements ErrorsManagerInterface
 {
     private Container $container;
     private HandlersCollection $handlers;
