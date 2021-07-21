@@ -3,15 +3,15 @@
 namespace Framework\ErrorHandler;
 
 use Framework\ErrorHandler\Interfaces\HandlerInterface;
-use Framework\ErrorHandler\Interfaces\WrapperInterface;
+use Framework\ErrorHandler\Interfaces\DecoratorInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-abstract class HandlerWrapper implements WrapperInterface, HandlerInterface
+abstract class HandlerDecorator implements DecoratorInterface, HandlerInterface
 {
     protected HandlerInterface $handler;
 
-    public function wrapUp(HandlerInterface $handler): WrapperInterface
+    public function wrapUp(HandlerInterface $handler): DecoratorInterface
     {
         $this->handler = $handler;
         return $this;
@@ -23,7 +23,7 @@ abstract class HandlerWrapper implements WrapperInterface, HandlerInterface
         return $this->render($e, $request);
     }
 
-    protected function log(\Throwable $e): void
+    protected function log(\Exception $e): void
     {
         $this->handler->log($e);
     }

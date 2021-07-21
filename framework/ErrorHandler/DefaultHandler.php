@@ -4,11 +4,12 @@ namespace Framework\ErrorHandler;
 
 use Framework\ErrorHandler\ErrorFactory\HtmlErrorFactory;
 use Framework\ErrorHandler\ErrorFactory\JsonErrorFactory;
+use Framework\ErrorHandler\Interfaces\HandlerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 
-class DefaultHandler implements Interfaces\HandlerInterface
+class DefaultHandler implements HandlerInterface
 {
     private LoggerInterface $logger;
     private HtmlErrorFactory $htmlErrorFactory;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\ErrorHandler;
+namespace Framework\ErrorHandler\Middleware;
 
 use Framework\ErrorHandler\Interfaces\ErrorsManagerInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -21,7 +21,7 @@ class ErrorHandlerMiddleware implements MiddlewareInterface
     {
         try {
             $handler->handle($request);
-        } catch (\Throwable $e) {
+        } catch (\Exception $e) {
             $this->errorsManager->process($e, $request);
         }
     }

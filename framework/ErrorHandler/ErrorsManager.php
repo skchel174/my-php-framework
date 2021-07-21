@@ -2,21 +2,17 @@
 
 namespace Framework\ErrorHandler;
 
-use Framework\Container\Container;
 use Framework\ErrorHandler\Interfaces\ErrorsManagerInterface;
 use Framework\ErrorHandler\Interfaces\HandlerInterface;
-use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class ErrorHandleManager implements ErrorsManagerInterface
+class ErrorsManager implements ErrorsManagerInterface
 {
-    private Container $container;
     private HandlersCollection $handlers;
 
-    public function __construct(ContainerInterface $container, HandlersCollection $handlers)
+    public function __construct(HandlersCollection $handlers)
     {
-        $this->container = $container;
         $this->handlers= $handlers;
     }
 
@@ -28,14 +24,10 @@ class ErrorHandleManager implements ErrorsManagerInterface
 
     protected function buildSequence(string $exception): HandlerInterface
     {
-        $handlerName = $this->handlers->get(\Exception::class);
-        $handler = $this->container->get($handlerName);
+        $handler = $this->handlers->get(\Exception::class);
 
-        while ($this->handlers->has($exception)) {
-            $handlerName = $this->handlers->get($exception);
-
-            $handler = $this->container->get($handlerName)->wrapUp($handler);
-
+        while ($exception && $this->handlers->has($exception)) {
+            $handler = $handler->wrapUp($handler);
             $reflection = new \ReflectionClass($exception);
             $exception = $reflection->getParentClass();
         }
