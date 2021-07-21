@@ -20,7 +20,7 @@ class ErrorHandleManager implements ErrorsManagerInterface
         $this->handlers= $handlers;
     }
 
-    public function process(\Throwable $e, ServerRequestInterface $request): ResponseInterface
+    public function process(\Exception $e, ServerRequestInterface $request): ResponseInterface
     {
         $handler = $this->buildSequence($e::class);
         return $handler->handle($e, $request);
@@ -28,7 +28,7 @@ class ErrorHandleManager implements ErrorsManagerInterface
 
     protected function buildSequence(string $exception): HandlerInterface
     {
-        $handlerName = $this->handlers->get(\Throwable::class);
+        $handlerName = $this->handlers->get(\Exception::class);
         $handler = $this->container->get($handlerName);
 
         while ($this->handlers->has($exception)) {

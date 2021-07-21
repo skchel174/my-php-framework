@@ -7,5 +7,5 @@ use Psr\Http\Message\ServerRequestInterface;
 
 interface HandlerInterface
 {
-    public function handle(\Throwable $e, ServerRequestInterface $request): ResponseInterface;
+    public function handle(\Exception $e, ServerRequestInterface $request): ResponseInterface;
 }

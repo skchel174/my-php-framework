@@ -17,10 +17,10 @@ abstract class HandlerWrapper implements WrapperInterface, HandlerInterface
         return $this;
     }
 
-    public function handle(\Throwable $e, ServerRequestInterface $request): ResponseInterface
+    public function handle(\Exception $e, ServerRequestInterface $request): ResponseInterface
     {
         $this->log($e);
-        return $this->display($e);
+        return $this->render($e, $request);
     }
 
     protected function log(\Throwable $e): void
@@ -28,8 +28,8 @@ abstract class HandlerWrapper implements WrapperInterface, HandlerInterface
         $this->handler->log($e);
     }
 
-    protected function display(\Throwable $e): ResponseInterface
+    protected function render(\Exception $e, ServerRequestInterface $request): ResponseInterface
     {
-        return  $this->handler->display($e);
+        return  $this->handler->render($e, $request);
     }
 }
