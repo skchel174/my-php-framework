@@ -9,7 +9,6 @@ use Psr\Container\ContainerInterface;
 class HandlersCollection
 {
     private array $handlers = [];
-
     private ContainerInterface $container;
 
     public function __construct(ContainerInterface $container)
@@ -36,8 +35,7 @@ class HandlersCollection
     protected function handlerTypeGuard(mixed $handler)
     {
         $reflection = new \ReflectionClass($handler);
-        if (!$reflection->implementsInterface(HandlerInterface::class)
-            || !$reflection->implementsInterface(\Closure::class)) {
+        if (!$reflection->implementsInterface(HandlerInterface::class) && !$reflection->hasMethod('__invoke')) {
             throw new InvalidErrorHandlerTypeException($handler);
         }
     }

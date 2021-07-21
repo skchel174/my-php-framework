@@ -31,7 +31,7 @@ class HtmlErrorFactory extends ErrorFactory
             $this->whoops->pushHandler(new PrettyPageHandler);
             $html = $this->whoops->handleException($e);
         } else {
-            $template = $this->config['templates'][$code] ?? $this->config['templates']['default'];
+            $template = $this->config['error'][$code] ?? $this->config['error']['default'];
             $html = $this->renderer->render($template);
         }
 

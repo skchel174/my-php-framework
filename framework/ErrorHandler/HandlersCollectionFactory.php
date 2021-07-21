@@ -8,7 +8,8 @@ class HandlersCollectionFactory
 {
     public function __invoke(ContainerInterface $container): HandlersCollection
     {
-        $collection = $container->get(HandlersCollection::class);
+        $collection = new HandlersCollection($container);
         require BASE_DIR . '/setup/error-handlers.php';
+        return $collection;
     }
 }

@@ -11,6 +11,7 @@ class ApplicationFactory
     public function __invoke(ContainerInterface $container): Application
     {
         $middlewareDispatcher = require BASE_DIR . '/setup/middlewares.php';
+
         return new Application(
             $middlewareDispatcher,
             $container->get(ResponseEmitterInterface::class),

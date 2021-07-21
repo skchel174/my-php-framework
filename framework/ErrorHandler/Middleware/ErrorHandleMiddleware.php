@@ -8,7 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-class ErrorHandlerMiddleware implements MiddlewareInterface
+class ErrorHandleMiddleware implements MiddlewareInterface
 {
     private ErrorsManagerInterface $errorsManager;
 
@@ -20,9 +20,10 @@ class ErrorHandlerMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         try {
-            $handler->handle($request);
+            throw new \RuntimeException('test exception');
+            return $handler->handle($request);
         } catch (\Exception $e) {
-            $this->errorsManager->process($e, $request);
+            return $this->errorsManager->process($e, $request);
         }
     }
 }
