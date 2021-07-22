@@ -17,19 +17,19 @@ abstract class HandlerDecorator implements DecoratorInterface, HandlerInterface
         return $this;
     }
 
-    public function handle(\Exception $e, ServerRequestInterface $request): ResponseInterface
-    {
-        $this->log($e);
-        return $this->render($e, $request);
-    }
-
-    protected function log(\Exception $e): void
+    public function log(\Exception $e): void
     {
         $this->handler->log($e);
     }
 
-    protected function render(\Exception $e, ServerRequestInterface $request): ResponseInterface
+    public function render(\Exception $e, ServerRequestInterface $request): ResponseInterface
     {
-        return  $this->handler->render($e, $request);
+        return $this->handler->render($e, $request);
+    }
+
+    public function handle(\Exception $e, ServerRequestInterface $request): ResponseInterface
+    {
+        $this->log($e);
+        return $this->render($e, $request);
     }
 }

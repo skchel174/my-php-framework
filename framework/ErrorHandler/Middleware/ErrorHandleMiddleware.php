@@ -20,7 +20,7 @@ class ErrorHandleMiddleware implements MiddlewareInterface
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
         try {
-            throw new \RuntimeException('test exception');
+            throw new \Exception('test exception');
             return $handler->handle($request);
         } catch (\Exception $e) {
             return $this->errorsManager->process($e, $request);

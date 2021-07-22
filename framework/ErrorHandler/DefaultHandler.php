@@ -26,18 +26,12 @@ class DefaultHandler implements HandlerInterface
         $this->jsonErrorFactory = $jsonErrorFactory;
     }
 
-    public function handle(\Exception $e, ServerRequestInterface $request): ResponseInterface
-    {
-        $this->log($e);
-        return $this->render($e, $request);
-    }
-
-    protected function log(\Exception $e): void
+    public function log(\Exception $e): void
     {
         $this->logger->debug($e->getMessage());
     }
 
-    protected function render(\Exception $e, ServerRequestInterface $request): ResponseInterface
+    public function render(\Exception $e, ServerRequestInterface $request): ResponseInterface
     {
         $acceptType = $request->getHeaderLine('Accept')
             ?? $request->getHeaderLine('Content-Type');
@@ -47,5 +41,11 @@ class DefaultHandler implements HandlerInterface
             : $this->htmlErrorFactory;
 
         return $errorFactory->create($e);
+    }
+
+    public function handle(\Exception $e, ServerRequestInterface $request): ResponseInterface
+    {
+        $this->log($e);
+        return $this->render($e, $request);
     }
 }

@@ -19,12 +19,22 @@ class HandlersCollection
     public function register(string $exception, mixed $handler): void
     {
         $this->handlerTypeGuard($handler);
-        $this->handlers[$exception] = new LazyHandlerWrapper($this->container, $handler);
+        $this->handlers[$exception] = $handler;
     }
 
-    public function get(string $exception): null|string|HandlerInterface
+    public function get(string $exception): ?HandlerInterface
     {
-        return $this->handlers[$exception] ?? null;
+        if (!$this->has($exception)) {
+            return null;
+        }
+
+        $handler = $this->handlers[$exception];
+
+        if (is_string($handler)) {
+            $handler = $this->container->get($handler);
+        }
+
+        return $handler;
     }
 
     public function has(string $exception): bool
@@ -35,7 +45,7 @@ class HandlersCollection
     protected function handlerTypeGuard(mixed $handler)
     {
         $reflection = new \ReflectionClass($handler);
-        if (!$reflection->implementsInterface(HandlerInterface::class) && !$reflection->hasMethod('__invoke')) {
+        if (!$reflection->implementsInterface(HandlerInterface::class)) {
             throw new InvalidErrorHandlerTypeException($handler);
         }
     }

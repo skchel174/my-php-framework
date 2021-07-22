@@ -26,11 +26,15 @@ class ErrorsManager implements ErrorsManagerInterface
     {
         $handler = $this->handlers->get(\Exception::class);
 
-        while ($exception && $this->handlers->has($exception)) {
-            $handler = $handler->wrapUp($handler);
+        while ($exception) {
             $reflection = new \ReflectionClass($exception);
             $exception = $reflection->getParentClass();
-        }
+
+            if ($exception && $this->handlers->has($exception)) {
+                $wrapper = $this->handlers->get($exception);
+                $handler = $wrapper->wrapUp($handler);
+            }
+        };
 
         return $handler;
     }
