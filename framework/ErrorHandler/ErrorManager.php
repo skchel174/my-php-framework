@@ -7,7 +7,7 @@ use Framework\ErrorHandler\Interfaces\HandlerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class ErrorsManager implements ErrorsManagerInterface
+class ErrorManager implements ErrorsManagerInterface
 {
     private HandlersCollection $handlers;
 
