@@ -2,18 +2,19 @@
 
 namespace Framework\ErrorHandler;
 
-use Framework\ErrorHandler\Interfaces\ErrorsManagerInterface;
+use Framework\ErrorHandler\Interfaces\ErrorManagerInterface;
 use Framework\ErrorHandler\Interfaces\HandlerInterface;
+use http\Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class ErrorManager implements ErrorsManagerInterface
+class ErrorManager implements ErrorManagerInterface
 {
     private HandlersCollection $handlers;
 
     public function __construct(HandlersCollection $handlers)
     {
-        $this->handlers= $handlers;
+        $this->handlers = $handlers;
     }
 
     public function process(\Exception $e, ServerRequestInterface $request): ResponseInterface
@@ -24,18 +25,29 @@ class ErrorManager implements ErrorsManagerInterface
 
     protected function buildSequence(string $exception): HandlerInterface
     {
+        $stack = new \SplStack();
+
+        do {
+            if ($exception !== \Exception::class && $this->handlers->has($exception)) {
+                $stack->push($this->handlers->get($exception));
+            }
+        } while ($exception = $this->getExceptionParent($exception));
+
         $handler = $this->handlers->get(\Exception::class);
 
-        while ($exception) {
-            $reflection = new \ReflectionClass($exception);
-            $exception = $reflection->getParentClass();
-
-            if ($exception && $this->handlers->has($exception)) {
-                $wrapper = $this->handlers->get($exception);
-                $handler = $wrapper->wrapUp($handler);
-            }
-        };
+        while (!$stack->isEmpty()) {
+            /** @var HandlerDecorator $wrapper */
+            $wrapper = $stack->pop();
+            $handler = $wrapper->wrapUp($handler);
+        }
 
         return $handler;
+    }
+
+    protected function getExceptionParent(string $exception): ?string
+    {
+        $reflection = new \ReflectionClass($exception);
+        $parent = $reflection->getParentClass();
+        return $parent ? $parent->getName() : null;
     }
 }

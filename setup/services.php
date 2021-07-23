@@ -4,8 +4,8 @@ use Framework\Container\Container;
 use Framework\Container\ServiceProvider;
 use Framework\ErrorHandler\ErrorFactory\HtmlErrorFactory;
 use Framework\ErrorHandler\ErrorFactory\JsonErrorFactory;
-use Framework\ErrorHandler\ErrorsManager;
-use Framework\ErrorHandler\Interfaces\ErrorsManagerInterface;
+use Framework\ErrorHandler\ErrorManager;
+use Framework\ErrorHandler\Interfaces\ErrorManagerInterface;
 use Framework\Http\Middlewares\MiddlewareDispatcher\Interfaces\MiddlewareDispatcherInterface;
 use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareDispatcher;
 use Framework\Http\Middlewares\RequestHandler\RequestHandler;
@@ -40,7 +40,7 @@ $provider->alias(RouteDispatcherInterface::class, RouteDispatcher::class);
 $provider->alias(MiddlewareDispatcherInterface::class, MiddlewareDispatcher::class);
 $provider->alias(RequestHandlerInterface::class, RequestHandler::class);
 $provider->alias(ResponseEmitterInterface::class, ResponseEmitter::class);
-$provider->alias(ErrorsManagerInterface::class, ErrorsManager::class);
+$provider->alias(ErrorManagerInterface::class, ErrorManager::class);
 $provider->alias(RendererInterface::class, Renderer::class);
 
 // Factories
