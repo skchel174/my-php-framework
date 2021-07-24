@@ -4,7 +4,6 @@ namespace Framework\ErrorHandler;
 
 use Framework\ErrorHandler\Interfaces\ErrorManagerInterface;
 use Framework\ErrorHandler\Interfaces\HandlerInterface;
-use http\Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -14,6 +13,7 @@ class ErrorManager implements ErrorManagerInterface
 
     public function __construct(HandlersCollection $handlers)
     {
+        set_error_handler([$this, 'translateErrorToException']);
         $this->handlers = $handlers;
     }
 
@@ -50,5 +50,16 @@ class ErrorManager implements ErrorManagerInterface
         $reflection = new \ReflectionClass($exception);
         $parent = $reflection->getParentClass();
         return $parent ? $parent->getName() : null;
+    }
+
+    public function translateErrorToException(
+        int $errno,
+        string $errstr,
+        string $errfile = null,
+        int $errline = null,
+        array $errcontext = null,
+    ): bool
+    {
+        throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
     }
 }
