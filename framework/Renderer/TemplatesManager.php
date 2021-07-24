@@ -9,22 +9,22 @@ use Framework\Renderer\Exceptions\NotOpenedBlockException;
 class TemplatesManager
 {
     private string $directory;
+    private BlocksCollection $blocks;
     private FiltersCollection $filters;
     private ExtensionsCollection $extensions;
     private ?Template $currentTemplate = null;
-    private BlocksCollection $blocks;
 
     public function __construct(
         string $directory,
+        BlocksCollection $blocks,
         FiltersCollection $filters,
         ExtensionsCollection $extensions,
-        BlocksCollection $blocks,
     )
     {
         $this->directory = $directory;
+        $this->blocks = $blocks;
         $this->filters = $filters;
         $this->extensions = $extensions;
-        $this->blocks = $blocks;
     }
 
     public function handle(string $template, array $parameters = []): string

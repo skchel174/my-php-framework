@@ -30,7 +30,6 @@ use Psr\Log\LoggerInterface;
 /** @var ServiceProvider $provider */
 
 // Services
-$provider->service(TemplatesManager::class)->argument('directory', 'config.templates');
 $provider->service(HtmlErrorFactory::class)->argument('config', 'config');
 $provider->service(JsonErrorFactory::class)->argument('config', 'config');
 
@@ -46,6 +45,7 @@ $provider->alias(RendererInterface::class, Renderer::class);
 $provider->factory(Application::class, ApplicationFactory::class);
 $provider->factory(RoutesCollectionInterface::class, RoutesCollectionFactory::class);
 $provider->factory(HandlersCollection::class, HandlersCollectionFactory::class);
+$provider->factory(RendererInterface::class, Framework\Renderer\RendererFactory::class);
 
 // Callables
 $provider->callable(LoggerInterface::class, function (ContainerInterface $container): LoggerInterface {
