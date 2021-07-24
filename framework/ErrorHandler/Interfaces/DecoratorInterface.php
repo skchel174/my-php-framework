@@ -4,5 +4,6 @@ namespace Framework\ErrorHandler\Interfaces;
 
 interface DecoratorInterface
 {
-    public function wrapUp(HandlerInterface $handler): DecoratorInterface;
+    public function wrapHandler(HandlerInterface $handler);
+    public function getHandler(): ?HandlerInterface;
 }

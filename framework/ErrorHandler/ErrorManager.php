@@ -38,7 +38,8 @@ class ErrorManager implements ErrorManagerInterface
         while (!$stack->isEmpty()) {
             /** @var HandlerDecorator $wrapper */
             $wrapper = $stack->pop();
-            $handler = $wrapper->wrapUp($handler);
+            $wrapper->wrapHandler($handler);
+            $handler = $wrapper;
         }
 
         return $handler;

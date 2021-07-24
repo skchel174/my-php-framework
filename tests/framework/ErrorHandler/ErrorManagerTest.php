@@ -54,14 +54,12 @@ class ErrorManagerTest extends TestCase
         $unexpectedValueHandler = $this->getMockBuilder(HandlerDecorator::class)->getMock();
 
         $runtimeHandler->expects($this->once())
-            ->method('wrapUp')
-            ->withConsecutive([$demoHandler])
-            ->willReturn($runtimeHandler);
+            ->method('wrapHandler')
+            ->withConsecutive([$demoHandler]);
 
         $unexpectedValueHandler->expects($this->once())
-            ->method('wrapUp')
-            ->withConsecutive([$runtimeHandler])
-            ->willReturn($unexpectedValueHandler);
+            ->method('wrapHandler')
+            ->withConsecutive([$runtimeHandler]);
 
         $handlers = $this->getMockBuilder(HandlersCollection::class)
             ->disableOriginalConstructor()

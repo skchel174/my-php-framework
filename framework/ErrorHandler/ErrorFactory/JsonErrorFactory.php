@@ -28,7 +28,10 @@ class JsonErrorFactory extends ErrorFactory
             $this->whoops->pushHandler(new JsonResponseHandler);
             $data = $this->whoops->handleException($e);
         } else {
-            $data = [ 'message' => $e->getCode(), 'code' => $code ];
+            $data = [
+                'code' => $code,
+                'message' => $e->getMessage(),
+            ];
         }
 
         return new JsonResponse($data, $code);

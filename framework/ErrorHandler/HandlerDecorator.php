@@ -9,12 +9,17 @@ use Psr\Http\Message\ServerRequestInterface;
 
 abstract class HandlerDecorator implements DecoratorInterface, HandlerInterface
 {
-    protected HandlerInterface $handler;
+    protected ?HandlerInterface $handler = null;
 
-    public function wrapUp(HandlerInterface $handler): DecoratorInterface
+    public function wrapHandler(HandlerInterface $handler): DecoratorInterface
     {
         $this->handler = $handler;
         return $this;
+    }
+
+    public function getHandler(): ?HandlerInterface
+    {
+        return $this->handler;
     }
 
     public function log(\Exception $e): void
