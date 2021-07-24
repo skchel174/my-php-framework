@@ -1,13 +1,11 @@
 <?php
 
-use Framework\Container\Interfaces\ContainerInterface;
 use Framework\ErrorHandler\Middleware\ErrorHandleMiddleware;
-use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareDispatcher;
+use Framework\Http\Middlewares\MiddlewareDispatcher\Interfaces\MiddlewareDispatcherInterface;
 use Framework\Http\Middlewares\RouteDispatchMiddleware;
 use App\Http\Middlewares\AppPerformanceMiddleware;
 
-/** @var ContainerInterface $container */
-$middlewareDispatcher = $container->get(MiddlewareDispatcher::class);
+/** @var MiddlewareDispatcherInterface $middlewareDispatcher */
 
 $middlewareDispatcher->add(ErrorHandleMiddleware::class);
 $middlewareDispatcher->add(RouteDispatchMiddleware::class);

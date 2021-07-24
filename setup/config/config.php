@@ -11,6 +11,8 @@ return [
     'templates' => BASE_DIR . '/app/Templates',
 
     'error' => [
-        'default' => 'error_page.phtml',
+        'templates' => [
+            'default' => 'error_page.phtml',
+        ],
     ]
 ];

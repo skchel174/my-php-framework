@@ -2,12 +2,16 @@
 
 namespace Framework\Http\Router;
 
+use Psr\Container\ContainerInterface;
+
 class RoutesCollectionFactory
 {
     const ROUTES_FILE = BASE_DIR . '/setup/routes.php';
 
-    public function __invoke(): RoutesCollection
+    public function __invoke(ContainerInterface $container): RoutesCollection
     {
-        return require static::ROUTES_FILE;
+        $routes = $container->get(RoutesCollection::class);
+        require static::ROUTES_FILE;
+        return $routes;
     }
 }
