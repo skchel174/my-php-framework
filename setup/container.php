@@ -10,6 +10,6 @@ $provider = $container->get(ServiceProvider::class);
 $configLoader = new ConfigLoader(BASE_DIR . '/setup/config');
 $provider->config('config', $configLoader->load());
 
-require BASE_DIR . '/setup/services/services.php';
+require BASE_DIR . '/setup/services.php';
 
 return $container;
