@@ -10,7 +10,7 @@ define('START_MEMORY', memory_get_usage());
 
 require_once BASE_DIR . '/vendor/autoload.php';
 
-$container = (new ContainerFactory)();
+$container = (new ContainerFactory)->create();
 
 $request = (new ServerRequestFactory)->createFromSapi();
 

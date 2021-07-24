@@ -9,7 +9,7 @@ class ContainerFactory
     const CONFIG_DIR = BASE_DIR . '/setup/config';
     const SERVICES_FILE = BASE_DIR . '/setup/services.php';
 
-    public function __invoke(): ContainerInterface
+    public function create(): ContainerInterface
     {
         $container = Container::getInstance();
 
