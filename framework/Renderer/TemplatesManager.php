@@ -29,22 +29,17 @@ class TemplatesManager
 
     public function handle(string $template, array $parameters = []): string
     {
-        try {
-            $this->currentTemplate = $this->createTemplate($template);
+        $this->currentTemplate = $this->createTemplate($template);
 
-            while ($this->currentTemplate) {
-                $content = $this->renderTemplate($this->currentTemplate, $parameters);
-            }
-
-            if ($this->blocks->isNotClosedExist()) {
-                throw new NotClosedBlockException($this->blocks->getOpen());
-            }
-
-            return $content;
-        } catch (\Throwable $e) {
-            ob_get_clean();
-            throw $e;
+        while ($this->currentTemplate) {
+            $content = $this->renderTemplate($this->currentTemplate, $parameters);
         }
+
+        if ($this->blocks->isNotClosedExist()) {
+            throw new NotClosedBlockException($this->blocks->getOpen());
+        }
+
+        return $content;
     }
 
     public function openBlock(string $name): void

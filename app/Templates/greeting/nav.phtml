@@ -1,9 +1,0 @@
-<?php use Framework\Renderer\View; ?>
-
-<?php View::block('nav') ?>
-<nav class="nav">
-    <?php foreach ($links as $key => $value): ?>
-        <a href="<?=$key ?>"><?=View::get($value, 'strip|ucfirst') ?></a>
-    <?php endforeach ?>
-</nav>
-<?php View::close() ?>
