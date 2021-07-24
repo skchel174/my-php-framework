@@ -1,6 +1,5 @@
 <?php
 
-use Framework\Container\Container;
 use Framework\Container\ServiceProvider;
 use Framework\ErrorHandler\ErrorFactory\HtmlErrorFactory;
 use Framework\ErrorHandler\ErrorFactory\JsonErrorFactory;
@@ -28,7 +27,7 @@ use Framework\Http\Router\Interfaces\RoutesCollectionInterface;
 use Framework\Http\Router\RoutesCollectionFactory;
 use Psr\Log\LoggerInterface;
 
-$provider = Container::getInstance()->get(ServiceProvider::class);
+/** @var ServiceProvider $provider */
 
 // Services
 $provider->service(TemplatesManager::class)->argument('directory', 'config.templates');

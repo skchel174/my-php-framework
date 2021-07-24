@@ -6,6 +6,7 @@ class ConfigLoader
 {
     const GLOBAL_PATTERN = '{*/*,*}.php';
     const LOCAL_PATTERN = '{*/*,*}.php.local';
+
     protected string $confDir;
 
     public function __construct(string $confDir)
