@@ -5,10 +5,8 @@ use Framework\Http\Middlewares\MiddlewareDispatcher\Interfaces\MiddlewareDispatc
 use Framework\Http\Middlewares\RouteDispatchMiddleware;
 use App\Http\Middlewares\AppPerformanceMiddleware;
 
-/** @var MiddlewareDispatcherInterface $middlewareDispatcher */
+/** @var MiddlewareDispatcherInterface $dispatcher */
 
-$middlewareDispatcher->add(ErrorHandleMiddleware::class);
-$middlewareDispatcher->add(RouteDispatchMiddleware::class);
-$middlewareDispatcher->add(AppPerformanceMiddleware::class)->route('home');
-
-return $middlewareDispatcher;
+$dispatcher->add(ErrorHandleMiddleware::class);
+$dispatcher->add(RouteDispatchMiddleware::class);
+$dispatcher->add(AppPerformanceMiddleware::class)->route('home');

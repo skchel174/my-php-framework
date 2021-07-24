@@ -11,7 +11,12 @@ class HandlersCollectionFactory
     public function __invoke(ContainerInterface $container): HandlersCollection
     {
         $collection = new HandlersCollection($container);
-        require static::HANDLERS_FILE;
+        $this->handlers($collection);
         return $collection;
+    }
+
+    protected function handlers(HandlersCollection $collection): void
+    {
+        require static::HANDLERS_FILE;
     }
 }

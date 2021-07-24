@@ -11,7 +11,12 @@ class RoutesCollectionFactory
     public function __invoke(ContainerInterface $container): RoutesCollection
     {
         $routes = $container->get(RoutesCollection::class);
-        require static::ROUTES_FILE;
+        $this->routes($routes);
         return $routes;
+    }
+
+    protected function routes(RoutesCollection $routes): void
+    {
+        require static::ROUTES_FILE;
     }
 }
