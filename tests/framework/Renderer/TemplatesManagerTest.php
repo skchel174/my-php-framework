@@ -25,7 +25,7 @@ class TemplatesManagerTest extends TestCase
         $this->filters = $this->getMockBuilder(FiltersCollection::class)->getMock();
         $this->extensions = $this->getMockBuilder(ExtensionsCollection::class)->getMock();
         $this->blocks = $this->getMockBuilder(BlocksCollection::class)->getMock();
-        $this->manager = new TemplatesManager($this->directory, $this->filters, $this->extensions, $this->blocks);
+        $this->manager = new TemplatesManager($this->directory, $this->blocks, $this->filters, $this->extensions);
     }
 
     public function testCreateTemplate(): void
