@@ -9,31 +9,20 @@ use Whoops\Run;
 
 class JsonErrorFactory extends ErrorFactory
 {
-    private Run $whoops;
-    private array $config;
+    private bool $debug;
 
-    public function __construct(Run $whoops, array $config)
+    public function __construct(bool $debug)
     {
-        $this->whoops = $whoops;
-        $this->config = $config;
+        $this->debug = $debug;
     }
 
     public function create(\Exception $e): ResponseInterface
     {
-        $code = $this->normalizeCode($e->getCode());
-
-        if ($this->config['debug']) {
-            $this->whoops->allowQuit(false);
-            $this->whoops->writeToOutput(false);
-            $this->whoops->pushHandler(new JsonResponseHandler);
-            $data = $this->whoops->handleException($e);
-        } else {
-            $data = [
-                'code' => $code,
-                'message' => $e->getMessage(),
-            ];
+        if ($this->debug) {
+            throw $e;
         }
 
-        return new JsonResponse($data, $code);
+        $code = $this->normalizeCode($e->getCode());
+        return new JsonResponse(['code' => $code, 'message' => $e->getMessage()], $code);
     }
 }

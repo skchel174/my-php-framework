@@ -11,30 +11,28 @@ use Whoops\Run;
 class HtmlErrorFactory extends ErrorFactory
 {
     private RendererInterface $renderer;
-    private Run $whoops;
-    private array $config;
+    private bool $debug;
+    private array $templates;
 
-    public function __construct(RendererInterface $renderer, Run $whoops, array $config)
+    public function __construct(RendererInterface $renderer, bool $debug, array $templates)
     {
         $this->renderer = $renderer;
-        $this->whoops = $whoops;
-        $this->config = $config;
+        $this->debug = $debug;
+        $this->templates = $templates;
     }
 
     public function create(\Exception $e): ResponseInterface
     {
-        $code = $this->normalizeCode($e->getCode());
-
-        if ($this->config['debug']) {
-            $this->whoops->allowQuit(false);
-            $this->whoops->writeToOutput(false);
-            $this->whoops->pushHandler(new PrettyPageHandler);
-            $html = $this->whoops->handleException($e);
-        } else {
-            $template = $this->config['error']['templates'][$code]
-                ?? $this->config['error']['templates']['default'];
-            $html = $this->renderer->render($template);
+        if ($this->debug) {
+            throw $e;
         }
+
+        $code = $this->normalizeCode($e->getCode());
+        $template = $this->templates[$code] ?? $this->templates['default'];
+        $html = $this->renderer->render($template, [
+            'code' => $code,
+            'message' => $e->getMessage(),
+        ]);
 
         return new HtmlResponse($html, $code);
     }
