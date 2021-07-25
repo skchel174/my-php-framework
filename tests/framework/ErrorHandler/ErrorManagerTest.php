@@ -38,7 +38,7 @@ class ErrorManagerTest extends TestCase
             ->withConsecutive([\Exception::class])
             ->willReturn($demoHandler);
 
-        $manager = new ErrorManager($handlers);
+        $manager = new ErrorManager($handlers, false);
         $result = $manager->process($exception, $request);
 
         $this->assertInstanceOf(ResponseInterface::class, $result);
@@ -84,7 +84,7 @@ class ErrorManagerTest extends TestCase
                 return $handlersMap[$val];
             }));
 
-        $manager = new ErrorManager($handlers);
+        $manager = new ErrorManager($handlers, false);
         $manager->process(new \UnexpectedValueException(), $request);
     }
 }

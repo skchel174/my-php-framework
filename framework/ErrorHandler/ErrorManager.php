@@ -10,26 +10,21 @@ use Psr\Http\Message\ServerRequestInterface;
 class ErrorManager implements ErrorManagerInterface
 {
     private HandlersCollection $handlers;
+    private bool $debug;
 
-    public function __construct(HandlersCollection $handlers)
+    public function __construct(HandlersCollection $handlers, bool $debug)
     {
-//        ini_set('display_errors', 0);
-//        set_error_handler([$this, 'translateErrorToException']);
-//        register_shutdown_function(function () {
-//            if ($error = error_get_last()) {
-//                echo new \ErrorException(
-//                    $error['message'],
-//                    0, $error['type'],
-//                    $error['file'],
-//                    $error['line']);
-//            };
-//        });
+        set_error_handler([$this, 'translateErrorToException']);
 
         $this->handlers = $handlers;
+        $this->debug = $debug;
     }
 
     public function process(\Exception $e, ServerRequestInterface $request): ResponseInterface
     {
+        if ($this->debug) {
+            throw $e;
+        }
 
         $handler = $this->buildSequence($e::class);
         return $handler->handle($e, $request);
@@ -64,7 +59,7 @@ class ErrorManager implements ErrorManagerInterface
         return $parent ? $parent->getName() : null;
     }
 
-    public function translateErrorToException(int $number, string $message, string $file = null, int $line = null): bool
+    public function translateErrorToException(int $number, string $message, string $file = null, int $line = null)
     {
         throw new \ErrorException($message, 0, $number, $file, $line);
     }

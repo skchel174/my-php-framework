@@ -9,4 +9,4 @@ use App\Http\Middlewares\AppPerformanceMiddleware;
 
 $dispatcher->add(ErrorHandleMiddleware::class);
 $dispatcher->add(RouteDispatchMiddleware::class);
-$dispatcher->add(AppPerformanceMiddleware::class)->route('home');
+$dispatcher->add(AppPerformanceMiddleware::class);
