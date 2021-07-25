@@ -4,7 +4,7 @@ namespace Framework\Helpers;
 
 use Psr\Http\Message\ServerRequestInterface;
 
-trait ContentTypeHelper
+trait ResponseTypeHelper
 {
     public function getResponseType(ServerRequestInterface $request): string
     {
