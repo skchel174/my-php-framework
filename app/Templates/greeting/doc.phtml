@@ -1,14 +1,14 @@
-<?php /** @var Framework\Renderer\Renderer $this */ ?>
+<?php use Framework\Renderer\View; ?>
 
-<?php $this->extends('greeting/main.phtml');  ?>
+<?php View::extends('greeting/layout.phtml'); ?>
 
-<?php $this->block('main') ?>
-    <h1>Documentation</h1>
+<?php View::block('main') ?>
 
-    <?php $this->block('footer') ?>
-    <footer>
-        <h3>DOC FOOTER</h3>
-    </footer>
-    <?php $this->close() ?>
+<div class="doc main__doc">
 
-<?php $this->close() ?>
+    <div class="doc__sidebar"></div>
+    <div class="doc__content"></div>
+
+</div>
+
+<?php View::close() ?>

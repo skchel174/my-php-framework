@@ -15,6 +15,11 @@ class Renderer implements RendererInterface
 
     public function render(string $template, array $parameters = []): string
     {
-        return $this->templatesManager->handle($template, $parameters);
+        try {
+            return $this->templatesManager->handle($template, $parameters);
+        } catch (\Throwable $e) {
+            ob_get_clean();
+            throw $e;
+        }
     }
 }

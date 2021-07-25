@@ -1,11 +1,15 @@
 <?php use Framework\Renderer\View; ?>
 
-<?php View::extends('greeting/layout.phtml');  ?>
+<?php View::extends('greeting/layout.phtml'); ?>
 
 <?php View::block('main') ?>
-    <div class="main">
-        <?php View::include('greeting/nav.phtml', $parameters) ?>
-
-        <p><?=$text ?></p>
+<div class="jumbotron main__jumbotron">
+    <h1 class="jumbotron__h1">
+        <span class="jumbotron__span-top">WELCOME</span>
+        <span class="jumbotron__span-bottom">to My-PHP-Framework</span>
+    </h1>
+    <div class="jumbotron__link">
+        <a href="<?= View::route('doc') ?>" class="jumbotron__a">Learn more...</a>
     </div>
+</div>
 <?php View::close() ?>

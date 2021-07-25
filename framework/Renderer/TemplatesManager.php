@@ -9,39 +9,34 @@ use Framework\Renderer\Exceptions\NotOpenedBlockException;
 class TemplatesManager
 {
     private string $directory;
+    private BlocksCollection $blocks;
     private FiltersCollection $filters;
     private ExtensionsCollection $extensions;
     private ?Template $currentTemplate = null;
-    private BlocksCollection $blocks;
 
     public function __construct(
         string $directory,
+        BlocksCollection $blocks,
         FiltersCollection $filters,
         ExtensionsCollection $extensions,
-        BlocksCollection $blocks,
     )
     {
         $this->directory = $directory;
+        $this->blocks = $blocks;
         $this->filters = $filters;
         $this->extensions = $extensions;
-        $this->blocks = $blocks;
     }
 
     public function handle(string $template, array $parameters = []): string
     {
         $this->currentTemplate = $this->createTemplate($template);
 
-        try {
-            while ($this->currentTemplate) {
-                $content = $this->renderTemplate($this->currentTemplate, $parameters);
-            }
+        while ($this->currentTemplate) {
+            $content = $this->renderTemplate($this->currentTemplate, $parameters);
+        }
 
-            if ($this->blocks->isNotClosedExist()) {
-                throw new NotClosedBlockException($this->blocks->getOpen());
-            }
-        } catch (\Throwable $e) {
-            ob_get_clean();
-            throw $e;
+        if ($this->blocks->isNotClosedExist()) {
+            throw new NotClosedBlockException($this->blocks->getOpen());
         }
 
         return $content;

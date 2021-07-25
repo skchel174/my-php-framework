@@ -50,7 +50,7 @@ class RouteDispatcher implements RouteDispatcherInterface
     {
         foreach ($this->routes->getRoutes() as $route) {
             /** @var Route $route */
-            if ($name != $route->getName()) {
+            if ($name != $route->getName() && $name != $route->getPath()) {
                 continue;
             }
 

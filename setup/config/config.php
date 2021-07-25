@@ -12,7 +12,7 @@ return [
 
     'error' => [
         'templates' => [
-            'default' => 'error_page.phtml',
+            'default' => 'error/default.phtml',
         ],
     ]
 ];

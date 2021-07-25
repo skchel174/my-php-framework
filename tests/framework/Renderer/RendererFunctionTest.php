@@ -28,9 +28,9 @@ class RendererFunctionTest extends TestCase
 
         $templatesManager = new TemplatesManager(
             __DIR__ . '/templates',
+            new BlocksCollection(),
             new FiltersCollection(),
             $extensions,
-            new BlocksCollection(),
         );
 
         $this->renderer = new Renderer($templatesManager);
