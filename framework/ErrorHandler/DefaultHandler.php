@@ -36,7 +36,7 @@ class DefaultHandler implements HandlerInterface
 
     public function render(\Exception $e, ServerRequestInterface $request): ResponseInterface
     {
-        $type = $this->getType($request);
+        $type = $this->getResponseType($request);
         $errorFactory =  $type === 'json' ? $this->jsonErrorFactory : $this->htmlErrorFactory;
         return $errorFactory->create($e);
     }
