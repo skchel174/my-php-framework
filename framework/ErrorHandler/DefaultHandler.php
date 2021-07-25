@@ -5,12 +5,15 @@ namespace Framework\ErrorHandler;
 use Framework\ErrorHandler\ErrorFactory\HtmlErrorFactory;
 use Framework\ErrorHandler\ErrorFactory\JsonErrorFactory;
 use Framework\ErrorHandler\Interfaces\HandlerInterface;
+use Framework\Helpers\ContentTypeHelper;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 
 class DefaultHandler implements HandlerInterface
 {
+    use ContentTypeHelper;
+
     private LoggerInterface $logger;
     private HtmlErrorFactory $htmlErrorFactory;
     private JsonErrorFactory $jsonErrorFactory;
@@ -18,7 +21,7 @@ class DefaultHandler implements HandlerInterface
     public function __construct(
         LoggerInterface $logger,
         HtmlErrorFactory $htmlErrorFactory,
-        JsonErrorFactory $jsonErrorFactory
+        JsonErrorFactory $jsonErrorFactory,
     )
     {
         $this->logger = $logger;
@@ -33,13 +36,8 @@ class DefaultHandler implements HandlerInterface
 
     public function render(\Exception $e, ServerRequestInterface $request): ResponseInterface
     {
-        $acceptType = $request->getHeaderLine('Accept')
-            ?? $request->getHeaderLine('Content-Type');
-
-        $errorFactory = str_contains($acceptType, 'json')
-            ? $this->jsonErrorFactory
-            : $this->htmlErrorFactory;
-
+        $type = $this->getResponseType($request);
+        $errorFactory =  $type === 'json' ? $this->jsonErrorFactory : $this->htmlErrorFactory;
         return $errorFactory->create($e);
     }
 
