@@ -46,7 +46,12 @@ class Service implements ServiceInterface
             return $this->service;
         }
 
-        $reflection = new \ReflectionClass($this->service);
+        return $this->constructService($container, $this->service);
+    }
+
+    protected function constructService(ContainerInterface $container, string $service): object
+    {
+        $reflection = new \ReflectionClass($service);
 
         if ($constructor = $reflection->getConstructor()) {
             $arguments = $this->initParameters($container, $constructor->getParameters());
