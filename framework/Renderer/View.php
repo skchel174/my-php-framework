@@ -8,6 +8,8 @@ namespace Framework\Renderer;
  * @method static extends (string $string)
  * @method static include (string $string, array $parameters = [])
  * @method static get(mixed $parameter, array|string $filters = [])
+ * @method static assets(string $string)
+ * @method static route(string $string)
  */
 class View
 {
