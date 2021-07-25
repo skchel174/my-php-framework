@@ -2,7 +2,7 @@
 
 namespace Framework\ErrorHandler;
 
-use Framework\Helpers\ContentTypeHelper;
+use Framework\Helpers\ResponseTypeHelper;
 use Psr\Http\Message\ServerRequestInterface;
 use Whoops\Handler\JsonResponseHandler;
 use Whoops\Handler\PrettyPageHandler;
@@ -10,7 +10,7 @@ use Whoops\Run;
 
 class Debugger
 {
-    use ContentTypeHelper;
+    use ResponseTypeHelper;
 
     private Run $whoops;
 
