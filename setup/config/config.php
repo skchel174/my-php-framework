@@ -1,11 +1,16 @@
 <?php
 
 return [
-    'debug' => false,
+    'debug' => true,
 
     'log' => [
-        'name' => 'default_log',
-        'file' => BASE_DIR . '/storage/log/default.log',
+        'default' => [
+            'name' => 'default-logger',
+            'handler' => [
+                'file' => BASE_DIR . '/storage/log/default.log',
+                'level' => 100,
+            ],
+        ],
     ],
 
     'templates' => BASE_DIR . '/app/Templates',
