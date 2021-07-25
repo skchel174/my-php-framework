@@ -24,6 +24,7 @@ class GreetingController
 
     public function doc(ServerRequestInterface $request): ResponseInterface
     {
-
+        $html = $this->renderer->render('greeting/doc.phtml');
+        return new HtmlResponse($html);
     }
 }

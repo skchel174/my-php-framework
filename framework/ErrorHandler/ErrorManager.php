@@ -13,12 +13,24 @@ class ErrorManager implements ErrorManagerInterface
 
     public function __construct(HandlersCollection $handlers)
     {
-        set_error_handler([$this, 'translateErrorToException']);
+//        ini_set('display_errors', 0);
+//        set_error_handler([$this, 'translateErrorToException']);
+//        register_shutdown_function(function () {
+//            if ($error = error_get_last()) {
+//                echo new \ErrorException(
+//                    $error['message'],
+//                    0, $error['type'],
+//                    $error['file'],
+//                    $error['line']);
+//            };
+//        });
+
         $this->handlers = $handlers;
     }
 
     public function process(\Exception $e, ServerRequestInterface $request): ResponseInterface
     {
+
         $handler = $this->buildSequence($e::class);
         return $handler->handle($e, $request);
     }
@@ -52,14 +64,8 @@ class ErrorManager implements ErrorManagerInterface
         return $parent ? $parent->getName() : null;
     }
 
-    public function translateErrorToException(
-        int $errno,
-        string $errstr,
-        string $errfile = null,
-        int $errline = null,
-        array $errcontext = null,
-    ): bool
+    public function translateErrorToException(int $number, string $message, string $file = null, int $line = null): bool
     {
-        throw new \ErrorException($errstr, 0, $errno, $errfile, $errline);
+        throw new \ErrorException($message, 0, $number, $file, $line);
     }
 }

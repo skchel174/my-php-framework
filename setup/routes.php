@@ -6,8 +6,8 @@ use App\Http\Controllers\IndexController;
 
 /** @var RoutesCollection $routes */
 
-$routes->get('/', [GreetingController::class, 'index']);
-$routes->get('/doc', [GreetingController::class, 'doc']);
+$routes->get('/', [GreetingController::class, 'index'])->name('greeting');
+$routes->get('/doc', [GreetingController::class, 'doc'])->name('doc');
 
 
 
