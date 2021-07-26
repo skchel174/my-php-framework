@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Middlewares\ApiOrWebMiddleware;
+namespace Framework\Http\Middlewares\ApiOrWebMiddleware;
 
-use Framework\Http\Middlewares\MiddlewareDispatcher\Interfaces\MiddlewareDispatcherInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -12,12 +11,12 @@ class ApiOrWebMiddleware implements MiddlewareInterface
 {
     const API_PREFIX = '/api';
 
-    private MiddlewareDispatcherInterface $apiDispatcher;
-    private MiddlewareDispatcherInterface $webDispatcher;
+    private ApiMiddlewareDispatcher $apiDispatcher;
+    private WebMiddlewareDispatcher $webDispatcher;
 
     public function __construct(
-        MiddlewareDispatcherInterface $apiDispatcher,
-        MiddlewareDispatcherInterface $webDispatcher
+        ApiMiddlewareDispatcher $apiDispatcher,
+        WebMiddlewareDispatcher $webDispatcher
     )
     {
         $this->apiDispatcher = $apiDispatcher;
