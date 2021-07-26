@@ -7,9 +7,7 @@ use App\Http\Controllers\IndexController;
 /** @var RoutesCollection $routes */
 
 $routes->get('/', [GreetingController::class, 'index'])->name('greeting');
-$routes->get('/doc', [GreetingController::class, 'doc'])->name('doc');
-
-
+$routes->get('/api/doc', [GreetingController::class, 'doc'])->name('doc');
 
 $routes->get('/home', [IndexController::class, 'index']);
 $routes->post('/{page}', [IndexController::class, 'page'])
