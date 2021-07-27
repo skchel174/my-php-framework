@@ -7,7 +7,7 @@ use Framework\Renderer\Interfaces\RendererInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class GreetingController
+class DocController
 {
     private RendererInterface $renderer;
 
@@ -16,15 +16,9 @@ class GreetingController
         $this->renderer = $renderer;
     }
 
-    public function index(ServerRequestInterface $request): ResponseInterface
+    public function __invoke(ServerRequestInterface $request): ResponseInterface
     {
-        $html = $this->renderer->render('greeting/main.phtml');
-        return new HtmlResponse($html);
-    }
-
-    public function doc(ServerRequestInterface $request): ResponseInterface
-    {
-        $html = $this->renderer->render('greeting/doc.phtml');
+        $html = $this->renderer->render('doc/main.phtml');
         return new HtmlResponse($html);
     }
 }
