@@ -8,7 +8,7 @@ use Framework\Http\Middlewares\MiddlewareDispatcher\Interfaces\MiddlewareDispatc
 use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareDispatcher;
 use Psr\Container\ContainerInterface;
 
-class AppMiddlewaresFactory
+class ApplicationMiddlewaresFactory
 {
     const MIDDLEWARES = BASE_DIR . '/setup/middlewares/middlewares.php';
     const WEB_MIDDLEWARES = BASE_DIR . '/setup/middlewares/web.php';
