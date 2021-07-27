@@ -3,6 +3,7 @@
 namespace Framework\Http\Middlewares\RequestHandler;
 
 use Framework\Container\Interfaces\ContainerInterface;
+use Framework\Http\Middlewares\RequestHandler\Exceptions\InvalidRequestHandlerActionException;
 use Framework\Http\Middlewares\RequestHandler\Exceptions\InvalidRequestHandlerTypeException;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -18,9 +19,7 @@ class RequestHandlerResolver
 
     public function resolve(mixed $handler): callable
     {
-        if (is_string($handler) && class_exists($handler)) {
-            $handler = $this->container->get($handler);
-        }
+        $handler = $this->createHandler($handler);
 
         if (is_object($handler)) {
             if ($handler instanceof RequestHandlerInterface) {
@@ -37,13 +36,30 @@ class RequestHandlerResolver
         }
 
         if (is_array($handler) && count($handler) === 2) {
-            return function (ServerRequestInterface $request) use ($handler) {
-                [$controller, $action] = $handler;
-                $controller = $this->container->get($controller);
+            [$controller, $action] = $handler;
+            $this->actionExistGuard($controller, $action);
+            $controller = $this->createHandler($controller);
+
+            return function (ServerRequestInterface $request) use ($controller, $action) {
                 return $controller->$action($request);
             };
         }
 
         throw new InvalidRequestHandlerTypeException($handler);
+    }
+
+    protected function createHandler(mixed $handler)
+    {
+        if (is_string($handler) && class_exists($handler)) {
+            $handler = $this->container->get($handler);
+        }
+        return $handler;
+    }
+
+    protected function actionExistGuard(string|object $controller, string $action): void
+    {
+        if (!method_exists($controller, $action)) {
+            throw new InvalidRequestHandlerActionException($controller,  $action);
+        }
     }
 }

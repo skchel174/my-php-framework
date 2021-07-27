@@ -12,24 +12,24 @@ use Whoops\Run;
 
 class Application
 {
-    protected MiddlewareDispatcherInterface $middlewareDispatcher;
+    protected MiddlewareDispatcherInterface $middlewares;
     protected ResponseEmitterInterface $responseEmitter;
     protected RequestHandlerInterface $requestHandler;
 
     public function __construct(
-        MiddlewareDispatcherInterface $middlewareDispatcher,
+        MiddlewareDispatcherInterface $middlewares,
         ResponseEmitterInterface $responseEmitter,
         RequestHandlerInterface $requestHandler,
     )
     {
-        $this->middlewareDispatcher = $middlewareDispatcher;
+        $this->middlewares = $middlewares;
         $this->responseEmitter = $responseEmitter;
         $this->requestHandler = $requestHandler;
     }
 
     public function handleRequest(ServerRequestInterface $request): void
     {
-        $response = $this->middlewareDispatcher->process($request, $this->requestHandler);
+        $response = $this->middlewares->process($request, $this->requestHandler);
         $this->responseEmitter->emit($response);
     }
 

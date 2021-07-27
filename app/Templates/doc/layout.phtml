@@ -12,12 +12,8 @@
 </head>
 <body>
 
-<?php View::include('greeting/header.phtml') ?>
+<?php View::include('doc/header.phtml') ?>
 
-<main class="main center">
-    <?php View::block('main') ?><?php View::close() ?>
-</main>
-
-<script src="<?= View::assets('js/script.js') ?>"></script>
+<?php View::block('main') ?><?php View::close() ?>
 </body>
 </html>

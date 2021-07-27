@@ -23,107 +23,26 @@ a {
 .header__content {
     display: flex;
     align-items: center;
-    min-height: 55px;
+    min-height: 60px;
 }
 
-.header__nav {
-    margin-left: 20px;
-}
-
-.nav {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.nav__link {
-    padding: 0 15px;
-}
-
-.nav__a {
-    padding: 5px 5px;
-    font-size: 20px;
-    color: #9e9e9e;
-    cursor: pointer;
-    letter-spacing: 2px;
-    transition-property: color;
-    transition-duration: .4s;
-}
-
-.nav__a_active {
+.header__logo {
     color: #ffffff;
-}
-
-.nav__logo {
-    padding: 0;
-    margin-right: 25px;
+    margin-left: 25px;
     font-size: 26px;
-    letter-spacing: 2px;
+    letter-spacing: 4px;
 }
 
 /* MAIN */
 
 .main {
     display: flex;
-    justify-content: center;
-}
-
-.main__jumbotron {
-    margin-top: 50px;
+    align-items: center;
+    flex-direction: column;
 }
 
 .main__doc {
-    margin-top: 30px;
-}
-
-.jumbotron {
-    display: flex;
-    flex-direction: column;
-    width: 900px;
-    height: 400px;
-    background-color: #eeeeee;
-    border-radius: 10px;
-    padding: 60px 90px;
-}
-
-.jumbotron__h1 {
-    display: flex;
-    flex-direction: column;
-    color: #424242;
-}
-
-.jumbotron__span-top {
-    font-size: 76px;
-    font-weight: normal;
-    letter-spacing: 20px;
-}
-
-.jumbotron__span-bottom {
-    margin-top: 30px;
-    margin-left: 100px;
-    font-weight: normal;
-    font-size: 40px;
-    letter-spacing: 5px;
-}
-
-.jumbotron__link {
-    display: flex;
-    justify-content: flex-end;
-    margin-top: 100px;
-}
-
-.jumbotron__a {
-    padding: 5px 5px;
-    font-size: 20px;
-    color: #9e9e9e;
-    cursor: pointer;
-    letter-spacing: 2px;
-    transition-property: color;
-    transition-duration: .4s;
-}
-
-.jumbotron__a:hover {
-    color: #424242;
+    margin-top: 35px;
 }
 
 /* DOC */
@@ -135,25 +54,15 @@ a {
 }
 
 .doc__sidebar {
-    flex: 2;
-    height: 700px;
-    background-color: #eeeeee;
-    border-radius: 10px;
-    padding: 25px;
+    width: 300px;
+    padding: 15px;
 }
 
 .doc__content {
-    flex: 6;
+    width: 850px;
     margin-left: 30px;
     margin-bottom: 30px;
     min-height: 100vh;
-    background-color: #eeeeee;
-    border-radius: 10px;
-    padding: 25px;
+    padding: 15px;
+    border-left: 2px solid #eeeeee;
 }
-
-
-
-
-
-

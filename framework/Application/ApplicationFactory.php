@@ -2,29 +2,19 @@
 
 namespace Framework\Application;
 
-use Framework\Container\Interfaces\ContainerInterface;
-use Framework\Http\Middlewares\MiddlewareDispatcher\Interfaces\MiddlewareDispatcherInterface;
-use Framework\Http\ResponseEmitter\Interfaces\ResponseEmitterInterface;
-use Psr\Http\Server\RequestHandlerInterface;
+use Framework\Http\Middlewares\ApplicationMiddlewaresFactory;
+use Framework\Http\Middlewares\RequestHandler\RequestHandler;
+use Framework\Http\ResponseEmitter\ResponseEmitter;
+use Psr\Container\ContainerInterface;
 
 class ApplicationFactory
 {
-    const MIDDLEWARES_FILE = BASE_DIR . '/setup/middlewares.php';
-
     public function __invoke(ContainerInterface $container): Application
     {
-        $middlewareDispatcher = $container->get(MiddlewareDispatcherInterface::class);
-        $this->middlewares($middlewareDispatcher);
-
         return new Application(
-            $middlewareDispatcher,
-            $container->get(ResponseEmitterInterface::class),
-            $container->get(RequestHandlerInterface::class),
+            $container->get(ApplicationMiddlewaresFactory::class)($container),
+            $container->get(ResponseEmitter::class),
+            $container->get(RequestHandler::class),
         );
-    }
-
-    protected function middlewares(MiddlewareDispatcherInterface $dispatcher): void
-    {
-        require static::MIDDLEWARES_FILE;
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use Framework\ErrorHandler\Middleware\ErrorHandleMiddleware;
+use Framework\Http\Middlewares\ApiOrWebMiddleware\ApiOrWebMiddleware;
 use Framework\Http\Middlewares\MiddlewareDispatcher\Interfaces\MiddlewareDispatcherInterface;
 use Framework\Http\Middlewares\RouteDispatchMiddleware;
 use App\Http\Middlewares\AppPerformanceMiddleware;
@@ -9,4 +10,5 @@ use App\Http\Middlewares\AppPerformanceMiddleware;
 
 $dispatcher->add(ErrorHandleMiddleware::class);
 $dispatcher->add(RouteDispatchMiddleware::class);
-$dispatcher->add(AppPerformanceMiddleware::class);
+//$dispatcher->add(AppPerformanceMiddleware::class);
+$dispatcher->add(ApiOrWebMiddleware::class);
