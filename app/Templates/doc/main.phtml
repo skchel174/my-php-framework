@@ -1,0 +1,12 @@
+<?php use Framework\Renderer\View; ?>
+
+<?php View::extends('doc/layout.phtml'); ?>
+
+<?php View::block('main') ?>
+<main class="main center">
+    <div class="doc main__doc">
+        <div class="doc__sidebar"></div>
+        <div class="doc__content"></div>
+    </div>
+</main>
+<?php View::close() ?>
