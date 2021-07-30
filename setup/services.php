@@ -11,7 +11,6 @@ use Framework\Http\MiddlewareDispatcher\MiddlewareDispatcher;
 use Framework\Http\Router\Interfaces\RouteDispatcherInterface;
 use Framework\Http\Router\RouteDispatcher;
 use Framework\Http\Sessions\Interfaces\SessionInterface;
-use Framework\Http\Sessions\MemcachedSessionFactory;
 use Framework\Http\Sessions\SessionFactory;
 use Framework\Logger\LoggerFactory;
 use Framework\Renderer\Interfaces\RendererInterface;
@@ -38,7 +37,7 @@ $provider->factory(Application::class, ApplicationFactory::class);
 $provider->factory(RoutesCollectionInterface::class, RoutesCollectionFactory::class);
 $provider->factory(ErrorManagerInterface::class, ErrorManagerFactory::class);
 $provider->factory(RendererInterface::class, Framework\Renderer\RendererFactory::class);
-$provider->factory(SessionInterface::class, MemcachedSessionFactory::class);
+$provider->factory(SessionInterface::class, SessionFactory::class);
 
 $provider->factory('default-logger', LoggerFactory::class)
     ->argument('config', 'config.log.default');
