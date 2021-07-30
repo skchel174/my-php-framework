@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Framework\Http\Client\Response\HtmlResponse;
 use Framework\Http\Sessions\Interfaces\SessionInterface;
+use Memcached;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
