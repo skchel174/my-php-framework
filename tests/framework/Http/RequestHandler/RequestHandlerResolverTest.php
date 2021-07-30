@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\framework\Http\Middlewares\RequestHandler;
+namespace Tests\framework\Http\RequestHandler;
 
 use Framework\Container\Container;
 use Framework\Http\Client\Response\Response;
-use Framework\Http\Middlewares\RequestHandler\Exceptions\InvalidRequestHandlerTypeException;
-use Framework\Http\Middlewares\RequestHandler\RequestHandlerResolver;
+use Framework\Http\RequestHandler\Exceptions\InvalidRequestHandlerTypeException;
+use Framework\Http\RequestHandler\RequestHandlerResolver;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

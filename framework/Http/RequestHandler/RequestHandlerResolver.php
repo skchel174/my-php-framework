@@ -1,10 +1,10 @@
 <?php
 
-namespace Framework\Http\Middlewares\RequestHandler;
+namespace Framework\Http\RequestHandler;
 
 use Framework\Container\Interfaces\ContainerInterface;
-use Framework\Http\Middlewares\RequestHandler\Exceptions\InvalidRequestHandlerActionException;
-use Framework\Http\Middlewares\RequestHandler\Exceptions\InvalidRequestHandlerTypeException;
+use Framework\Http\RequestHandler\Exceptions\InvalidRequestHandlerActionException;
+use Framework\Http\RequestHandler\Exceptions\InvalidRequestHandlerTypeException;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 

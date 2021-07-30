@@ -1,12 +1,12 @@
 <?php
 
-namespace Tests\framework\Http\Middlewares\RequestHandler;
+namespace Tests\framework\Http\RequestHandler;
 
 use Framework\Container\Container;
 use Framework\Http\Client\Request\ServerRequest;
 use Framework\Http\Client\Response\Response;
-use Framework\Http\Middlewares\RequestHandler\RequestHandler;
-use Framework\Http\Middlewares\RequestHandler\RequestHandlerResolver;
+use Framework\Http\RequestHandler\RequestHandler;
+use Framework\Http\RequestHandler\RequestHandlerResolver;
 use Framework\Http\Router\Route;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;

@@ -1,8 +1,6 @@
 <?php
 
-namespace Framework\Http\Middlewares\RequestHandler\Exceptions;
-
-use Throwable;
+namespace Framework\Http\RequestHandler\Exceptions;
 
 class InvalidRequestHandlerActionException extends \BadMethodCallException
 {
