@@ -4,8 +4,8 @@ namespace Framework\Http\Middlewares;
 
 use Framework\Http\Middlewares\ApiOrWebMiddleware\ApiMiddlewareDispatcher;
 use Framework\Http\Middlewares\ApiOrWebMiddleware\WebMiddlewareDispatcher;
-use Framework\Http\Middlewares\MiddlewareDispatcher\Interfaces\MiddlewareDispatcherInterface;
-use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareDispatcher;
+use Framework\Http\MiddlewareDispatcher\Interfaces\MiddlewareDispatcherInterface;
+use Framework\Http\MiddlewareDispatcher\MiddlewareDispatcher;
 use Psr\Container\ContainerInterface;
 
 class ApplicationMiddlewaresFactory

@@ -2,7 +2,7 @@
 
 use Framework\Http\Middlewares\ErrorHandleMiddleware;
 use Framework\Http\Middlewares\ApiOrWebMiddleware\ApiOrWebMiddleware;
-use Framework\Http\Middlewares\MiddlewareDispatcher\Interfaces\MiddlewareDispatcherInterface;
+use Framework\Http\MiddlewareDispatcher\Interfaces\MiddlewareDispatcherInterface;
 use Framework\Http\Middlewares\RouteDispatchMiddleware;
 
 /** @var MiddlewareDispatcherInterface $dispatcher */

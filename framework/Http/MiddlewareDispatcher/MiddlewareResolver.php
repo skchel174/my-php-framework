@@ -1,14 +1,14 @@
 <?php
 
-namespace Framework\Http\Middlewares\MiddlewareDispatcher;
+namespace Framework\Http\MiddlewareDispatcher;
 
 use Framework\Container\Interfaces\ContainerInterface;
-use Framework\Http\Middlewares\MiddlewareDispatcher\Exceptions\UnknownMiddlewareClassException;
-use Framework\Http\Middlewares\MiddlewareDispatcher\Interfaces\MiddlewareResolverInterface;
+use Framework\Http\MiddlewareDispatcher\Exceptions\UnknownMiddlewareClassException;
+use Framework\Http\MiddlewareDispatcher\Interfaces\MiddlewareResolverInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Framework\Http\Middlewares\MiddlewareDispatcher\Exceptions\InvalidMiddlewareTypeException;
+use Framework\Http\MiddlewareDispatcher\Exceptions\InvalidMiddlewareTypeException;
 use ReflectionParameter;
 
 class MiddlewareResolver implements MiddlewareResolverInterface

@@ -3,7 +3,7 @@
 namespace Tests\framework\Http\Middlewares\MiddlewareDispatcher;
 
 use Framework\Http\Client\Request\ServerRequest;
-use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareWrapper;
+use Framework\Http\MiddlewareDispatcher\MiddlewareWrapper;
 use Framework\Http\Router\Route;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;

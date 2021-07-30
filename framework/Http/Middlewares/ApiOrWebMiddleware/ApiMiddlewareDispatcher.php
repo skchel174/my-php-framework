@@ -2,7 +2,7 @@
 
 namespace Framework\Http\Middlewares\ApiOrWebMiddleware;
 
-use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareDispatcher;
+use Framework\Http\MiddlewareDispatcher\MiddlewareDispatcher;
 
 class ApiMiddlewareDispatcher extends MiddlewareDispatcher
 {}

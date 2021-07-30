@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Http\Middlewares\MiddlewareDispatcher;
+namespace Framework\Http\MiddlewareDispatcher;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

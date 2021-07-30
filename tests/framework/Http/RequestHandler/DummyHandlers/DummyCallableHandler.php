@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\framework\Http\Middlewares\DummyHandlers;
+namespace Tests\framework\Http\RequestHandler\DummyHandlers;
 
 use Framework\Http\Client\Response\Response;
 use Psr\Http\Message\ResponseInterface;

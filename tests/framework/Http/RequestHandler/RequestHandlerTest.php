@@ -7,14 +7,13 @@ use Framework\Http\Client\Request\ServerRequest;
 use Framework\Http\Client\Response\Response;
 use Framework\Http\RequestHandler\RequestHandler;
 use Framework\Http\RequestHandler\RequestHandlerResolver;
-use Framework\Http\Router\Route;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Tests\framework\Http\Middlewares\DummyHandlers\DummyArrayHandler;
-use Tests\framework\Http\Middlewares\DummyHandlers\DummyCallableHandler;
-use Tests\framework\Http\Middlewares\DummyHandlers\DummyPsrHandler;
+use Tests\framework\Http\RequestHandler\DummyHandlers\DummyArrayHandler;
+use Tests\framework\Http\RequestHandler\DummyHandlers\DummyCallableHandler;
+use Tests\framework\Http\RequestHandler\DummyHandlers\DummyPsrHandler;
 
 class RequestHandlerTest extends TestCase
 {

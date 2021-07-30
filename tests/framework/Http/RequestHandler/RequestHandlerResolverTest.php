@@ -9,9 +9,9 @@ use Framework\Http\RequestHandler\RequestHandlerResolver;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Tests\framework\Http\Middlewares\DummyHandlers\DummyArrayHandler;
-use Tests\framework\Http\Middlewares\DummyHandlers\DummyCallableHandler;
-use Tests\framework\Http\Middlewares\DummyHandlers\DummyPsrHandler;
+use Tests\framework\Http\RequestHandler\DummyHandlers\DummyArrayHandler;
+use Tests\framework\Http\RequestHandler\DummyHandlers\DummyCallableHandler;
+use Tests\framework\Http\RequestHandler\DummyHandlers\DummyPsrHandler;
 
 class RequestHandlerResolverTest extends TestCase
 {

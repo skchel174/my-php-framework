@@ -2,9 +2,9 @@
 
 namespace Tests\framework\Http\Middlewares\MiddlewareDispatcher;
 
-use Framework\Http\Middlewares\MiddlewareDispatcher\Interfaces\MiddlewareWrapperInterface;
-use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareDispatcher;
-use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareResolver;
+use Framework\Http\MiddlewareDispatcher\Interfaces\MiddlewareWrapperInterface;
+use Framework\Http\MiddlewareDispatcher\MiddlewareDispatcher;
+use Framework\Http\MiddlewareDispatcher\MiddlewareResolver;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;

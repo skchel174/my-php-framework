@@ -1,8 +1,8 @@
 <?php
 
-namespace Framework\Http\Middlewares\MiddlewareDispatcher;
+namespace Framework\Http\MiddlewareDispatcher;
 
-use Framework\Http\Middlewares\MiddlewareDispatcher\Interfaces\MiddlewareWrapperInterface;
+use Framework\Http\MiddlewareDispatcher\Interfaces\MiddlewareWrapperInterface;
 use Framework\Http\Router\Interfaces\RouteInterface;
 use Framework\Http\Router\Route;
 use Psr\Http\Message\ResponseInterface;
