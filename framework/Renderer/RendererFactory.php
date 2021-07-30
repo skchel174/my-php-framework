@@ -4,6 +4,7 @@ namespace Framework\Renderer;
 
 use Framework\Http\Router\RouteDispatcher;
 use Framework\Renderer\Extensions\AssetsDispatcher;
+use Framework\Renderer\Extensions\CSRFToken;
 use Framework\Renderer\Interfaces\RendererInterface;
 use Psr\Container\ContainerInterface;
 
@@ -28,5 +29,6 @@ class RendererFactory
     {
         $extensions->setExtension($container->get(AssetsDispatcher::class), 'assets');
         $extensions->setExtension($container->get(RouteDispatcher::class), 'route');
+        $extensions->setExtension($container->get(CSRFToken::class), 'csrf');
     }
 }

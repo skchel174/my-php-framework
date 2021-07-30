@@ -16,22 +16,23 @@ class CSRFTokenBuilder
 
     public function __construct(SessionInterface $session)
     {
-        $this->sessionExistGuard();
         $this->session = $session;
     }
 
-    public function set()
+    public function setToken()
     {
+        $this->sessionExistGuard();
         $token = md5($this->session->getId() . $this->tokenSalt);
         $this->session->set(static::KEY, $token);
     }
 
-    public function get(): array
+    public function getToken(): string
     {
+        $this->sessionExistGuard();
         if (!$token = $this->session->get(static::KEY)) {
             throw new MissingCSRFTokenException();
         }
-        return [ 'key' => static::KEY, 'token' => $token ];
+        return $token;
     }
 
     protected function sessionExistGuard(): void
