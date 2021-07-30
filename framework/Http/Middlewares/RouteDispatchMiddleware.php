@@ -3,7 +3,7 @@
 namespace Framework\Http\Middlewares;
 
 use Framework\Http\Router\Interfaces\RouteDispatcherInterface;
-use Framework\Http\Router\Route;
+use Framework\Http\Router\Interfaces\RouteInterface;
 use Framework\Http\Router\RouteDispatcher;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -23,7 +23,10 @@ class RouteDispatchMiddleware implements MiddlewareInterface
     {
         $route = $this->router->dispatch($request);
 
-        $attributes = array_merge($route->getAttributes(), [Route::class => $route]);
+        $attributes = array_merge($route->getAttributes(), [
+            RequestHandlerInterface::class => $route->getHandler(),
+            RouteInterface::class => $route,
+        ]);
 
         foreach ($attributes as $name => $value) {
             $request = $request->withAttribute($name, $value);
