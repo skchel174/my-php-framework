@@ -19,5 +19,16 @@ return [
         'templates' => [
             'default' => 'error/default.phtml',
         ],
-    ]
+    ],
+
+    'sessions' => [
+        'options' => [
+//            'save_path' => '127.0.0.1:11211',
+            'save_path' => BASE_DIR . '/storage/sessions',
+            'gc_maxlifetime' => '1800',
+        ],
+        'session_save_handler' => [
+
+        ],
+    ],
 ];
