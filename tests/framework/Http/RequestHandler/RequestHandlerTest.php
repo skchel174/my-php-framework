@@ -11,6 +11,7 @@ use Framework\Http\Router\Route;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 use Tests\framework\Http\Middlewares\DummyHandlers\DummyArrayHandler;
 use Tests\framework\Http\Middlewares\DummyHandlers\DummyCallableHandler;
 use Tests\framework\Http\Middlewares\DummyHandlers\DummyPsrHandler;
@@ -20,9 +21,9 @@ class RequestHandlerTest extends TestCase
     /**
      * @dataProvider handlersProvider
      */
-    public function testHandle(Route $handler): void
+    public function testHandle(mixed $handler): void
     {
-        $request = (new ServerRequest)->withAttribute(Route::class, $handler);
+        $request = (new ServerRequest)->withAttribute(RequestHandlerInterface::class, $handler);
         $resolver = new RequestHandlerResolver(Container::getInstance());
         $handler = new RequestHandler($resolver);
         $response = $handler->handle($request);
@@ -33,12 +34,12 @@ class RequestHandlerTest extends TestCase
     public function handlersProvider(): array
     {
         return [
-            'Closure handler' => [new Route('/', function (ServerRequestInterface $request): ResponseInterface {
+            'Closure handler' => [function (ServerRequestInterface $request): ResponseInterface {
                 return new Response();
-            }, ['GET'])],
-            'Class name handler' => [new Route('/', DummyPsrHandler::class, ['GET'])],
-            'Callable handler' => [new Route('/', DummyCallableHandler::class, ['GET'])],
-            'Array handler' => [new Route('/', [DummyArrayHandler::class, 'index'], ['GET'])],
+            }],
+            'Class name handler' => [DummyPsrHandler::class],
+            'Callable handler' => [DummyCallableHandler::class],
+            'Array handler' => [[DummyArrayHandler::class, 'index']],
         ];
     }
 }
