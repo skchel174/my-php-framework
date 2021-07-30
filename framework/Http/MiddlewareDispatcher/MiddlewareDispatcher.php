@@ -1,13 +1,13 @@
 <?php
 
-namespace Framework\Http\Middlewares\MiddlewareDispatcher;
+namespace Framework\Http\MiddlewareDispatcher;
 
-use Framework\Http\Middlewares\MiddlewareDispatcher\Interfaces\MiddlewareWrapperInterface;
+use Framework\Http\MiddlewareDispatcher\Interfaces\MiddlewareWrapperInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
-use Framework\Http\Middlewares\MiddlewareDispatcher\Interfaces\MiddlewareDispatcherInterface;
+use Framework\Http\MiddlewareDispatcher\Interfaces\MiddlewareDispatcherInterface;
 
 class MiddlewareDispatcher implements MiddlewareInterface, MiddlewareDispatcherInterface
 {

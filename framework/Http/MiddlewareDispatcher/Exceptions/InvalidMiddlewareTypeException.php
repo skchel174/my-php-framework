@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Http\Middlewares\MiddlewareDispatcher\Exceptions;
+namespace Framework\Http\MiddlewareDispatcher\Exceptions;
 
 class InvalidMiddlewareTypeException extends \InvalidArgumentException
 {

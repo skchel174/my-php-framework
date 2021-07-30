@@ -1,9 +1,7 @@
 <?php
 
-namespace Framework\Http\Middlewares\RequestHandler;
+namespace Framework\Http\RequestHandler;
 
-use Framework\Http\Router\Interfaces\RouteInterface;
-use Framework\Http\Router\Route;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
@@ -19,9 +17,9 @@ class RequestHandler implements RequestHandlerInterface
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        /** @var RouteInterface $route */
-        $route = $request->getAttribute(Route::class);
-        $handler = $this->resolver->resolve($route->getHandler());
+        $handler = $this->resolver->resolve(
+            $request->getAttribute(RequestHandlerInterface::class)
+        );
         return $handler($request);
     }
 }

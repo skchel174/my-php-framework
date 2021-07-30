@@ -3,7 +3,7 @@
 namespace Framework\Application;
 
 use Framework\Http\Middlewares\ApplicationMiddlewaresFactory;
-use Framework\Http\Middlewares\RequestHandler\RequestHandler;
+use Framework\Http\RequestHandler\RequestHandler;
 use Framework\Http\ResponseEmitter\ResponseEmitter;
 use Psr\Container\ContainerInterface;
 

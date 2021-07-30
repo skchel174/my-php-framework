@@ -3,9 +3,9 @@
 namespace Tests\framework\Http\Middlewares\MiddlewareDispatcher;
 
 use Framework\Container\Container;
-use Framework\Http\Middlewares\MiddlewareDispatcher\Exceptions\InvalidMiddlewareTypeException;
-use Framework\Http\Middlewares\MiddlewareDispatcher\Exceptions\UnknownMiddlewareClassException;
-use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareResolver;
+use Framework\Http\MiddlewareDispatcher\Exceptions\InvalidMiddlewareTypeException;
+use Framework\Http\MiddlewareDispatcher\Exceptions\UnknownMiddlewareClassException;
+use Framework\Http\MiddlewareDispatcher\MiddlewareResolver;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

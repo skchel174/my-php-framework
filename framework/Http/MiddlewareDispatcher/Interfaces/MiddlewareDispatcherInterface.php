@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Http\Middlewares\MiddlewareDispatcher\Interfaces;
+namespace Framework\Http\MiddlewareDispatcher\Interfaces;
 
 interface MiddlewareDispatcherInterface
 {

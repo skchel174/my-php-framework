@@ -4,8 +4,8 @@ namespace Tests\framework\Http\Middlewares;
 
 use Framework\Container\Container;
 use Framework\Http\Client\Request\ServerRequest;
-use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareDispatcher;
-use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareResolver;
+use Framework\Http\MiddlewareDispatcher\MiddlewareDispatcher;
+use Framework\Http\MiddlewareDispatcher\MiddlewareResolver;
 use Framework\Http\Router\Route;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;

@@ -4,7 +4,7 @@ namespace Framework\Application;
 
 use Framework\Container\ContainerFactory;
 use Framework\ErrorHandler\Debugger;
-use Framework\Http\Middlewares\MiddlewareDispatcher\Interfaces\MiddlewareDispatcherInterface;
+use Framework\Http\MiddlewareDispatcher\Interfaces\MiddlewareDispatcherInterface;
 use Framework\Http\ResponseEmitter\Interfaces\ResponseEmitterInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;

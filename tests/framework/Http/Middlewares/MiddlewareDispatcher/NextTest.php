@@ -3,8 +3,8 @@
 namespace Tests\framework\Http\Middlewares\MiddlewareDispatcher;
 
 use Framework\Http\Client\Request\ServerRequest;
-use Framework\Http\Middlewares\MiddlewareDispatcher\MiddlewareWrapper;
-use Framework\Http\Middlewares\MiddlewareDispatcher\Next;
+use Framework\Http\MiddlewareDispatcher\MiddlewareWrapper;
+use Framework\Http\MiddlewareDispatcher\Next;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
 use Tests\framework\Http\Middlewares\DummyMiddlewares\DummyRequestHandler;
