@@ -9,7 +9,7 @@ use Psr\Http\Message\StreamInterface;
 
 abstract class HttpMessage implements MessageInterface
 {
-    protected string $protocolVersion = '';
+    protected string $protocolVersion = '1.1';
     protected array $headers = [];
     protected ?StreamInterface $body = null;
 
