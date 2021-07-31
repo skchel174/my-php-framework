@@ -31,4 +31,22 @@ return [
 
         ],
     ],
+
+    'db' => [
+        'sqlite' => [
+            'driver' => 'sqlite',
+            'dbname' => BASE_DIR . '/storage/sqlite/example.db',
+            'user' => '',
+            'password' => '',
+        ],
+
+        'mysql' => [
+            'driver' => 'mysql',
+            'host' => '127.0.0.1',
+            'port' => '3306',
+            'dbname' => 'example',
+            'user' => 'guest',
+            'password' => 'secret',
+        ],
+    ]
 ];
