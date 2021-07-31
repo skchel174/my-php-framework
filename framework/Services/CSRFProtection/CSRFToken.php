@@ -6,7 +6,7 @@ use Framework\Http\Sessions\Exceptions\SessionNotStartedException;
 use Framework\Http\Sessions\Interfaces\SessionInterface;
 use Framework\Services\CSRFProtection\Exceptions\MissingCSRFTokenException;
 
-class CSRFTokenBuilder
+class CSRFToken
 {
     const KEY = 'csrf_token';
     const HEADER = 'X-CSRF-Token';
@@ -19,7 +19,7 @@ class CSRFTokenBuilder
         $this->session = $session;
     }
 
-    public function setToken()
+    public function setToken(): void
     {
         $this->sessionExistGuard();
         $token = md5($this->session->getId() . $this->tokenSalt);
