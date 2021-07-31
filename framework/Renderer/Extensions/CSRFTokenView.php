@@ -2,21 +2,21 @@
 
 namespace Framework\Renderer\Extensions;
 
-use Framework\Services\CSRFProtection\CSRFTokenBuilder;
+use Framework\Services\CSRFProtection\CSRFToken;
 
-class CSRFToken
+class CSRFTokenView
 {
-    private CSRFTokenBuilder $tokenBuilder;
+    private CSRFToken $token;
 
-    public function __construct(CSRFTokenBuilder $tokenBuilder)
+    public function __construct(CSRFToken $token)
     {
-        $this->tokenBuilder = $tokenBuilder;
+        $this->token = $token;
     }
 
     public function csrf(): string
     {
-        $key = $this->tokenBuilder::KEY;
-        $token = $this->tokenBuilder->getToken();
+        $key = $this->token::KEY;
+        $token = $this->token->getToken();
         return '<input type="hidden" name="' . $key . '" value="' . $token . '">';
     }
 }

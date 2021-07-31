@@ -1,0 +1,7 @@
+<?php use Framework\Renderer\View; ?>
+
+<form action="/home" method="POST">
+    <?=View::csrf() ?>
+    <input type="text" name="input">
+    <input type="submit">
+</form>

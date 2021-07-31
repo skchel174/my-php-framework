@@ -2,7 +2,7 @@
 
 namespace Framework\Renderer\Extensions;
 
-class AssetsDispatcher
+class AssetsPathView
 {
     const ASSETS_DIR = '/assets';
 

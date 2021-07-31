@@ -2,7 +2,7 @@
 
 namespace Framework\Http\Middlewares\CSRFProtection;
 
-use Framework\Services\CSRFProtection\CSRFTokenBuilder;
+use Framework\Services\CSRFProtection\CSRFToken;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -10,16 +10,17 @@ use Psr\Http\Server\RequestHandlerInterface;
 
 class CSRFProtectionStartMiddleware implements MiddlewareInterface
 {
-    private CSRFTokenBuilder $tokenBuilder;
+    private CSRFToken $token;
 
-    public function __construct(CSRFTokenBuilder $tokenBuilder)
+    public function __construct(CSRFToken $token)
     {
-        $this->tokenBuilder = $tokenBuilder;
+        $this->token = $token;
     }
 
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        $this->tokenBuilder->setToken();
-        return $handler->handle($request);
+        $this->token->setToken();
+        $response = $handler->handle($request);
+        return $response->withHeader($this->token::HEADER, $this->token->getToken());
     }
 }
