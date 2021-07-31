@@ -4,7 +4,7 @@ namespace Framework\Renderer\Extensions;
 
 use Framework\Services\CSRFProtection\CSRFToken;
 
-class CSRFTokenView
+class CSRFTokenExtension
 {
     private CSRFToken $token;
 

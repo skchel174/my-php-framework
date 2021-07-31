@@ -3,8 +3,9 @@
 namespace Framework\Renderer;
 
 use Framework\Http\Router\RouteDispatcher;
-use Framework\Renderer\Extensions\AssetsPathView;
-use Framework\Renderer\Extensions\CSRFTokenView;
+use Framework\Renderer\Extensions\AssetsPathExtension;
+use Framework\Renderer\Extensions\CSRFTokenExtension;
+use Framework\Renderer\Extensions\MethodSpecifierExtension;
 use Framework\Renderer\Interfaces\RendererInterface;
 use Psr\Container\ContainerInterface;
 
@@ -28,7 +29,8 @@ class RendererFactory
     protected function extensions(ContainerInterface $container, ExtensionsCollection $extensions): void
     {
         $extensions->setExtension($container->get(RouteDispatcher::class), 'route');
-        $extensions->setExtension($container->get(AssetsPathView::class), 'assets');
-        $extensions->setExtension($container->get(CSRFTokenView::class), 'csrf');
+        $extensions->setExtension($container->get(AssetsPathExtension::class), 'assets');
+        $extensions->setExtension($container->get(MethodSpecifierExtension::class), 'method');
+        $extensions->setExtension($container->get(CSRFTokenExtension::class), 'csrf');
     }
 }
