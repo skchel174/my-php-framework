@@ -2,7 +2,7 @@
 
 namespace Framework\Renderer\Extensions;
 
-class AssetsPathView
+class AssetsPathExtension
 {
     const ASSETS_DIR = '/assets';
 

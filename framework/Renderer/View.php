@@ -10,6 +10,8 @@ namespace Framework\Renderer;
  * @method static get(mixed $parameter, array|string $filters = [])
  * @method static assets(string $string)
  * @method static route(string $string)
+ * @method static csrf()
+ * @method static method(string $string)
  */
 class View
 {
