@@ -1,6 +1,9 @@
 <?php
 
+use App\Http\Controllers\IndexController;
 use Framework\Container\ServiceProvider;
+use Framework\DB\MysqlDBFactory;
+use Framework\DB\SqliteDBFactory;
 use Framework\ErrorHandler\DefaultHandler;
 use Framework\ErrorHandler\ErrorFactory\HtmlErrorFactory;
 use Framework\ErrorHandler\ErrorManager;
@@ -26,6 +29,10 @@ use Framework\Http\Router\RoutesCollectionFactory;
 $provider->service(DefaultHandler::class)->argument('logger', 'default-logger');
 $provider->service(HtmlErrorFactory::class)->argument('templates', 'config.error.templates');
 
+$provider->service(IndexController::class)
+    ->argument('sqlite', SqliteDBFactory::class)
+    ->argument('mysql', MysqlDBFactory::class);
+
 // Aliases
 $provider->alias(RouteDispatcherInterface::class, RouteDispatcher::class);
 $provider->alias(MiddlewareDispatcherInterface::class, MiddlewareDispatcher::class);
@@ -38,6 +45,9 @@ $provider->factory(RoutesCollectionInterface::class, RoutesCollectionFactory::cl
 $provider->factory(ErrorManagerInterface::class, ErrorManagerFactory::class);
 $provider->factory(RendererInterface::class, Framework\Renderer\RendererFactory::class);
 $provider->factory(SessionInterface::class, SessionFactory::class);
+
+$provider->factory(MysqlDBFactory::class, MysqlDBFactory::class);
+$provider->factory(SqliteDBFactory::class, SqliteDBFactory::class);
 
 $provider->factory('default-logger', LoggerFactory::class)
     ->argument('config', 'config.log.default');
