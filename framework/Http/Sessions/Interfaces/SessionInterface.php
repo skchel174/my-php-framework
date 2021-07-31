@@ -60,6 +60,14 @@ interface SessionInterface
     public function get(string $key = ''): mixed;
 
     /**
+     * Проверяет, существует значение сессии по переданному ключу.
+     *
+     * @param string $key
+     * @return bool
+     */
+    public function has(string $key): bool;
+
+    /**
      * Удалает эелемент массива сессий по ключу $key.
      *
      * @param string $key

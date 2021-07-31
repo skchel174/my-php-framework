@@ -51,6 +51,11 @@ class Session implements SessionInterface
         return $_SESSION[$key] ?? null;
     }
 
+    public function has(string $key): bool
+    {
+        return array_key_exists($key, $_SESSION);
+    }
+
     public function remove(string $key): bool
     {
         if (isset($_SESSION[$key])) {
