@@ -9,7 +9,7 @@ use Whoops\Run;
 
 class JsonErrorFactory extends ErrorFactory
 {
-    public function create(\Exception $e): ResponseInterface
+    public function create(\Throwable $e): ResponseInterface
     {
         $code = $this->normalizeCode($e->getCode());
         return new JsonResponse(['code' => $code, 'message' => $e->getMessage()], $code);

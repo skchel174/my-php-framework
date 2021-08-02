@@ -13,7 +13,11 @@ class ErrorManagerFactory
     {
         $collection = $container->get(HandlersCollection::class);
         $this->handlers($collection);
-        return new ErrorManager($collection, $container->get('config.debug'));
+        return new ErrorManager(
+            $collection,
+            $container->get(Debugger::class),
+            $container->get('config.debug'),
+        );
     }
 
     protected function handlers(HandlersCollection $collection): void

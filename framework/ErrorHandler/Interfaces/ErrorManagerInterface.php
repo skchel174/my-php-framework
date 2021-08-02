@@ -7,5 +7,5 @@ use Psr\Http\Message\ServerRequestInterface;
 
 interface ErrorManagerInterface
 {
-    public function process(\Exception $e, ServerRequestInterface $request): ResponseInterface;
+    public function process(\Throwable $e, ServerRequestInterface $request): ResponseInterface;
 }

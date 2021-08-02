@@ -3,7 +3,7 @@
 use Framework\Application\Application;
 use Framework\Http\Client\Request\ServerRequestFactory;
 
-ini_set('display_errors', 1);
+ini_set('display_errors', 0);
 
 define('BASE_DIR', dirname(__DIR__));
 define('START_TIME', microtime(true));

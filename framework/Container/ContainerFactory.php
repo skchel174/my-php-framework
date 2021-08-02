@@ -14,12 +14,12 @@ class ContainerFactory
         $container = Container::getInstance();
 
         $provider = $container->get(ServiceProvider::class);
-        $this->services($provider);
+        $this->services($container, $provider);
 
         return $container;
     }
 
-    protected function services(ServiceProvider $provider): void
+    protected function services(ContainerInterface $container, ServiceProvider $provider): void
     {
         $configLoader = new ConfigLoader(static::CONFIG_DIR);
         $provider->config('config', $configLoader->load());

@@ -4,6 +4,7 @@ namespace Framework\Application;
 
 use Framework\Container\ContainerFactory;
 use Framework\ErrorHandler\Debugger;
+use Framework\ErrorHandler\ErrorManager;
 use Framework\Http\MiddlewareDispatcher\Interfaces\MiddlewareDispatcherInterface;
 use Framework\Http\ResponseEmitter\Interfaces\ResponseEmitterInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -27,21 +28,25 @@ class Application
         $this->requestHandler = $requestHandler;
     }
 
-    public function handleRequest(ServerRequestInterface $request): void
-    {
-        $response = $this->middlewares->process($request, $this->requestHandler);
-        $this->responseEmitter->emit($response);
-    }
-
     public static function run(ServerRequestInterface $request): void
     {
+        ErrorManager::registerErrorHandler();
+
         try {
             $container = (new ContainerFactory)->create();
             $app = $container->get(Application::class);
             $app->handleRequest($request);
-        } catch (\Exception $e) {
-            $debugger = new Debugger(new Run());
-            $debugger->handle($e, $request);
+        } catch (\Throwable $e) {
+            if (ini_get('display_errors')) {
+                $debugger = new Debugger(new Run());
+                $debugger->handle($e, $request);
+            }
         }
+    }
+
+    public function handleRequest(ServerRequestInterface $request): void
+    {
+        $response = $this->middlewares->process($request, $this->requestHandler);
+        $this->responseEmitter->emit($response);
     }
 }

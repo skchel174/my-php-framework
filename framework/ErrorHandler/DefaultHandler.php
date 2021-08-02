@@ -29,19 +29,19 @@ class DefaultHandler implements HandlerInterface
         $this->jsonErrorFactory = $jsonErrorFactory;
     }
 
-    public function log(\Exception $e): void
+    public function log(\Throwable $e): void
     {
         $this->logger->debug($e->getMessage());
     }
 
-    public function render(\Exception $e, ServerRequestInterface $request): ResponseInterface
+    public function render(\Throwable $e, ServerRequestInterface $request): ResponseInterface
     {
         $type = $this->getResponseType($request);
         $errorFactory =  $type === 'json' ? $this->jsonErrorFactory : $this->htmlErrorFactory;
         return $errorFactory->create($e);
     }
 
-    public function handle(\Exception $e, ServerRequestInterface $request): ResponseInterface
+    public function handle(\Throwable $e, ServerRequestInterface $request): ResponseInterface
     {
         $this->log($e);
         return $this->render($e, $request);
