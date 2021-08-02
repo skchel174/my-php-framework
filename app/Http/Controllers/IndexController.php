@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Framework\DB\DB;
-use Framework\DB\SqliteDBFactory;
 use Framework\Http\Client\Response\HtmlResponse;
 use Framework\Http\Sessions\Interfaces\SessionInterface;
 use Framework\Renderer\Interfaces\RendererInterface;

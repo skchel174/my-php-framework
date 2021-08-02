@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'debug' => true,
+    'debug' => 1,
 
     'log' => [
         'default' => [

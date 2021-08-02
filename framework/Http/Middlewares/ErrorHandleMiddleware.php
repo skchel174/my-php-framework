@@ -21,7 +21,7 @@ class ErrorHandleMiddleware implements MiddlewareInterface
     {
         try {
             return $handler->handle($request);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             return $this->errorsManager->process($e, $request);
         }
     }

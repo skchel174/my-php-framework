@@ -19,10 +19,11 @@ class HtmlErrorFactory extends ErrorFactory
         $this->templates = $templates;
     }
 
-    public function create(\Exception $e): ResponseInterface
+    public function create(\Throwable $e): ResponseInterface
     {
         $code = $this->normalizeCode($e->getCode());
         $template = $this->templates[$code] ?? $this->templates['default'];
+
         $html = $this->renderer->render($template, [
             'code' => $code,
             'message' => $e->getMessage(),

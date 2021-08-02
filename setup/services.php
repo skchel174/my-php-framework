@@ -23,7 +23,10 @@ use Framework\Application\ApplicationFactory;
 use Framework\Http\Router\Interfaces\RoutesCollectionInterface;
 use Framework\Http\Router\RoutesCollectionFactory;
 
-/** @var ServiceProvider $provider */
+/**
+ * @var Psr\Container\ContainerInterface $container
+ * @var ServiceProvider $provider
+ */
 
 // Services
 $provider->service(DefaultHandler::class)->argument('logger', 'default-logger');
@@ -36,13 +39,13 @@ $provider->service(IndexController::class)
 // Aliases
 $provider->alias(RouteDispatcherInterface::class, RouteDispatcher::class);
 $provider->alias(MiddlewareDispatcherInterface::class, MiddlewareDispatcher::class);
-$provider->alias(ErrorManagerInterface::class, ErrorManager::class);
 $provider->alias(RendererInterface::class, Renderer::class);
+$provider->alias(ErrorManagerInterface::class, (new ErrorManagerFactory)($container));
 
 // Factories
 $provider->factory(Application::class, ApplicationFactory::class);
 $provider->factory(RoutesCollectionInterface::class, RoutesCollectionFactory::class);
-$provider->factory(ErrorManagerInterface::class, ErrorManagerFactory::class);
+
 $provider->factory(RendererInterface::class, Framework\Renderer\RendererFactory::class);
 $provider->factory(SessionInterface::class, SessionFactory::class);
 

@@ -7,7 +7,7 @@ use Psr\Http\Message\ResponseInterface;
 
 abstract class ErrorFactory
 {
-    abstract public function create(\Exception $e): ResponseInterface;
+    abstract public function create(\Throwable $e): ResponseInterface;
 
     protected function normalizeCode(int $code): int
     {

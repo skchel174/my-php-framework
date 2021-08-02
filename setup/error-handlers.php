@@ -2,4 +2,4 @@
 
 /** @var Framework\ErrorHandler\HandlersCollection $collection */
 
-$collection->register(Exception::class, Framework\ErrorHandler\DefaultHandler::class);
+$collection->register(\Throwable::class, Framework\ErrorHandler\DefaultHandler::class);
