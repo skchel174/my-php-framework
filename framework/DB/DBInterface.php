@@ -4,7 +4,7 @@ namespace Framework\DB;
 
 interface DBInterface
 {
-    public function getPdo(): \PDO;
+    public function getPDO(): \PDO;
     public function getRow(string $query, array $args = []): array|bool;
     public function getRows(string $query, array $args = []): array|bool;
     public function getObject(string $className, string $query, array $args = []): bool|object;
