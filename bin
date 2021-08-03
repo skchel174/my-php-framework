@@ -1,0 +1,12 @@
+<?php
+
+const BASE_DIR = __DIR__;
+
+require BASE_DIR . '/vendor/autoload.php';
+
+$container = (new Framework\Container\ContainerFactory)();
+
+$handler = $container->get(Framework\Command\CommandHandler::class);
+
+$handler->run(new Framework\Command\Input($argv))
+    ->print();
