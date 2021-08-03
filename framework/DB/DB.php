@@ -2,7 +2,7 @@
 
 namespace Framework\DB;
 
-class DB
+class DB implements DBInterface
 {
     protected \PDO $connection;
 

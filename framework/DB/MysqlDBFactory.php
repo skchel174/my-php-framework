@@ -7,7 +7,7 @@ use Psr\Container\ContainerInterface;
 
 class MysqlDBFactory
 {
-    public function __invoke(ContainerInterface $container): DB
+    public function __invoke(ContainerInterface $container): DBInterface
     {
         $connection = new MysqlConnection($container->get('config.db.mysql'), [
             \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION,
