@@ -4,12 +4,11 @@ return [
     'debug' => 1,
 
     'log' => [
+        'dir' => BASE_DIR . '/storage/log',
         'default' => [
             'name' => 'default-logger',
-            'handler' => [
-                'file' => BASE_DIR . '/storage/log/default.log',
-                'level' => 100,
-            ],
+            'file' => 'default.log',
+            'level' => 100,
         ],
     ],
 
