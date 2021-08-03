@@ -35,7 +35,7 @@ class SqliteSessionFactory
 
     protected function createSessionsTable(DBInterface $db): void
     {
-        $db->getPdo()->exec("
+        $db->getPDO()->exec("
             CREATE TABLE IF NOT EXISTS `sessions` (
                 `session_id` TEXT NOT NULL PRIMARY KEY,
                 `session_data` TEXT DEFAULT NULL,

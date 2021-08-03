@@ -11,7 +11,7 @@ class DB implements DBInterface
         $this->connection = $connection;
     }
 
-    public function getPdo(): \PDO
+    public function getPDO(): \PDO
     {
         return $this->connection;
     }
