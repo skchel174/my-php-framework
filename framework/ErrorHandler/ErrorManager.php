@@ -11,10 +11,14 @@ use Psr\Http\Message\ServerRequestInterface;
 class ErrorManager implements ErrorManagerInterface
 {
     private HandlersCollection $handlers;
-    private Debugger $debugger;
+    private DebuggerInterface $debugger;
     private bool $debug;
 
-    public function __construct(HandlersCollection $handlers, DebuggerInterface $debugger, bool $debug)
+    public function __construct(
+        HandlersCollection $handlers,
+        DebuggerInterface $debugger,
+        bool $debug,
+    )
     {
         $this->handlers = $handlers;
         $this->debugger = $debugger;
