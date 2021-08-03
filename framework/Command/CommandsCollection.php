@@ -2,18 +2,21 @@
 
 namespace Framework\Command;
 
+use Framework\Command\Exceptions\CommandNotExistException;
+
 class CommandsCollection
 {
-    private array $commands;
+    private array $commands = [];
 
-    public function __construct(array $commands = [])
+    public function has(string $name): bool
     {
-        $this->commands = $commands;
+        return array_key_exists($name, $this->commands);
     }
 
-    public function get(string $name): ?Command
+    public function get(string $name): Command
     {
-        return $this->commands[$name] ?? null;
+        $this->commandExistGuard($name);
+        return $this->commands[$name];
     }
 
     public function getAll(): array
@@ -26,12 +29,24 @@ class CommandsCollection
         $group = explode(':', $name)[0];
         return array_filter($this->commands, function ($command) use ($group) {
            /** @var Command $command */
-           return explode(':', $command->getName())[0] === $group;
+           return $command->getGroup() === $group;
         });
     }
 
     public function add(string $name, Command $command): void
     {
         $this->commands[$name] = $command;
+    }
+
+    public function sort(): void
+    {
+        ksort($this->commands);
+    }
+
+    protected function commandExistGuard(string $name): void
+    {
+        if (!$this->has($name)) {
+            throw new CommandNotExistException();
+        }
     }
 }

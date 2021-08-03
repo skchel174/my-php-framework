@@ -10,29 +10,35 @@ abstract class Command
 
     public function __construct()
     {
-        $this->name();
-        $this->description();
-        $this->options();
+        $this->name = $this->name();
+        $this->description = $this->description();
+        $this->options = $this->options();
     }
 
-    protected function name(): void
+    protected function setName(): string
     {
-        $this->name = static::class;
+        return static::class;
     }
 
-    protected function description(): void
+    protected function description(): string
     {
-        $this->description = '';
+        return '';
     }
 
-    protected function options(): void
+    protected function options(): array
     {
-        $this->options = [];
+        return [];
     }
 
     public function getName(): string
     {
         return $this->name;
+    }
+
+    public function getGroup(): ?string
+    {
+        $name = explode(':', $this->name);
+        return isset($name[1]) ? $name[0] : null;
     }
 
     public function getDescription(): string
