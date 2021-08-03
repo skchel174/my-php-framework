@@ -33,7 +33,7 @@ class Application
         ErrorManager::registerErrorHandler();
 
         try {
-            $container = (new ContainerFactory)->create();
+            $container = (new ContainerFactory)();
             $app = $container->get(Application::class);
             $app->handleRequest($request);
         } catch (\Throwable $e) {
