@@ -5,12 +5,14 @@ use Framework\Http\Middlewares\CSRFProtection\CSRFProtectionStartMiddleware;
 use Framework\Http\Middlewares\ErrorHandleMiddleware;
 use Framework\Http\Middlewares\ApiOrWebMiddleware\ApiOrWebMiddleware;
 use Framework\Http\MiddlewareDispatcher\Interfaces\MiddlewareDispatcherInterface;
+use Framework\Http\Middlewares\ProtocolVersionMiddleware;
 use Framework\Http\Middlewares\RouteDispatchMiddleware;
 use Framework\Http\Middlewares\SessionStartMiddleware;
 
 /** @var MiddlewareDispatcherInterface $dispatcher */
 
 $dispatcher->add(ErrorHandleMiddleware::class);
+$dispatcher->add(ProtocolVersionMiddleware::class);
 $dispatcher->add(SessionStartMiddleware::class);
 $dispatcher->add(RouteDispatchMiddleware::class);
 
