@@ -35,7 +35,7 @@ class ErrorFactoryTest extends TestCase
 
 class DummyErrorFactory extends ErrorFactory
 {
-    public function create(\Exception $e): ResponseInterface
+    public function create(\Throwable $e): ResponseInterface
     {
         $code = $this->normalizeCode($e->getCode());
         return new Response($e->getMessage(), $code);

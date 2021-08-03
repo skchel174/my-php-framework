@@ -9,20 +9,17 @@ use Psr\Log\LoggerInterface;
 
 class LoggerFactory
 {
-    private array $config;
-
-    public function __construct(array $config)
-    {
-        $this->config = $config;
-    }
-
     public function __invoke(ContainerInterface $container): LoggerInterface
     {
-        $config = $container->get('config.log.default');
+        $config = $container->get('config.log');
 
-        $logger = new Logger($config['name']);
+        $name = $config['default']['name'];
+        $path = $config['dir'] . $config['default']['file'];
+        $level = $config['default']['level'];
 
-        $logger->pushHandler(new StreamHandler($config['handler']['file'], $config['handler']['level']));
+        $logger = new Logger($name);
+
+        $logger->pushHandler(new StreamHandler($path, $level));
 
         return $logger;
     }

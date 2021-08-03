@@ -1,12 +1,13 @@
 <?php
 
 use App\Http\Controllers\IndexController;
+use Framework\Command\CommandHandler;
+use Framework\Command\CommandHandlerFactory;
 use Framework\Container\ServiceProvider;
 use Framework\DB\MysqlDBFactory;
 use Framework\DB\SqliteDBFactory;
 use Framework\ErrorHandler\DefaultHandler;
 use Framework\ErrorHandler\ErrorFactory\HtmlErrorFactory;
-use Framework\ErrorHandler\ErrorManager;
 use Framework\ErrorHandler\ErrorManagerFactory;
 use Framework\ErrorHandler\Interfaces\ErrorManagerInterface;
 use Framework\Http\MiddlewareDispatcher\Interfaces\MiddlewareDispatcherInterface;
@@ -45,12 +46,12 @@ $provider->alias(ErrorManagerInterface::class, (new ErrorManagerFactory)($contai
 // Factories
 $provider->factory(Application::class, ApplicationFactory::class);
 $provider->factory(RoutesCollectionInterface::class, RoutesCollectionFactory::class);
-
 $provider->factory(RendererInterface::class, Framework\Renderer\RendererFactory::class);
 $provider->factory(SessionInterface::class, SessionFactory::class);
 
 $provider->factory(MysqlDBFactory::class, MysqlDBFactory::class);
 $provider->factory(SqliteDBFactory::class, SqliteDBFactory::class);
 
-$provider->factory('default-logger', LoggerFactory::class)
-    ->argument('config', 'config.log.default');
+$provider->factory(CommandHandler::class, CommandHandlerFactory::class);
+
+$provider->factory('default-logger', LoggerFactory::class);
