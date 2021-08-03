@@ -26,8 +26,12 @@ return [
             'save_path' => BASE_DIR . '/storage/sessions',
             'gc_maxlifetime' => '1800',
         ],
-        'session_save_handler' => [
 
+        'sqlite_handler' => [
+            'driver' => 'sqlite',
+            'dbname' => BASE_DIR . '/storage/sessions/sqlite/sessions.db',
+            'user' => '',
+            'password' => '',
         ],
     ],
 

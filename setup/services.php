@@ -16,6 +16,7 @@ use Framework\Http\Router\Interfaces\RouteDispatcherInterface;
 use Framework\Http\Router\RouteDispatcher;
 use Framework\Http\Sessions\Interfaces\SessionInterface;
 use Framework\Http\Sessions\SessionFactory;
+use Framework\Http\Sessions\SqliteSessionFactory;
 use Framework\Logger\LoggerFactory;
 use Framework\Renderer\Interfaces\RendererInterface;
 use Framework\Renderer\Renderer;
@@ -47,7 +48,10 @@ $provider->alias(ErrorManagerInterface::class, (new ErrorManagerFactory)($contai
 $provider->factory(Application::class, ApplicationFactory::class);
 $provider->factory(RoutesCollectionInterface::class, RoutesCollectionFactory::class);
 $provider->factory(RendererInterface::class, Framework\Renderer\RendererFactory::class);
-$provider->factory(SessionInterface::class, SessionFactory::class);
+//$provider->factory(SessionInterface::class, SessionFactory::class);
+
+$provider->factory(SessionInterface::class, SqliteSessionFactory::class);
+
 
 $provider->factory(MysqlDBFactory::class, MysqlDBFactory::class);
 $provider->factory(SqliteDBFactory::class, SqliteDBFactory::class);
