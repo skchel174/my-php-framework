@@ -2,8 +2,6 @@
 
 namespace Framework\Command;
 
-use Framework\Command\Exceptions\CommandNotExistException;
-
 class CommandHandler
 {
     private CommandsCollection $commands;
@@ -16,9 +14,7 @@ class CommandHandler
     public function run(Input $input): Output
     {
         try {
-            if (!$command = $this->commands->get($input->getCommand())) {
-                throw new CommandNotExistException($input->getCommand());
-            }
+            $command = $this->commands->get($input->getCommand());
             return $command->execute($input);
         } catch (\Throwable $e) {
             return $this->errorOutput($e);
