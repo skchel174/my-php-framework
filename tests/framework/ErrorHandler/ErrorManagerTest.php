@@ -5,6 +5,7 @@ namespace Tests\framework\ErrorHandler;
 use Framework\ErrorHandler\ErrorManager;
 use Framework\ErrorHandler\HandlerDecorator;
 use Framework\ErrorHandler\HandlersCollection;
+use Framework\ErrorHandler\Interfaces\DebuggerInterface;
 use Framework\ErrorHandler\Interfaces\HandlerInterface;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ResponseInterface;
@@ -17,10 +18,11 @@ class ErrorManagerTest extends TestCase
         $request = $this->getMockBuilder(ServerRequestInterface::class)->getMock();
         $response = $this->getMockBuilder(ResponseInterface::class)->getMock();
 
-        $demoHandler = $this->getMockBuilder(HandlerInterface::class)->getMock();
+        $debugger = $this->getMockBuilder(DebuggerInterface::class)->getMock();
 
         $exception = new \Exception();
 
+        $demoHandler = $this->getMockBuilder(HandlerInterface::class)->getMock();
         $demoHandler->expects($this->once())
             ->method('handle')
             ->withConsecutive([$exception, $request])
@@ -30,15 +32,12 @@ class ErrorManagerTest extends TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $handlers->expects($this->never())
-            ->method('has');
-
         $handlers->expects($this->once())
             ->method('get')
-            ->withConsecutive([\Exception::class])
+            ->withConsecutive([\Throwable::class])
             ->willReturn($demoHandler);
 
-        $manager = new ErrorManager($handlers, false);
+        $manager = new ErrorManager($handlers, $debugger, false);
         $result = $manager->process($exception, $request);
 
         $this->assertInstanceOf(ResponseInterface::class, $result);
@@ -53,6 +52,8 @@ class ErrorManagerTest extends TestCase
         $runtimeHandler = $this->getMockBuilder(HandlerDecorator::class)->getMock();
         $unexpectedValueHandler = $this->getMockBuilder(HandlerDecorator::class)->getMock();
 
+        $debugger = $this->getMockBuilder(DebuggerInterface::class)->getMock();
+
         $runtimeHandler->expects($this->once())
             ->method('wrapHandler')
             ->withConsecutive([$demoHandler]);
@@ -66,7 +67,7 @@ class ErrorManagerTest extends TestCase
             ->getMock();
 
         $handlersMap = [
-            \Exception::class => $demoHandler,
+            \Throwable::class => $demoHandler,
             \RuntimeException::class => $runtimeHandler,
             \UnexpectedValueException::class => $unexpectedValueHandler,
         ];
@@ -84,7 +85,7 @@ class ErrorManagerTest extends TestCase
                 return $handlersMap[$val];
             }));
 
-        $manager = new ErrorManager($handlers, false);
+        $manager = new ErrorManager($handlers, $debugger, false);
         $manager->process(new \UnexpectedValueException(), $request);
     }
 }
