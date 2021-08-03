@@ -23,15 +23,9 @@ class Input
         return $this->options;
     }
 
-    public function getOption(string $name): ?array
+    public function getOption(string $name): ?string
     {
-        if (!array_key_exists($name, $this->options)) {
-            return null;
-        }
-        return [
-            'name' => $name,
-            'value' => $this->options[$name],
-        ];
+        return $this->options[$name] ?? null;
     }
 
     protected function parseOptions(array $data): array
