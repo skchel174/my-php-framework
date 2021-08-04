@@ -12,7 +12,7 @@ class FactoryServiceTest extends TestCase
 {
     public function testConstruct(): void
     {
-        $container = Container::getInstance();
+        $container = new Container();
         $container->set('config.array', $config = ['value01', 'value02', 'value03']);
 
         $service = new FactoryService(DummyServiceFactory::class);
