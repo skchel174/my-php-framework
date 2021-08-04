@@ -3,9 +3,12 @@
 namespace Framework\Http\Middlewares;
 
 use Framework\Http\Middlewares\ApiOrWebMiddleware\ApiMiddlewareDispatcher;
+use Framework\Http\Middlewares\ApiOrWebMiddleware\ApiOrWebMiddleware;
 use Framework\Http\Middlewares\ApiOrWebMiddleware\WebMiddlewareDispatcher;
 use Framework\Http\MiddlewareDispatcher\Interfaces\MiddlewareDispatcherInterface;
 use Framework\Http\MiddlewareDispatcher\MiddlewareDispatcher;
+use Framework\Http\Middlewares\CSRFProtection\CSRFProtectionMiddleware;
+use Framework\Http\Middlewares\CSRFProtection\CSRFProtectionStartMiddleware;
 use Psr\Container\ContainerInterface;
 
 class ApplicationMiddlewaresFactory
@@ -18,24 +21,36 @@ class ApplicationMiddlewaresFactory
     {
         $dispatcher = $container->get(MiddlewareDispatcher::class);
 
-        $this->middlewares($dispatcher);
-        $this->web($container->get(WebMiddlewareDispatcher::class));
-        $this->api($container->get(ApiMiddlewareDispatcher::class));
+        $this->middlewares($container, $dispatcher);
+        $this->web($container, $container->get(WebMiddlewareDispatcher::class));
+        $this->api($container, $container->get(ApiMiddlewareDispatcher::class));
 
         return $dispatcher;
     }
 
-    protected function middlewares(MiddlewareDispatcherInterface $dispatcher): void
+    protected function middlewares(ContainerInterface $container, MiddlewareDispatcherInterface $dispatcher): void
     {
+        $dispatcher->add(ErrorHandleMiddleware::class);
+        $dispatcher->add(ProtocolVersionMiddleware::class);
+        $dispatcher->add(SessionStartMiddleware::class);
+        $dispatcher->add(RouteDispatchMiddleware::class);
+
+        $dispatcher->add(CSRFProtectionStartMiddleware::class);
+        $dispatcher->add(CSRFProtectionMiddleware::class);
+
+        $dispatcher->add(ApiOrWebMiddleware::class);
+
         require static::MIDDLEWARES;
     }
 
-    protected function web(MiddlewareDispatcherInterface $dispatcher): void
+    protected function web(ContainerInterface $container, MiddlewareDispatcherInterface $dispatcher): void
     {
+        $dispatcher->add(MethodSpecifierMiddleware::class);
+
         require static::WEB_MIDDLEWARES;
     }
 
-    protected function api(MiddlewareDispatcherInterface $dispatcher): void
+    protected function api(ContainerInterface $container, MiddlewareDispatcherInterface $dispatcher): void
     {
         require static::API_MIDDLEWARES;
     }

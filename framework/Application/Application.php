@@ -28,6 +28,12 @@ class Application
         $this->requestHandler = $requestHandler;
     }
 
+    public function handleRequest(ServerRequestInterface $request): void
+    {
+        $response = $this->middlewares->process($request, $this->requestHandler);
+        $this->responseEmitter->emit($response);
+    }
+
     public static function run(ServerRequestInterface $request): void
     {
         ErrorManager::registerErrorHandler();
@@ -42,11 +48,5 @@ class Application
                 $debugger->handle($e, $request);
             }
         }
-    }
-
-    public function handleRequest(ServerRequestInterface $request): void
-    {
-        $response = $this->middlewares->process($request, $this->requestHandler);
-        $this->responseEmitter->emit($response);
     }
 }
