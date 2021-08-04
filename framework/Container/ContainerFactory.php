@@ -17,7 +17,7 @@ use Framework\Http\MiddlewareDispatcher\MiddlewareDispatcher;
 use Framework\Http\Router\Interfaces\RouteDispatcherInterface;
 use Framework\Http\Router\Interfaces\RoutesCollectionInterface;
 use Framework\Http\Router\RouteDispatcher;
-use Framework\Http\Router\RoutesCollectionFactory;
+use Framework\Http\Router\RouteDispatcherFactory;
 use Framework\Http\Sessions\Interfaces\SessionInterface;
 use Framework\Http\Sessions\SqliteSessionFactory;
 use Framework\Logger\LoggerFactory;
@@ -59,7 +59,6 @@ class ContainerFactory
         $provider->service(DefaultHandler::class)->argument('logger', 'default-logger');
         $provider->service(HtmlErrorFactory::class)->argument('templates', 'config.error.templates');
 
-        $provider->alias(RouteDispatcherInterface::class, RouteDispatcher::class);
         $provider->alias(MiddlewareDispatcherInterface::class, MiddlewareDispatcher::class);
         $provider->alias(RendererInterface::class, Renderer::class);
 
@@ -70,7 +69,7 @@ class ContainerFactory
     {
         $provider->factory(Application::class, ApplicationFactory::class);
         $provider->factory(ErrorManagerInterface::class, ErrorManagerFactory::class);
-        $provider->factory(RoutesCollectionInterface::class, RoutesCollectionFactory::class);
+        $provider->factory(RouteDispatcherInterface::class, RouteDispatcherFactory::class);
         $provider->factory(RendererInterface::class, RendererFactory::class);
 
         //$provider->factory(SessionInterface::class, SessionFactory::class);

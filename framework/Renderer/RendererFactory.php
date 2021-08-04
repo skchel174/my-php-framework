@@ -2,7 +2,7 @@
 
 namespace Framework\Renderer;
 
-use Framework\Http\Router\RouteDispatcher;
+use Framework\Http\Router\Interfaces\RouteDispatcherInterface;
 use Framework\Renderer\Extensions\AssetsPathExtension;
 use Framework\Renderer\Extensions\CSRFTokenExtension;
 use Framework\Renderer\Extensions\MethodSpecifierExtension;
@@ -28,7 +28,7 @@ class RendererFactory
 
     protected function extensions(ContainerInterface $container, ExtensionsCollection $extensions): void
     {
-        $extensions->setExtension($container->get(RouteDispatcher::class), 'route');
+        $extensions->setExtension($container->get(RouteDispatcherInterface::class), 'route');
         $extensions->setExtension($container->get(AssetsPathExtension::class), 'assets');
         $extensions->setExtension($container->get(MethodSpecifierExtension::class), 'method');
         $extensions->setExtension($container->get(CSRFTokenExtension::class), 'csrf');
