@@ -11,7 +11,7 @@ use Framework\Http\Middlewares\CSRFProtection\CSRFProtectionMiddleware;
 use Framework\Http\Middlewares\CSRFProtection\CSRFProtectionStartMiddleware;
 use Psr\Container\ContainerInterface;
 
-class ApplicationMiddlewaresFactory
+class AppMiddlewaresFactory
 {
     const MIDDLEWARES = BASE_DIR . '/setup/middlewares/middlewares.php';
     const WEB_MIDDLEWARES = BASE_DIR . '/setup/middlewares/web.php';
