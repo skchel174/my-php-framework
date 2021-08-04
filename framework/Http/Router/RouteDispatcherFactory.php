@@ -2,17 +2,18 @@
 
 namespace Framework\Http\Router;
 
+use Framework\Http\Router\Interfaces\RouteDispatcherInterface;
 use Psr\Container\ContainerInterface;
 
-class RoutesCollectionFactory
+class RouteDispatcherFactory
 {
     const ROUTES_FILE = BASE_DIR . '/setup/routes.php';
 
-    public function __invoke(ContainerInterface $container): RoutesCollection
+    public function __invoke(ContainerInterface $container): RouteDispatcherInterface
     {
         $routes = $container->get(RoutesCollection::class);
         $this->routes($routes);
-        return $routes;
+        return new RouteDispatcher($routes);
     }
 
     protected function routes(RoutesCollection $routes): void

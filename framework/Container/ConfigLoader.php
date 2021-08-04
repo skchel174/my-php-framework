@@ -5,7 +5,7 @@ namespace Framework\Container;
 class ConfigLoader
 {
     const GLOBAL_PATTERN = '{*/*,*}.php';
-    const LOCAL_PATTERN = '{*/*,*}.php.local';
+    const LOCAL_PATTERN = '{*/*,*}.local.php';
 
     protected string $confDir;
 

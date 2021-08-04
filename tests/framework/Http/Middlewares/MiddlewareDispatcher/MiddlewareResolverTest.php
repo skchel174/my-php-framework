@@ -22,7 +22,7 @@ class MiddlewareResolverTest extends TestCase
      */
     public function testResolve(mixed $middleware): void
     {
-        $resolver = new MiddlewareResolver(Container::getInstance());
+        $resolver = new MiddlewareResolver(new Container());
         $resolved = $resolver->resolve($middleware);
 
         $this->assertIsCallable($resolved);
@@ -34,7 +34,7 @@ class MiddlewareResolverTest extends TestCase
     public function testInvalidTypeMiddleware(mixed $middleware): void
     {
         $this->expectException(InvalidMiddlewareTypeException::class);
-        $resolver = new MiddlewareResolver(Container::getInstance());
+        $resolver = new MiddlewareResolver(new Container());
         $resolver->resolve($middleware);
     }
 
@@ -44,7 +44,7 @@ class MiddlewareResolverTest extends TestCase
     public function testUnknownClassMiddleware(mixed $middleware): void
     {
         $this->expectException(UnknownMiddlewareClassException::class);
-        $resolver = new MiddlewareResolver(Container::getInstance());
+        $resolver = new MiddlewareResolver(new Container());
         $resolver->resolve($middleware);
     }
 

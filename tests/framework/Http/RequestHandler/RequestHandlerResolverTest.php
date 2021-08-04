@@ -20,7 +20,7 @@ class RequestHandlerResolverTest extends TestCase
      */
     public function testResolve(mixed $handler): void
     {
-        $resolver = new RequestHandlerResolver(Container::getInstance());
+        $resolver = new RequestHandlerResolver(new Container());
         $result = $resolver->resolve($handler);
 
         $this->assertIsCallable($result);
@@ -33,7 +33,7 @@ class RequestHandlerResolverTest extends TestCase
     {
         $this->expectException(InvalidRequestHandlerTypeException::class);
 
-        $resolver = new RequestHandlerResolver(Container::getInstance());
+        $resolver = new RequestHandlerResolver(new Container());
         $resolver->resolve($handler);
     }
 

@@ -23,7 +23,7 @@ class RequestHandlerTest extends TestCase
     public function testHandle(mixed $handler): void
     {
         $request = (new ServerRequest)->withAttribute(RequestHandlerInterface::class, $handler);
-        $resolver = new RequestHandlerResolver(Container::getInstance());
+        $resolver = new RequestHandlerResolver(new Container());
         $handler = new RequestHandler($resolver);
         $response = $handler->handle($request);
 
