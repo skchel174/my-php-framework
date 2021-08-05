@@ -7,7 +7,7 @@ use Psr\Container\ContainerInterface;
 
 class ErrorManagerFactory
 {
-    const HANDLERS_FILE = BASE_DIR . '/setup/error-handlers.php';
+    const HANDLERS_FILE = BASE_DIR . '/bootstrap/error-handlers.php';
 
     public function __invoke(ContainerInterface $container): ErrorManagerInterface
     {

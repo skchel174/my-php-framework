@@ -7,7 +7,7 @@ use Psr\Container\ContainerInterface;
 
 class CommandHandlerFactory
 {
-    const COMMANDS_FILE = BASE_DIR . '/setup/commands.php';
+    const COMMANDS_FILE = BASE_DIR . '/bootstrap/commands.php';
 
     public function __invoke(ContainerInterface $container): CommandHandler
     {

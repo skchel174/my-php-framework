@@ -13,9 +13,9 @@ use Psr\Container\ContainerInterface;
 
 class AppMiddlewaresFactory
 {
-    const MIDDLEWARES = BASE_DIR . '/setup/middlewares/middlewares.php';
-    const WEB_MIDDLEWARES = BASE_DIR . '/setup/middlewares/web.php';
-    const API_MIDDLEWARES = BASE_DIR . '/setup/middlewares/api.php';
+    const MIDDLEWARES = BASE_DIR . '/bootstrap/middlewares/middlewares.php';
+    const WEB_MIDDLEWARES = BASE_DIR . '/bootstrap/middlewares/web.php';
+    const API_MIDDLEWARES = BASE_DIR . '/bootstrap/middlewares/api.php';
 
     public function __invoke(ContainerInterface $container): MiddlewareDispatcherInterface
     {
