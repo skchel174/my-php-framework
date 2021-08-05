@@ -7,7 +7,7 @@ use Psr\Container\ContainerInterface;
 
 class RouteDispatcherFactory
 {
-    const ROUTES_FILE = BASE_DIR . '/setup/routes.php';
+    const ROUTES_FILE = BASE_DIR . '/bootstrap/routes.php';
 
     public function __invoke(ContainerInterface $container): RouteDispatcherInterface
     {

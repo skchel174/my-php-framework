@@ -28,12 +28,10 @@ use Psr\Container\ContainerInterface;
 
 class ContainerFactory
 {
-    const CONFIG_ID = 'config';
-    const CONFIG_DIR = BASE_DIR . '/setup/config';
-
-    const SERVICES_FILE = BASE_DIR . '/setup/services/services.php';
-    const FACTORIES_FILE = BASE_DIR . '/setup/services/factories.php';
-    const CALLABLES_FILE = BASE_DIR . '/setup/services/callables.php';
+    const CONFIG_DIR = BASE_DIR . '/bootstrap/config';
+    const SERVICES_FILE = BASE_DIR . '/bootstrap/services/services.php';
+    const FACTORIES_FILE = BASE_DIR . '/bootstrap/services/factories.php';
+    const CALLABLES_FILE = BASE_DIR . '/bootstrap/services/callables.php';
 
     public function __invoke(): ContainerInterface
     {
@@ -51,7 +49,7 @@ class ContainerFactory
     protected function config(ContainerInterface $container, ServiceProvider $provider): void
     {
         $configLoader = new ConfigLoader(static::CONFIG_DIR);
-        $provider->config(static::CONFIG_ID, $configLoader->load());
+        $provider->config('config', $configLoader->load());
     }
 
     protected function services(ContainerInterface $container, ServiceProvider $provider): void
