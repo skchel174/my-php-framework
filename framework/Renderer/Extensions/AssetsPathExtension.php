@@ -4,7 +4,7 @@ namespace Framework\Renderer\Extensions;
 
 class AssetsPathExtension
 {
-    const ASSETS_DIR = '/assets';
+    const ASSETS_DIR = 'assets';
 
     public function assets(string $file): string
     {
