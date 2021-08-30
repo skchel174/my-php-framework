@@ -27,7 +27,7 @@ class ServerStartCommand extends Command
 
     public function execute(Input $input): Output
     {
-        $port = $input->getOption('port') ?? 8000;
+        $port = $input->getOption('port') ?? 0;
         exec('php -S 127.0.0.1:' . $port . ' server.php');
         return new Output('');
     }

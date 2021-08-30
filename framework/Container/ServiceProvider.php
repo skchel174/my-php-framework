@@ -30,9 +30,9 @@ class ServiceProvider
         return $service;
     }
 
-    public function alias(string $serviceId, string|object $alias): ServiceInterface
+    public function alias(string $serviceId, string|object $service): ServiceInterface
     {
-        $service = new Service($alias);
+        $service = new Service($service);
         $this->container->set($serviceId, $service);
         return $service;
     }
